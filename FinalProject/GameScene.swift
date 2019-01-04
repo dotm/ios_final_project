@@ -16,6 +16,9 @@ class GameScene: SKScene {
     let attack = Attack(position: CGPoint(x: 600, y: 150))
     let popupframe = PopupFrame(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY))
     
+    private var popupflag: String = "false"
+    private let layer = SKSpriteNode(color: UIColor(white: 0, alpha: 0.5), size: UIScreen.main.bounds.size)
+    
     override func sceneDidLoad() {
         
         let background = SKSpriteNode(imageNamed: "background")
@@ -38,12 +41,33 @@ class GameScene: SKScene {
 //        }
 //    }
     
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let layer = SKSpriteNode(color: UIColor(white: 0, alpha: 0.5), size: UIScreen.main.bounds.size)
+        
         layer.position = CGPoint(x:  UIScreen.main.bounds.midX, y:  UIScreen.main.bounds.midY)
         
-        addChild(layer)
-        addChild(popupframe)
+        
+        if popupflag == "false" {
+ 
+            addChild(layer)
+            addChild(popupframe)
+            
+            popupflag = "true"
+        }
+        else {
+            isUserInteractionEnabled = false
+            
+            layer.removeFromParent()
+            popupframe.removeFromParent()
+            
+            addChild(attack)
+            attack.BeginAttack {
+            self.attack.removeFromParent()
+            self.isUserInteractionEnabled = true
+            }
+            
+            popupflag = "false"
+        }
     }
     
     override func update(_ currentTime: TimeInterval) {
