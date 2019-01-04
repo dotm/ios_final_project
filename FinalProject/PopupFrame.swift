@@ -9,14 +9,18 @@
 import Foundation
 import SpriteKit
 
-class PopupFrame: SKSpriteNode {
+class PopupFrame: SKNode {
     
     init(position: CGPoint) {
-        let texture = SKTexture(imageNamed: "Frame")
-        
-        super.init(texture: texture, color: .clear, size: texture.size())
+        super.init()
         self.position = position
+        let texture = SKSpriteNode(imageNamed: "Frame")
+        self.addChild(texture)
+        let shapeSquare = PopupQuiz(size: texture.size)
+        self.addChild(shapeSquare)
         
+        texture.zPosition = 2
+        shapeSquare.zPosition = 1
     }
     
     required init?(coder aDecoder: NSCoder) {
