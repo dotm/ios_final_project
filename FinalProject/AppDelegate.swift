@@ -17,14 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         BackgroundMusicPlayer.initialize()
-        
-        //test doang
-        Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { (_) in
-            BackgroundMusicPlayer.playBattleSceneSong()
-            Timer.scheduledTimer(withTimeInterval: 30, repeats: false) { (_) in
-                BackgroundMusicPlayer.playMainMenuSong()
-            }
-        }
         return true
     }
 
