@@ -9,10 +9,6 @@
 import SpriteKit
 import GameplayKit
 
-protocol PopupDelegate {
-    func handleAnswerCorrect()
-    func handleAnswerWrong()
-}
 class PopupQuiz: SKNode {
     
     var gameDelegate:PopupDelegate?
