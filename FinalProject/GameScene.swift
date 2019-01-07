@@ -43,6 +43,8 @@ class GameScene: SKScene {
     
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // calling touch began in popupframe method
+        popupframe.touchesBegan(touches, with: event)
         
         layer.position = CGPoint(x:  UIScreen.main.bounds.midX, y:  UIScreen.main.bounds.midY)
         
