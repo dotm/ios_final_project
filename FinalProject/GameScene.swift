@@ -16,6 +16,9 @@ class GameScene: SKScene {
     let attack = Attack(position: CGPoint(x: 600, y: 150))
     let popupframe = PopupFrame(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY))
     
+    let playerHP = PlayerHP(MaxHP: 5)
+    let enemyHP = EnemyHP(MaxHP: 5)
+    
     private var popupflag: String = "false"
     private let layer = SKSpriteNode(color: UIColor(white: 0, alpha: 0.5), size: UIScreen.main.bounds.size)
     
@@ -27,6 +30,8 @@ class GameScene: SKScene {
         addChild(background)
         addChild(player)
         addChild(enemy)
+        addChild(playerHP)
+        addChild(enemyHP)
         
         player.beginAnimation(state: .walk)
         
