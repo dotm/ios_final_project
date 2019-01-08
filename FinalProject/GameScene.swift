@@ -9,18 +9,20 @@
 import SpriteKit
 import GameplayKit
 
+fileprivate let layer = SKSpriteNode(color: UIColor(white: 0, alpha: 0.5), size: UIScreen.main.bounds.size)
+
 class GameScene: SKScene {
     
     let player = Player(position: CGPoint(x: 150, y: 120))
     let enemy = Enemy(position: CGPoint(x: 600, y: 150))
     let attack = Attack(position: CGPoint(x: 600, y: 150))
+    
     private var popupframe: PopupFrame!
     
-    let playerHP = PlayerHP(MaxHP: 5)
-    let enemyHP = EnemyHP(MaxHP: 5)
-    
     private var popupflag: String = "false"
-    private let layer = SKSpriteNode(color: UIColor(white: 0, alpha: 0.5), size: UIScreen.main.bounds.size)
+    
+    private var playerHP: PlayerHP!
+    private var enemyHP: EnemyHP!
     
     override init(size: CGSize) {
         super.init(size: size)
@@ -32,12 +34,27 @@ class GameScene: SKScene {
     
     override func sceneDidLoad() {
         
+        let playerHP = PlayerHP(maxHP: 5)
+        let enemyHP = EnemyHP(maxHP: 5) {
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (_) in
+                self.addChild(layer)
+//                self.addChild(self.popupframe)
+            })
+        }
+        
+        self.playerHP = playerHP
+        self.enemyHP = enemyHP
+        
+        playerHP.position = CGPoint(x: UIScreen.main.bounds.minX + 60, y: UIScreen.main.bounds.maxY - 70)
+        enemyHP.position = CGPoint(x: UIScreen.main.bounds.maxX - 360, y: UIScreen.main.bounds.maxY - 70)
+        
         let background = SKSpriteNode(imageNamed: "background")
         background.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
         
         addChild(background)
         addChild(player)
         addChild(enemy)
+        
         addChild(playerHP)
         addChild(enemyHP)
         
@@ -89,11 +106,26 @@ extension GameScene: PopupDelegate {
         }
         
         popupflag = "false"
+        
+        enemyHP.decreaseHP()
     }
     
     func handleAnswerWrong() {
-        fatalError("Menunggu animasi avoid")
+//        fatalError("Menunggu animasi avoid")
+        
+        isUserInteractionEnabled = false
+
+        layer.removeFromParent()
+        popupframe.removeFromParent()
+
+        enemy.dodge()
+        addChild(attack)
+        attack.BeginAttack {
+            self.attack.removeFromParent()
+            self.isUserInteractionEnabled = true
+        }
+
+        popupflag = "false"
     }
-    
     
 }
