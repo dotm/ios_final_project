@@ -52,6 +52,15 @@ class Player: SKSpriteNode {
         }
     }
     
+    func dodge(){
+        
+        let moveUp = SKAction.moveBy(x: -150, y: -150, duration: 0.2)
+        let moveBack = SKAction.move(to: position, duration: 0.2)
+        let dodgeAnimation = SKAction.sequence([moveUp,moveBack])
+        
+        self.run(dodgeAnimation)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

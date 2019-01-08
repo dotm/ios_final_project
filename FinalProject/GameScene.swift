@@ -17,6 +17,8 @@ class GameScene: SKScene {
     let enemy = Enemy(position: CGPoint(x: 600, y: 150))
     let attack = Attack(position: CGPoint(x: 600, y: 150))
     
+    var playerTurn: Bool = true
+    
     private var popupframe: PopupFrame!
     
     private var popupflag: String = "false"
@@ -99,6 +101,15 @@ extension GameScene: PopupDelegate {
         layer.removeFromParent()
         popupframe.removeFromParent()
         
+        if playerTurn == true {
+            enemyHP.decreaseHP()
+            playerTurn = false
+        }
+        else {
+            player.dodge()
+            playerTurn = true
+        }
+        
         addChild(attack)
         attack.BeginAttack {
             self.attack.removeFromParent()
@@ -107,7 +118,8 @@ extension GameScene: PopupDelegate {
         
         popupflag = "false"
         
-        enemyHP.decreaseHP()
+
+        
     }
     
     func handleAnswerWrong() {
@@ -118,7 +130,15 @@ extension GameScene: PopupDelegate {
         layer.removeFromParent()
         popupframe.removeFromParent()
 
-        enemy.dodge()
+        if playerTurn == true {
+            enemy.dodge()
+            playerTurn = false
+        }
+        else {
+            playerHP.decreaseHP()
+            playerTurn = true
+        }
+        
         addChild(attack)
         attack.BeginAttack {
             self.attack.removeFromParent()
