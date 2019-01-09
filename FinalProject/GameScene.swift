@@ -24,7 +24,7 @@ class GameScene: SKScene {
     
     var playerTurn: Bool = true
     
-    private var popupframe: PopupFrame!
+    private var popupframe: PopupFrame?
     
     private var popupflag: String = "false"
     
@@ -33,7 +33,6 @@ class GameScene: SKScene {
     
     override init(size: CGSize) {
         super.init(size: size)
-        self.popupframe = PopupFrame(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY), gameDelegate: self)
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -106,26 +105,29 @@ class GameScene: SKScene {
         for touch:AnyObject in touches
         {
             let location = touch.location(in: self)
-            guard attackIcon.contains(location) || defenseIcon.contains(location) else {return}
             
-            if playerTurn == true {
-                attackIcon.alpha = 0
-                defenseIcon.alpha = 1
-            }
-            else {
-                attackIcon.alpha = 1
-                defenseIcon.alpha = 0
-            }
             
             if popupflag == "false" {
+                guard attackIcon.contains(location) || defenseIcon.contains(location) else {return}
+                
+                if playerTurn == true {
+                    attackIcon.alpha = 0
+                    defenseIcon.alpha = 1
+                }
+                else {
+                    attackIcon.alpha = 1
+                    defenseIcon.alpha = 0
+                }
                 
                 addChild(layer)
-                addChild(popupframe)
+                
+                self.popupframe = PopupFrame(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY), gameDelegate: self)
+                addChild(popupframe!)
                 
                 popupflag = "true"
             } else {
                 // calling touch began in popupframe method
-                popupframe.touchesBegan(touches, with: event)
+                popupframe?.touchesBegan(touches, with: event)
             }
             
         }
@@ -135,6 +137,12 @@ class GameScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        popupframe?.touchesMoved(touches, with: event)
+    }
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        popupframe?.touchesEnded(touches, with: event)
+    }
 }
 
 extension GameScene: PopupDelegate {
@@ -142,7 +150,7 @@ extension GameScene: PopupDelegate {
         isUserInteractionEnabled = false
         
         layer.removeFromParent()
-        popupframe.removeFromParent()
+        popupframe?.removeFromParent()
         
         if playerTurn == true {
             
@@ -178,7 +186,7 @@ extension GameScene: PopupDelegate {
         isUserInteractionEnabled = false
 
         layer.removeFromParent()
-        popupframe.removeFromParent()
+        popupframe?.removeFromParent()
 
         if playerTurn == true {
             addChild(attack)

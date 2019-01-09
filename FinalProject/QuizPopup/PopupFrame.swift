@@ -12,14 +12,14 @@ import SpriteKit
 class PopupFrame: SKNode {
     
     let texture = SKSpriteNode(imageNamed: "Frame")
-    var quizBox:PopupQuiz?
+    var quizBox:ColorPopupQuiz?
     
     init(position: CGPoint, gameDelegate: PopupDelegate) {
         super.init()
         self.position = position
         self.addChild(texture)
         // create instance shapeSquare
-        quizBox = PopupQuiz.init(size: texture.size)
+        quizBox = ColorPopupQuiz()
         quizBox?.gameDelegate = gameDelegate
         // insert shape square to popupframe node
         self.addChild(quizBox!)
@@ -36,5 +36,11 @@ class PopupFrame: SKNode {
         // calling shapeSquare action in this class
         print("touched frame")
         quizBox?.touchesBegan(touches, with: event)
+    }
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        quizBox?.touchesMoved(touches, with: event)
+    }
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        quizBox?.touchesEnded(touches, with: event)
     }
 }

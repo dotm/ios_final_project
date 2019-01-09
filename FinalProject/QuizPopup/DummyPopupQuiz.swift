@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-class PopupQuiz: SKNode {
+class DummyPopupQuiz: SKNode {
     
     var gameDelegate:PopupDelegate?
     private var label : SKLabelNode?
