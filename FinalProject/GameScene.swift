@@ -13,9 +13,14 @@ fileprivate let layer = SKSpriteNode(color: UIColor(white: 0, alpha: 0.5), size:
 
 class GameScene: SKScene {
     
+    
     let player = Player(position: CGPoint(x: 150, y: 120))
     let enemy = Enemy(position: CGPoint(x: 600, y: 150))
     let attack = Attack(position: CGPoint(x: 600, y: 150))
+    let damage = Damage(position: CGPoint(x: 150, y: 120))
+    
+    let attackIcon = AttackIcon(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY))
+    let defenseIcon = DefenseIcon(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY))
     
     var playerTurn: Bool = true
     
@@ -35,12 +40,23 @@ class GameScene: SKScene {
     }
     
     override func sceneDidLoad() {
+        layer.position = CGPoint(x:  UIScreen.main.bounds.midX, y:  UIScreen.main.bounds.midY)
         
-        let playerHP = PlayerHP(maxHP: 5)
-        let enemyHP = EnemyHP(maxHP: 5) {
+        let playerHP = PlayerHP(maxHP: 5) {
+            self.defenseIcon.alpha = 0
+            self.attackIcon.alpha = 0
+            
             Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (_) in
                 self.addChild(layer)
-//                self.addChild(self.popupframe)
+            })
+        }
+        
+        let enemyHP = EnemyHP(maxHP: 5) {
+            self.defenseIcon.alpha = 0
+            self.attackIcon.alpha = 0
+            
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (_) in
+                self.addChild(layer)
             })
         }
         
@@ -60,6 +76,17 @@ class GameScene: SKScene {
         addChild(playerHP)
         addChild(enemyHP)
         
+        addChild(attackIcon)
+        addChild(defenseIcon)
+        
+        if playerTurn == true {
+            defenseIcon.alpha = 0
+        }
+        else {
+            attackIcon.alpha = 1
+        }
+
+        
         player.beginAnimation(state: .walk)
         
     }
@@ -75,18 +102,34 @@ class GameScene: SKScene {
     
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        layer.position = CGPoint(x:  UIScreen.main.bounds.midX, y:  UIScreen.main.bounds.midY)
         
-        if popupflag == "false" {
- 
-            addChild(layer)
-            addChild(popupframe)
+        for touch:AnyObject in touches
+        {
+            let location = touch.location(in: self)
+            guard attackIcon.contains(location) || defenseIcon.contains(location) else {return}
             
-            popupflag = "true"
-        } else {
-            // calling touch began in popupframe method
-            popupframe.touchesBegan(touches, with: event)
+            if playerTurn == true {
+                attackIcon.alpha = 0
+                defenseIcon.alpha = 1
+            }
+            else {
+                attackIcon.alpha = 1
+                defenseIcon.alpha = 0
+            }
+            
+            if popupflag == "false" {
+                
+                addChild(layer)
+                addChild(popupframe)
+                
+                popupflag = "true"
+            } else {
+                // calling touch began in popupframe method
+                popupframe.touchesBegan(touches, with: event)
+            }
+            
         }
+
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -102,24 +145,31 @@ extension GameScene: PopupDelegate {
         popupframe.removeFromParent()
         
         if playerTurn == true {
+            
+            addChild(attack)
+            attack.BeginAttack {
+                self.attack.removeFromParent()
+                self.isUserInteractionEnabled = true
+            }
+            
             enemyHP.decreaseHP()
             playerTurn = false
+//            defenseIcon.alpha = 1
         }
         else {
+            
+            addChild(damage)
+            damage.BeginDamage {
+                self.damage.removeFromParent()
+                self.isUserInteractionEnabled = true
+            }
+            
             player.dodge()
             playerTurn = true
-        }
-        
-        addChild(attack)
-        attack.BeginAttack {
-            self.attack.removeFromParent()
-            self.isUserInteractionEnabled = true
+//            attackIcon.alpha = 1
         }
         
         popupflag = "false"
-        
-
-        
     }
     
     func handleAnswerWrong() {
@@ -131,18 +181,26 @@ extension GameScene: PopupDelegate {
         popupframe.removeFromParent()
 
         if playerTurn == true {
+            addChild(attack)
+            attack.BeginAttack {
+                self.attack.removeFromParent()
+                self.isUserInteractionEnabled = true
+            }
+            
             enemy.dodge()
             playerTurn = false
+//            defenseIcon.alpha = 1
         }
         else {
+            addChild(damage)
+            damage.BeginDamage {
+                self.damage.removeFromParent()
+                self.isUserInteractionEnabled = true
+            }
+            
             playerHP.decreaseHP()
             playerTurn = true
-        }
-        
-        addChild(attack)
-        attack.BeginAttack {
-            self.attack.removeFromParent()
-            self.isUserInteractionEnabled = true
+//            attackIcon.alpha = 1
         }
 
         popupflag = "false"

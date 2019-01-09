@@ -16,7 +16,11 @@ class PlayerHP: SKNode {
     var currentHP: Int = 0
     var duration: Double = 0.2
     
-    init(maxHP: Int) {
+    private var onEmptyHP: (()->())!
+    
+    init(maxHP: Int, onEmptyHP: @escaping ()->() ) {
+        
+        self.onEmptyHP = onEmptyHP
         
         currentHP = maxHP
         
@@ -56,7 +60,7 @@ class PlayerHP: SKNode {
             
             arrHP[currentHP -  1].run(decrease)
             
-            print("GAME OVER")
+            onEmptyHP()
         }
         
     }
