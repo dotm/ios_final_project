@@ -23,9 +23,7 @@ class GameScene: SKScene {
     let defenseIcon = DefenseIcon(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY))
     
     var playerTurn: Bool = true
-    
-    private var timerBar: SKSpriteNode?
-    
+
     private var popupframe: PopupFrame?
     
     private var popupflag: String = "false"
@@ -65,7 +63,7 @@ class GameScene: SKScene {
         self.enemyHP = enemyHP
         
         playerHP.position = CGPoint(x: UIScreen.main.bounds.minX + 60, y: UIScreen.main.bounds.maxY - 70)
-        enemyHP.position = CGPoint(x: UIScreen.main.bounds.maxX - 360, y: UIScreen.main.bounds.maxY - 70)
+        enemyHP.position = CGPoint(x: UIScreen.main.bounds.maxX - 300, y: UIScreen.main.bounds.maxY - 70)
         
         let background = SKSpriteNode(imageNamed: "background")
         background.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
@@ -108,13 +106,6 @@ class GameScene: SKScene {
         {
             let location = touch.location(in: self)
             
-            let timerBar = TimerBar(position: CGPoint(x: UIScreen.main.bounds.midX - 200, y: 30), duration: 5) {
-                self.handleAnswerWrong()
-//                print("Time Out")
-            }
-            
-            self.timerBar = timerBar
-            
             if popupflag == "false" {
                 guard attackIcon.contains(location) || defenseIcon.contains(location) else {return}
                 
@@ -128,6 +119,12 @@ class GameScene: SKScene {
                 }
                 
                 addChild(layer)
+                
+                let timerBar = TimerBar(position: CGPoint(x: UIScreen.main.bounds.midX - 200, y: 30), duration: 5) {
+                    self.handleAnswerWrong()
+                    //                print("Time Out")
+                }
+                timerBar.name = "timer"
                 addChild(timerBar)
                 timerBar.changeSize()
                 
@@ -159,8 +156,8 @@ extension GameScene: PopupDelegate {
     func handleAnswerCorrect() {
         isUserInteractionEnabled = false
         
+        self.childNode(withName: "timer")?.removeFromParent()
         layer.removeFromParent()
-        timerBar!.removeFromParent()
         popupframe?.removeFromParent()
         
         if playerTurn == true {
@@ -196,8 +193,8 @@ extension GameScene: PopupDelegate {
         
         isUserInteractionEnabled = false
 
+        self.childNode(withName: "timer")?.removeFromParent()
         layer.removeFromParent()
-        timerBar!.removeFromParent()
         popupframe?.removeFromParent()
 
         if playerTurn == true {
