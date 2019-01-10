@@ -24,6 +24,8 @@ class GameScene: SKScene {
     
     var playerTurn: Bool = true
     
+    private var timerBar: SKSpriteNode?
+    
     private var popupframe: PopupFrame?
     
     private var popupflag: String = "false"
@@ -106,6 +108,12 @@ class GameScene: SKScene {
         {
             let location = touch.location(in: self)
             
+            let timerBar = TimerBar(position: CGPoint(x: UIScreen.main.bounds.midX - 200, y: 30), duration: 5) {
+                self.handleAnswerWrong()
+//                print("Time Out")
+            }
+            
+            self.timerBar = timerBar
             
             if popupflag == "false" {
                 guard attackIcon.contains(location) || defenseIcon.contains(location) else {return}
@@ -120,6 +128,8 @@ class GameScene: SKScene {
                 }
                 
                 addChild(layer)
+                addChild(timerBar)
+                timerBar.changeSize()
                 
                 self.popupframe = PopupFrame(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY), gameDelegate: self)
                 addChild(popupframe!)
@@ -150,6 +160,7 @@ extension GameScene: PopupDelegate {
         isUserInteractionEnabled = false
         
         layer.removeFromParent()
+        timerBar!.removeFromParent()
         popupframe?.removeFromParent()
         
         if playerTurn == true {
@@ -186,6 +197,7 @@ extension GameScene: PopupDelegate {
         isUserInteractionEnabled = false
 
         layer.removeFromParent()
+        timerBar!.removeFromParent()
         popupframe?.removeFromParent()
 
         if playerTurn == true {
