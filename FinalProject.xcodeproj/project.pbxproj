@@ -123,8 +123,26 @@
 				2515616E21DDF0A7008294FE /* Player.swift */,
 				2515617021DDF47B008294FE /* Enemy.swift */,
 				25ED1BF821DE140600FB2CD4 /* Attack.swift */,
+				255EF53121E59F4E0098FFD9 /* Damage.swift */,
 			);
 			path = "Character & Assets";
+			sourceTree = "<group>";
+		};
+		25AE54EF21E71A2D005C4F1C /* Icon */ = {
+			isa = PBXGroup;
+			children = (
+				255EF52D21E59B240098FFD9 /* AttackIcon.swift */,
+				255EF52F21E59B340098FFD9 /* DefenseIcon.swift */,
+			);
+			path = Icon;
+			sourceTree = "<group>";
+		};
+		25AE54F021E71A7D005C4F1C /* Timer Bar */ = {
+			isa = PBXGroup;
+			children = (
+				25AE54ED21E6F019005C4F1C /* TimerBar.swift */,
+			);
+			path = "Timer Bar";
 			sourceTree = "<group>";
 		};
 		376E6D8621DC736E005B830E = {
@@ -149,14 +167,12 @@
 		376E6D9121DC736E005B830E /* FinalProject */ = {
 			isa = PBXGroup;
 			children = (
+				25AE54F021E71A7D005C4F1C /* Timer Bar */,
+				25AE54EF21E71A2D005C4F1C /* Icon */,
 				255EF52C21E596750098FFD9 /* Character & Assets */,
 				253144D021E43F9E00629058 /* HP Bar */,
 				252CFC3F21DF1F9800BA7C5A /* QuizPopup */,
 				376E6D9221DC736E005B830E /* AppDelegate.swift */,
-				25AE54ED21E6F019005C4F1C /* TimerBar.swift */,
-				255EF53121E59F4E0098FFD9 /* Damage.swift */,
-				255EF52D21E59B240098FFD9 /* AttackIcon.swift */,
-				255EF52F21E59B340098FFD9 /* DefenseIcon.swift */,
 				37391D3721E1F59900AE59E0 /* BackgroundMusicPlayer.swift */,
 				376E6D9821DC736E005B830E /* GameScene.swift */,
 				376E6D9A21DC736E005B830E /* GameViewController.swift */,
