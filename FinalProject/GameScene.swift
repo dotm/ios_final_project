@@ -103,7 +103,7 @@ class GameScene: SKScene {
                 
                 addChild(layer)
                 
-                let timerBar = TimerBar(position: CGPoint(x: UIScreen.main.bounds.midX - 200, y: 30), duration: 5) {
+                let timerBar = TimerBar(position: CGPoint(x: UIScreen.main.bounds.midX, y: 30), duration: 5) {
                     self.handleAnswerWrong()
                 }
                 timerBar.name = "timer"
