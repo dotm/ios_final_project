@@ -19,7 +19,7 @@ class PopupFrame: SKNode {
         self.position = position
         self.addChild(texture)
         // create instance shapeSquare
-        quizBox = ColorPopupQuiz()
+        quizBox = ColorPopupQuiz(size: texture.size)
         quizBox?.gameDelegate = gameDelegate
         // insert shape square to popupframe node
         self.addChild(quizBox!)
