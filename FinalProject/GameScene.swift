@@ -14,8 +14,8 @@ fileprivate let layer = SKSpriteNode(color: UIColor(white: 0, alpha: 0.5), size:
 class GameScene: SKScene {
     
     
-    let player = Player(position: CGPoint(x: 150, y: 120))
-    let enemy = Enemy(position: CGPoint(x: 600, y: 150))
+    let playerNode = PlayerNode(position: CGPoint(x: 150, y: 120))
+    let enemyNode = EnemyNode(position: CGPoint(x: 600, y: 150))
     let attack = Attack(position: CGPoint(x: 600, y: 150))
     let damage = Damage(position: CGPoint(x: 150, y: 120))
     
@@ -69,8 +69,8 @@ class GameScene: SKScene {
         background.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
         
         addChild(background)
-        addChild(player)
-        addChild(enemy)
+        addChild(playerNode)
+        addChild(enemyNode)
         
         addChild(playerHP)
         addChild(enemyHP)
@@ -86,7 +86,7 @@ class GameScene: SKScene {
         }
 
         
-        player.beginAnimation(state: .walk)
+        playerNode.beginAnimation(state: .walk)
         
     }
 
@@ -105,7 +105,6 @@ class GameScene: SKScene {
                 
                 let timerBar = TimerBar(position: CGPoint(x: UIScreen.main.bounds.midX - 200, y: 30), duration: 5) {
                     self.handleAnswerWrong()
-                    //                print("Time Out")
                 }
                 timerBar.name = "timer"
                 addChild(timerBar)
@@ -182,7 +181,7 @@ extension GameScene: PopupDelegate {
                 self.isUserInteractionEnabled = true
             }
             
-            player.dodge()
+            playerNode.dodge()
             playerTurn = true
         }
         
@@ -202,7 +201,7 @@ extension GameScene: PopupDelegate {
                 self.isUserInteractionEnabled = true
             }
             
-            enemy.dodge()
+            enemyNode.dodge()
             playerTurn = false
         }
         else {

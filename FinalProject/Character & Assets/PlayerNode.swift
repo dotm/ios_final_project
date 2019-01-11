@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class Player: SKSpriteNode {
+class PlayerNode: SKSpriteNode {
     
     enum State{
         case walk, jump
@@ -34,7 +34,8 @@ class Player: SKSpriteNode {
     }
     
     func beginAnimation(state: State) {
-        self.removeAction(forKey: "player")
+        let PLAYER = "player"
+        self.removeAction(forKey: PLAYER)
         let textureAtlas = SKTextureAtlas(named: "penguin")
         
         switch state {
@@ -42,13 +43,13 @@ class Player: SKSpriteNode {
             let frames = ["penguin_jump01","penguin_jump02","penguin_jump03"].map{textureAtlas.textureNamed($0)}
             let animate = SKAction.animate(with: frames, timePerFrame: 0.3)
             let forever = SKAction.repeat(animate, count: 1)
-            self.run(forever, withKey: "player")
+            self.run(forever, withKey: PLAYER)
             
         case .walk:
             let frames = ["penguin_walk01","penguin_walk02","penguin_walk03","penguin_walk04"].map{textureAtlas.textureNamed($0)}
             let animate = SKAction.animate(with: frames, timePerFrame: 0.2)
             let forever = SKAction.repeatForever(animate)
-            self.run(forever, withKey: "player")
+            self.run(forever, withKey: PLAYER)
         }
     }
     
