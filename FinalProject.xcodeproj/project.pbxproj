@@ -13,6 +13,8 @@
 		252CFC4521DF1F9800BA7C5A /* QnA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252CFC4121DF1F9800BA7C5A /* QnA.swift */; };
 		252CFC4621DF1F9800BA7C5A /* ShapeQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252CFC4221DF1F9800BA7C5A /* ShapeQuestion.swift */; };
 		252CFC4721DF1F9800BA7C5A /* PopupQuiz.sks in Resources */ = {isa = PBXBuildFile; fileRef = 252CFC4321DF1F9800BA7C5A /* PopupQuiz.sks */; };
+		254A8FA221E83956005974DA /* EnemyStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254A8FA121E83956005974DA /* EnemyStruct.swift */; };
+		254A8FA421E83965005974DA /* StageStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254A8FA321E83965005974DA /* StageStruct.swift */; };
 		255EF52E21E59B240098FFD9 /* AttackIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255EF52D21E59B240098FFD9 /* AttackIcon.swift */; };
 		255EF53021E59B340098FFD9 /* DefenseIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255EF52F21E59B340098FFD9 /* DefenseIcon.swift */; };
 		255EF53221E59F4E0098FFD9 /* Damage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255EF53121E59F4E0098FFD9 /* Damage.swift */; };
@@ -51,6 +53,8 @@
 		252CFC4121DF1F9800BA7C5A /* QnA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QnA.swift; sourceTree = "<group>"; };
 		252CFC4221DF1F9800BA7C5A /* ShapeQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeQuestion.swift; sourceTree = "<group>"; };
 		252CFC4321DF1F9800BA7C5A /* PopupQuiz.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PopupQuiz.sks; sourceTree = "<group>"; };
+		254A8FA121E83956005974DA /* EnemyStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyStruct.swift; sourceTree = "<group>"; };
+		254A8FA321E83965005974DA /* StageStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageStruct.swift; sourceTree = "<group>"; };
 		255EF52D21E59B240098FFD9 /* AttackIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackIcon.swift; sourceTree = "<group>"; };
 		255EF52F21E59B340098FFD9 /* DefenseIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefenseIcon.swift; sourceTree = "<group>"; };
 		255EF53121E59F4E0098FFD9 /* Damage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Damage.swift; sourceTree = "<group>"; };
@@ -117,6 +121,15 @@
 			path = "HP Bar";
 			sourceTree = "<group>";
 		};
+		254A8FA021E838C4005974DA /* Struct */ = {
+			isa = PBXGroup;
+			children = (
+				254A8FA121E83956005974DA /* EnemyStruct.swift */,
+				254A8FA321E83965005974DA /* StageStruct.swift */,
+			);
+			path = Struct;
+			sourceTree = "<group>";
+		};
 		255EF52C21E596750098FFD9 /* Character & Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +180,7 @@
 		376E6D9121DC736E005B830E /* FinalProject */ = {
 			isa = PBXGroup;
 			children = (
+				254A8FA021E838C4005974DA /* Struct */,
 				25AE54F021E71A7D005C4F1C /* Timer Bar */,
 				25AE54EF21E71A2D005C4F1C /* Icon */,
 				255EF52C21E596750098FFD9 /* Character & Assets */,
@@ -305,6 +319,7 @@
 				252CFC4521DF1F9800BA7C5A /* QnA.swift in Sources */,
 				376E6D9B21DC736E005B830E /* GameViewController.swift in Sources */,
 				3708912C21E2F7150065EC92 /* PopupDelegate.swift in Sources */,
+				254A8FA421E83965005974DA /* StageStruct.swift in Sources */,
 				2515617121DDF47B008294FE /* EnemyNode.swift in Sources */,
 				259A8FA821E306E800CFA23A /* PopupFrame.swift in Sources */,
 				37391D3821E1F59900AE59E0 /* BackgroundMusicPlayer.swift in Sources */,
@@ -315,6 +330,7 @@
 				252CFC4421DF1F9800BA7C5A /* DummyPopupQuiz.swift in Sources */,
 				25AE54EE21E6F019005C4F1C /* TimerBar.swift in Sources */,
 				255EF53021E59B340098FFD9 /* DefenseIcon.swift in Sources */,
+				254A8FA221E83956005974DA /* EnemyStruct.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,6 +17,7 @@ class PopupFrame: SKNode {
     init(position: CGPoint, gameDelegate: PopupDelegate) {
         super.init()
         self.position = position
+        texture.size = CGSize(width: 600, height: 250)
         self.addChild(texture)
         // create instance shapeSquare
         quizBox = ColorPopupQuiz()
@@ -25,8 +26,8 @@ class PopupFrame: SKNode {
         self.addChild(quizBox!)
         // adding interactions for frame
         // setting z location node
-        texture.zPosition = 2
-        quizBox!.zPosition = 1
+        texture.zPosition = 1
+        quizBox!.zPosition = 2
     }
     
     required init?(coder aDecoder: NSCoder) {

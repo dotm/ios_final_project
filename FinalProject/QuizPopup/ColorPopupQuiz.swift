@@ -23,7 +23,7 @@ class ColorPopupQuiz: SKNode {
     
     override init() {
         //generate frame
-        frameQuestions = SKSpriteNode(color: .white, size: texture.size)
+        frameQuestions = SKSpriteNode(color: .clear, size: texture.size)
         
         super.init()
         addChild(frameQuestions!)

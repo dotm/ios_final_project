@@ -21,16 +21,6 @@ class PlayerNode: SKSpriteNode {
         super.init(texture: texture, color: .clear, size: texture.size())
         self.position = position
         
-//        self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
-//        self.physicsBody?.isDynamic = true
-//        self.physicsBody?.affectedByGravity = true
-//        self.physicsBody?.mass = 0.5
-//        self.physicsBody?.usesPreciseCollisionDetection = true
-//
-//        self.physicsBody?.categoryBitMask = PlayerCategory
-//        self.physicsBody?.collisionBitMask = FloorCategory
-//        self.physicsBody?.contactTestBitMask = FloorCategory
-        
     }
     
     func beginAnimation(state: State) {
