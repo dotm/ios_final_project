@@ -89,16 +89,6 @@ class GameScene: SKScene {
         player.beginAnimation(state: .walk)
         
     }
-    
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        isUserInteractionEnabled = false
-//        addChild(attack)
-//        attack.BeginAttack {
-//            self.attack.removeFromParent()
-//            self.isUserInteractionEnabled = true
-//        }
-//    }
-    
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
@@ -109,14 +99,7 @@ class GameScene: SKScene {
             if popupflag == "false" {
                 guard attackIcon.contains(location) || defenseIcon.contains(location) else {return}
                 
-                if playerTurn == true {
-                    attackIcon.alpha = 0
-                    defenseIcon.alpha = 1
-                }
-                else {
-                    attackIcon.alpha = 1
-                    defenseIcon.alpha = 0
-                }
+                displayIcon()
                 
                 addChild(layer)
                 
@@ -128,8 +111,7 @@ class GameScene: SKScene {
                 addChild(timerBar)
                 timerBar.changeSize()
                 
-                self.popupframe = PopupFrame(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY), gameDelegate: self)
-                addChild(popupframe!)
+                showPopUpQuiz()
                 
                 popupflag = "true"
             } else {
@@ -139,6 +121,27 @@ class GameScene: SKScene {
             
         }
 
+    }
+    
+    func showPopUpQuiz() {
+        self.popupframe = PopupFrame(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY), gameDelegate: self)
+        addChild(popupframe!)
+    }
+    
+    func hidePopUpQuiz() {
+        layer.removeFromParent()
+        popupframe?.removeFromParent()
+    }
+    
+    func displayIcon() {
+        if playerTurn == true {
+            attackIcon.alpha = 0
+            defenseIcon.alpha = 1
+        }
+        else {
+            attackIcon.alpha = 1
+            defenseIcon.alpha = 0
+        }
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -154,11 +157,11 @@ class GameScene: SKScene {
 
 extension GameScene: PopupDelegate {
     func handleAnswerCorrect() {
+        
         isUserInteractionEnabled = false
         
         self.childNode(withName: "timer")?.removeFromParent()
-        layer.removeFromParent()
-        popupframe?.removeFromParent()
+        hidePopUpQuiz()
         
         if playerTurn == true {
             
@@ -170,7 +173,6 @@ extension GameScene: PopupDelegate {
             
             enemyHP.decreaseHP()
             playerTurn = false
-//            defenseIcon.alpha = 1
         }
         else {
             
@@ -182,20 +184,16 @@ extension GameScene: PopupDelegate {
             
             player.dodge()
             playerTurn = true
-//            attackIcon.alpha = 1
         }
         
         popupflag = "false"
     }
     
     func handleAnswerWrong() {
-//        fatalError("Menunggu animasi avoid")
-        
         isUserInteractionEnabled = false
 
         self.childNode(withName: "timer")?.removeFromParent()
-        layer.removeFromParent()
-        popupframe?.removeFromParent()
+        hidePopUpQuiz()
 
         if playerTurn == true {
             addChild(attack)
@@ -206,7 +204,6 @@ extension GameScene: PopupDelegate {
             
             enemy.dodge()
             playerTurn = false
-//            defenseIcon.alpha = 1
         }
         else {
             addChild(damage)
@@ -217,7 +214,6 @@ extension GameScene: PopupDelegate {
             
             playerHP.decreaseHP()
             playerTurn = true
-//            attackIcon.alpha = 1
         }
 
         popupflag = "false"
