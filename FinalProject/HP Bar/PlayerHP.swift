@@ -11,7 +11,7 @@ import SpriteKit
 
 class PlayerHP: SKNode {
     
-    var arrHP : [SKShapeNode] = []
+    var arrHP : [SKSpriteNode] = []
     
     var currentHP: Int = 0
     var duration: Double = 0.2
@@ -33,11 +33,11 @@ class PlayerHP: SKNode {
         
         for i in 0..<maxHP {
             
-            let health = SKShapeNode(rectOf: CGSize(width: width, height: height))
+            let health = SKSpriteNode(imageNamed: "health_player")
             
-            health.fillColor = .green
             arrHP.append(health)
             
+            health.size = CGSize(width: width, height: height)
             health.position = CGPoint(x: CGFloat(i) * width, y: 30)
             
             addChild(health)

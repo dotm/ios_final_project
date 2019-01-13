@@ -11,17 +11,39 @@ import SpriteKit
 
 class TimerBar: SKSpriteNode {
     
+    private var timerFront: SKSpriteNode?
+    
     private var complete: (()->())!
     private var duration: Double
     
     init(position: CGPoint, duration: Double, complete: @escaping ()->()) {
         
+        let size = CGSize(width: 400, height: 25)
+        let anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        
         self.complete = complete
         self.duration = duration
         
-        super.init(texture: nil, color: .green, size: CGSize(width: 400, height: 25))
+        super.init(texture: nil, color: .clear, size: size)
         self.position = position
-        self.anchorPoint = CGPoint(x: 0.0, y: 0.5)
+        self.anchorPoint = anchorPoint
+        
+        let timerBase = SKSpriteNode(imageNamed: "time_baseBar")
+        let timerFront = SKSpriteNode(imageNamed: "time_frontBar")
+        
+        self.timerFront = timerFront
+        
+        timerBase.size = size
+//        timerBase.position = position
+        timerBase.anchorPoint = anchorPoint
+        
+        timerFront.anchorPoint = CGPoint(x: 0.0, y: 0.5)
+        timerFront.size = size
+        timerFront.position.x = -(self.size.width/2)
+        
+        addChild(timerBase)
+        addChild(timerFront)
+        
     }
     
     func changeSize() {
@@ -32,7 +54,7 @@ class TimerBar: SKSpriteNode {
         
         let timerAnimation = SKAction.group([change,changeColor])
         
-        self.run(timerAnimation) {
+        timerFront!.run(timerAnimation) {
             self.complete()
         }
     }

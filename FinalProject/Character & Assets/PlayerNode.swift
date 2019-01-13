@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class Player: SKSpriteNode {
+class PlayerNode: SKSpriteNode {
     
     enum State{
         case walk, jump
@@ -21,20 +21,11 @@ class Player: SKSpriteNode {
         super.init(texture: texture, color: .clear, size: texture.size())
         self.position = position
         
-//        self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
-//        self.physicsBody?.isDynamic = true
-//        self.physicsBody?.affectedByGravity = true
-//        self.physicsBody?.mass = 0.5
-//        self.physicsBody?.usesPreciseCollisionDetection = true
-//
-//        self.physicsBody?.categoryBitMask = PlayerCategory
-//        self.physicsBody?.collisionBitMask = FloorCategory
-//        self.physicsBody?.contactTestBitMask = FloorCategory
-        
     }
     
     func beginAnimation(state: State) {
-        self.removeAction(forKey: "player")
+        let PLAYER = "player"
+        self.removeAction(forKey: PLAYER)
         let textureAtlas = SKTextureAtlas(named: "penguin")
         
         switch state {
@@ -42,13 +33,13 @@ class Player: SKSpriteNode {
             let frames = ["penguin_jump01","penguin_jump02","penguin_jump03"].map{textureAtlas.textureNamed($0)}
             let animate = SKAction.animate(with: frames, timePerFrame: 0.3)
             let forever = SKAction.repeat(animate, count: 1)
-            self.run(forever, withKey: "player")
+            self.run(forever, withKey: PLAYER)
             
         case .walk:
             let frames = ["penguin_walk01","penguin_walk02","penguin_walk03","penguin_walk04"].map{textureAtlas.textureNamed($0)}
             let animate = SKAction.animate(with: frames, timePerFrame: 0.2)
             let forever = SKAction.repeatForever(animate)
-            self.run(forever, withKey: "player")
+            self.run(forever, withKey: PLAYER)
         }
     }
     

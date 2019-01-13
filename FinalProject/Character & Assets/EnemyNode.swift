@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class Enemy: SKSpriteNode {
+class EnemyNode: SKSpriteNode {
     
     init(position: CGPoint) {
         let texture = SKTexture(imageNamed: "Prinny")

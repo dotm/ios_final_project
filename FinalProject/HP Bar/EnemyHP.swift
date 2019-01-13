@@ -14,8 +14,7 @@ fileprivate let barWidth: CGFloat = 300
 
 class EnemyHP: SKNode {
     
-    private let layer = SKSpriteNode(color: UIColor(white: 0, alpha: 0.5), size: UIScreen.main.bounds.size)
-    var arrHP : [SKShapeNode] = []
+    var arrHP : [SKSpriteNode] = []
     
     var currentHP: Int = 0
     var duration: Double = 0.2
@@ -38,11 +37,11 @@ class EnemyHP: SKNode {
         
         for i in 0..<maxHP {
             
-            let health = SKShapeNode(rectOf: CGSize(width: width, height: height))
+            let health = SKSpriteNode(imageNamed: "health_boss")
             
-            health.fillColor = .red
             arrHP.append(health)
             
+            health.size = CGSize(width: width, height: height)
             health.position = CGPoint(x: CGFloat(i) * width, y: 30)
             
             addChild(health)
