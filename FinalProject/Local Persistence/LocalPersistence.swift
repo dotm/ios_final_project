@@ -9,11 +9,6 @@
 import Foundation
 import CoreData
 
-enum QuizCategory: String {
-    case color
-    case shape
-}
-
 enum LocalPersistence {
     static let PERSISTENT_CONTAINER_NAME = "DataModel"
     
