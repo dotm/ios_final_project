@@ -15,7 +15,7 @@ class GameScene: SKScene {
     
     
     let playerNode = PlayerNode(position: CGPoint(x: 150, y: 120))
-    let enemyNode = EnemyNode(position: CGPoint(x: 600, y: 150))
+    let enemyNode = EnemyNode(position: CGPoint(x: 650, y: 150))
     let attack = Attack(position: CGPoint(x: 600, y: 150))
     let damage = Damage(position: CGPoint(x: 150, y: 120))
     
@@ -163,25 +163,35 @@ extension GameScene: PopupDelegate {
         hidePopUpQuiz()
         
         if playerTurn == true {
-            
+            playerNode.beginAnimation(state: .attack)
             addChild(attack)
             attack.BeginAttack {
                 self.attack.removeFromParent()
+                self.enemyNode.beginAnimation(state: .stagger)
                 self.isUserInteractionEnabled = true
             }
             
             enemyHP.decreaseHP()
+            Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
+                self.enemyNode.beginAnimation(state: .walk)
+                self.playerNode.beginAnimation(state: .walk)
+            })
             playerTurn = false
         }
         else {
             
+            playerNode.beginAnimation(state: .defense)
+            enemyNode.beginAnimation(state: .attack)
             addChild(damage)
             damage.BeginDamage {
                 self.damage.removeFromParent()
                 self.isUserInteractionEnabled = true
             }
             
-            playerNode.dodge()
+            Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
+                self.playerNode.beginAnimation(state: .walk)
+                self.enemyNode.beginAnimation(state: .walk)
+            })
             playerTurn = true
         }
         
@@ -196,22 +206,34 @@ extension GameScene: PopupDelegate {
 
         if playerTurn == true {
             addChild(attack)
+            playerNode.beginAnimation(state: .attack)
+            self.enemyNode.beginAnimation(state: .defense)
             attack.BeginAttack {
                 self.attack.removeFromParent()
                 self.isUserInteractionEnabled = true
             }
             
-            enemyNode.dodge()
+            Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
+                self.playerNode.beginAnimation(state: .walk)
+                self.enemyNode.beginAnimation(state: .walk)
+            })
             playerTurn = false
         }
         else {
             addChild(damage)
+            enemyNode.beginAnimation(state: .attack)
             damage.BeginDamage {
                 self.damage.removeFromParent()
+                self.playerNode.beginAnimation(state: .stagger)
                 self.isUserInteractionEnabled = true
             }
             
             playerHP.decreaseHP()
+            
+            Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
+                self.playerNode.beginAnimation(state: .walk)
+                self.enemyNode.beginAnimation(state: .walk)
+            })
             playerTurn = true
         }
 

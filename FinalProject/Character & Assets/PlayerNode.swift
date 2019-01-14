@@ -12,11 +12,11 @@ import SpriteKit
 class PlayerNode: SKSpriteNode {
     
     enum State{
-        case walk, jump
+        case walk, attack, defense, stagger
     }
     
     init(position: CGPoint) {
-        let texture = SKTexture(imageNamed: "penguin_walk01")
+        let texture = SKTexture(imageNamed: "idle_penguin_01")
         
         super.init(texture: texture, color: .clear, size: texture.size())
         self.position = position
@@ -29,27 +29,30 @@ class PlayerNode: SKSpriteNode {
         let textureAtlas = SKTextureAtlas(named: "penguin")
         
         switch state {
-        case .jump:
-            let frames = ["penguin_jump01","penguin_jump02","penguin_jump03"].map{textureAtlas.textureNamed($0)}
-            let animate = SKAction.animate(with: frames, timePerFrame: 0.3)
+        case .attack:
+            let frames = ["attack_penguin"].map{textureAtlas.textureNamed($0)}
+            let animate = SKAction.animate(with: frames, timePerFrame: 1)
             let forever = SKAction.repeat(animate, count: 1)
             self.run(forever, withKey: PLAYER)
             
         case .walk:
-            let frames = ["penguin_walk01","penguin_walk02","penguin_walk03","penguin_walk04"].map{textureAtlas.textureNamed($0)}
+            let frames = ["idle_penguin_1","idle_penguin_2"].map{textureAtlas.textureNamed($0)}
             let animate = SKAction.animate(with: frames, timePerFrame: 0.2)
             let forever = SKAction.repeatForever(animate)
             self.run(forever, withKey: PLAYER)
+            
+        case .defense:
+            let frames = ["defend_penguin"].map{textureAtlas.textureNamed($0)}
+            let animate = SKAction.animate(with: frames, timePerFrame: 1)
+            let forever = SKAction.repeat(animate, count: 1)
+            self.run(forever, withKey: PLAYER)
+            
+        case .stagger:
+            let frames = ["stagger_penguin"].map{textureAtlas.textureNamed($0)}
+            let animate = SKAction.animate(with: frames, timePerFrame: 1)
+            let forever = SKAction.repeat(animate, count: 1)
+            self.run(forever, withKey: PLAYER)
         }
-    }
-    
-    func dodge(){
-        
-        let moveUp = SKAction.moveBy(x: -150, y: -150, duration: 0.2)
-        let moveBack = SKAction.move(to: position, duration: 0.2)
-        let dodgeAnimation = SKAction.sequence([moveUp,moveBack])
-        
-        self.run(dodgeAnimation)
     }
     
     required init?(coder aDecoder: NSCoder) {

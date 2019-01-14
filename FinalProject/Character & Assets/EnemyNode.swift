@@ -11,13 +11,52 @@ import SpriteKit
 
 class EnemyNode: SKSpriteNode {
     
+    enum State{
+        case walk, attack, defense, stagger
+    }
+    
     init(position: CGPoint) {
-        let texture = SKTexture(imageNamed: "Prinny")
+        let texture = SKTexture(imageNamed: "idle_mob_01")
         
-        super.init(texture: texture, color: .clear, size: texture.size())
+        let height = CGFloat(200)
+        let rescale = height/texture.size().height
+        let width = texture.size().width * rescale
+        let size = CGSize(width: width, height: height)
+        super.init(texture: texture, color: .clear, size: size)
         self.position = position
         
+    }
+    
+    func beginAnimation(state: State) {
+        let PLAYER = "player"
+        self.removeAction(forKey: PLAYER)
+        let textureAtlas = SKTextureAtlas(named: "Mob")
         
+        switch state {
+        case .attack:
+            let frames = ["attack_mob_01"].map{textureAtlas.textureNamed($0)}
+            let animate = SKAction.animate(with: frames, timePerFrame: 1)
+            let forever = SKAction.repeat(animate, count: 1)
+            self.run(forever, withKey: PLAYER)
+            
+        case .walk:
+            let frames = ["idle_mob_01"].map{textureAtlas.textureNamed($0)}
+            let animate = SKAction.animate(with: frames, timePerFrame: 0.2)
+            let forever = SKAction.repeatForever(animate)
+            self.run(forever, withKey: PLAYER)
+            
+        case .defense:
+            let frames = ["defense_mob_01"].map{textureAtlas.textureNamed($0)}
+            let animate = SKAction.animate(with: frames, timePerFrame: 1)
+            let forever = SKAction.repeat(animate, count: 1)
+            self.run(forever, withKey: PLAYER)
+            
+        case .stagger:
+            let frames = ["stagger_mob_01"].map{textureAtlas.textureNamed($0)}
+            let animate = SKAction.animate(with: frames, timePerFrame: 1)
+            let forever = SKAction.repeat(animate, count: 1)
+            self.run(forever, withKey: PLAYER)
+        }
     }
     
     func dodge(){
