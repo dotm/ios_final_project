@@ -27,6 +27,9 @@
 		3708912C21E2F7150065EC92 /* PopupDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3708912B21E2F7150065EC92 /* PopupDelegate.swift */; };
 		37255D0F21E203C400E64AA7 /* bgm in Resources */ = {isa = PBXBuildFile; fileRef = 37255D0E21E203C400E64AA7 /* bgm */; };
 		37391D3821E1F59900AE59E0 /* BackgroundMusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37391D3721E1F59900AE59E0 /* BackgroundMusicPlayer.swift */; };
+		373A51C721EADE69002EDFC1 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 373A51C521EADE69002EDFC1 /* DataModel.xcdatamodeld */; };
+		373A51CA21EAE165002EDFC1 /* LocalPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373A51C921EAE165002EDFC1 /* LocalPersistence.swift */; };
+		375BB4CB21EB51FC000969D9 /* QuizCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375BB4CA21EB51FC000969D9 /* QuizCategory.swift */; };
 		376E6D9321DC736E005B830E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376E6D9221DC736E005B830E /* AppDelegate.swift */; };
 		376E6D9921DC736E005B830E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376E6D9821DC736E005B830E /* GameScene.swift */; };
 		376E6D9B21DC736E005B830E /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376E6D9A21DC736E005B830E /* GameViewController.swift */; };
@@ -67,6 +70,9 @@
 		3708912B21E2F7150065EC92 /* PopupDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupDelegate.swift; sourceTree = "<group>"; };
 		37255D0E21E203C400E64AA7 /* bgm */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bgm; sourceTree = "<group>"; };
 		37391D3721E1F59900AE59E0 /* BackgroundMusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundMusicPlayer.swift; sourceTree = "<group>"; };
+		373A51C621EADE69002EDFC1 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		373A51C921EAE165002EDFC1 /* LocalPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPersistence.swift; sourceTree = "<group>"; };
+		375BB4CA21EB51FC000969D9 /* QuizCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCategory.swift; sourceTree = "<group>"; };
 		376E6D8F21DC736E005B830E /* FinalProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		376E6D9221DC736E005B830E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		376E6D9821DC736E005B830E /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -158,6 +164,15 @@
 			path = "Timer Bar";
 			sourceTree = "<group>";
 		};
+		373A51C821EADE80002EDFC1 /* Local Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				373A51C521EADE69002EDFC1 /* DataModel.xcdatamodeld */,
+				373A51C921EAE165002EDFC1 /* LocalPersistence.swift */,
+			);
+			path = "Local Persistence";
+			sourceTree = "<group>";
+		};
 		376E6D8621DC736E005B830E = {
 			isa = PBXGroup;
 			children = (
@@ -180,6 +195,7 @@
 		376E6D9121DC736E005B830E /* FinalProject */ = {
 			isa = PBXGroup;
 			children = (
+				373A51C821EADE80002EDFC1 /* Local Persistence */,
 				254A8FA021E838C4005974DA /* Struct */,
 				25AE54F021E71A7D005C4F1C /* Timer Bar */,
 				25AE54EF21E71A2D005C4F1C /* Icon */,
@@ -187,6 +203,7 @@
 				253144D021E43F9E00629058 /* HP Bar */,
 				252CFC3F21DF1F9800BA7C5A /* QuizPopup */,
 				376E6D9221DC736E005B830E /* AppDelegate.swift */,
+				375BB4CA21EB51FC000969D9 /* QuizCategory.swift */,
 				37391D3721E1F59900AE59E0 /* BackgroundMusicPlayer.swift */,
 				376E6D9821DC736E005B830E /* GameScene.swift */,
 				376E6D9A21DC736E005B830E /* GameViewController.swift */,
@@ -311,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				376E6D9921DC736E005B830E /* GameScene.swift in Sources */,
+				373A51C721EADE69002EDFC1 /* DataModel.xcdatamodeld in Sources */,
 				3631F36C21E5B6E3004917F4 /* ColorPopupQuiz.swift in Sources */,
 				252CFC4621DF1F9800BA7C5A /* ShapeQuestion.swift in Sources */,
 				259A8FA421E2F6CD00CFA23A /* PlayerHP.swift in Sources */,
@@ -322,12 +340,14 @@
 				254A8FA421E83965005974DA /* StageStruct.swift in Sources */,
 				2515617121DDF47B008294FE /* EnemyNode.swift in Sources */,
 				259A8FA821E306E800CFA23A /* PopupFrame.swift in Sources */,
+				373A51CA21EAE165002EDFC1 /* LocalPersistence.swift in Sources */,
 				37391D3821E1F59900AE59E0 /* BackgroundMusicPlayer.swift in Sources */,
 				25ED1BF921DE140600FB2CD4 /* Attack.swift in Sources */,
 				255EF52E21E59B240098FFD9 /* AttackIcon.swift in Sources */,
 				2515616F21DDF0A7008294FE /* PlayerNode.swift in Sources */,
 				376E6D9321DC736E005B830E /* AppDelegate.swift in Sources */,
 				252CFC4421DF1F9800BA7C5A /* DummyPopupQuiz.swift in Sources */,
+				375BB4CB21EB51FC000969D9 /* QuizCategory.swift in Sources */,
 				25AE54EE21E6F019005C4F1C /* TimerBar.swift in Sources */,
 				255EF53021E59B340098FFD9 /* DefenseIcon.swift in Sources */,
 				254A8FA221E83956005974DA /* EnemyStruct.swift in Sources */,
@@ -597,6 +617,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		373A51C521EADE69002EDFC1 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				373A51C621EADE69002EDFC1 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 373A51C621EADE69002EDFC1 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 376E6D8721DC736E005B830E /* Project object */;
 }
