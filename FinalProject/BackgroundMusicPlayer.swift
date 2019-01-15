@@ -32,7 +32,6 @@ enum BackgroundMusicPlayer {
         } catch {
             print(error.localizedDescription)
         }
-        playMainMenuSong()
     }
     static func playMainMenuSong(){
         fadeOutCurrentSong_andStart(audioPlayer: mainMenu_audioPlayer)

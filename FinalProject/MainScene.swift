@@ -27,13 +27,31 @@ class MainScene: SKScene {
     }
     
     override func sceneDidLoad() {
+        BackgroundMusicPlayer.playMainMenuSong()
         
         //background
-        background.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY+50)
-        background.setScale(0.60)
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        let bgWidth: CGFloat
+        let bgHeight: CGFloat
+        let originalWidth = background.texture!.size().width
+        let originalHeight = background.texture!.size().height
+        
+        //resize item
+        if screenWidth >= screenHeight {
+            bgWidth = screenWidth
+            bgHeight = (originalHeight/originalWidth) * bgWidth
+        } else {
+            bgHeight = screenHeight
+            bgWidth = (originalWidth/originalHeight) * bgHeight
+        }
+        let size = CGSize(width: bgWidth, height: bgHeight)
+        background.size = size
+        background.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+//        background.setScale(0.60)
         
         //play icon button modifier
-        playIcon = PlayIcon(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY))
+        playIcon = PlayIcon(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY - 40))
         playIcon?.setScale(0.56)
         
         //setting icon button modifier
