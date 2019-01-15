@@ -7,3 +7,18 @@
 //
 
 import Foundation
+
+struct Stage {
+    
+    var textureBackground: String
+    var quizCategory: QuizCategory
+    var mobSpawn: Enemy
+    var quizTime: Double
+}
+
+var stage1A = Stage(
+    textureBackground: "background_snow",
+    quizCategory: .color,
+    mobSpawn: mobA,
+    quizTime: 5
+)

@@ -13,9 +13,6 @@ fileprivate let layer = SKSpriteNode(color: UIColor(white: 0, alpha: 0.5), size:
 
 class GameScene: SKScene {
     
-    
-    let playerNode = PlayerNode(position: CGPoint(x: 150, y: 120))
-    let enemyNode = EnemyNode(position: CGPoint(x: 650, y: 150))
     let attack = Attack(position: CGPoint(x: 600, y: 150))
     let damage = Damage(position: CGPoint(x: 150, y: 120))
     
@@ -31,7 +28,25 @@ class GameScene: SKScene {
     private var playerHP: PlayerHP!
     private var enemyHP: EnemyHP!
     
-    override init(size: CGSize) {
+    var stage: Stage!
+    var playerNode: PlayerNode!
+    var enemyNode: EnemyNode!
+    var background: SKSpriteNode!
+    
+    
+    init(size: CGSize, stage: Stage) {
+        self.stage = stage
+        
+        let playerNode = PlayerNode(position: CGPoint(x: UIScreen.main.bounds.minX + (UIScreen.main.bounds.width * 0.15), y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.4)))
+        let enemyNode = EnemyNode(position: CGPoint(x: UIScreen.main.bounds.maxX - (UIScreen.main.bounds.width * 0.25), y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.4)), enemy: stage.mobSpawn) //HEREEE
+        self.playerNode = playerNode
+        self.enemyNode = enemyNode
+        
+        let background = SKSpriteNode(imageNamed: stage.textureBackground) //HERE
+        background.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        background.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+        self.background = background
+        
         super.init(size: size)
     }
     required init?(coder aDecoder: NSCoder) {
@@ -65,9 +80,6 @@ class GameScene: SKScene {
         playerHP.position = CGPoint(x: UIScreen.main.bounds.minX + 60, y: UIScreen.main.bounds.maxY - 70)
         enemyHP.position = CGPoint(x: UIScreen.main.bounds.maxX - 300, y: UIScreen.main.bounds.maxY - 70)
         
-        let background = SKSpriteNode(imageNamed: "background")
-        background.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
-        
         addChild(background)
         addChild(playerNode)
         addChild(enemyNode)
@@ -87,7 +99,9 @@ class GameScene: SKScene {
 
         
         playerNode.beginAnimation(state: .walk)
+        enemyNode.beginAnimation(state: .walk)
         
+        BackgroundMusicPlayer.playBattleSceneSong()
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -103,7 +117,8 @@ class GameScene: SKScene {
                 
                 addChild(layer)
                 
-                let timerBar = TimerBar(position: CGPoint(x: UIScreen.main.bounds.midX, y: 30), duration: 5) {
+                let timerBar = TimerBar(position: CGPoint(x: UIScreen.main.bounds.midX, y: 30), duration: stage.quizTime) //HERE
+                {
                     self.handleAnswerWrong()
                 }
                 timerBar.name = "timer"
@@ -123,7 +138,7 @@ class GameScene: SKScene {
     }
     
     func showPopUpQuiz() {
-        self.popupframe = PopupFrame(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY), gameDelegate: self)
+        self.popupframe = PopupFrame(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY), gameDelegate: self, category: stage.quizCategory)
         addChild(popupframe!)
     }
     
@@ -162,6 +177,9 @@ extension GameScene: PopupDelegate {
         self.childNode(withName: "timer")?.removeFromParent()
         hidePopUpQuiz()
         
+        attackIcon.alpha = 0
+        defenseIcon.alpha = 0
+        
         if playerTurn == true {
             playerNode.beginAnimation(state: .attack)
             addChild(attack)
@@ -175,6 +193,7 @@ extension GameScene: PopupDelegate {
             Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
                 self.enemyNode.beginAnimation(state: .walk)
                 self.playerNode.beginAnimation(state: .walk)
+                self.defenseIcon.alpha = 1
             })
             playerTurn = false
         }
@@ -191,6 +210,8 @@ extension GameScene: PopupDelegate {
             Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
                 self.playerNode.beginAnimation(state: .walk)
                 self.enemyNode.beginAnimation(state: .walk)
+                self.attackIcon.alpha = 1
+                self.isUserInteractionEnabled = true
             })
             playerTurn = true
         }
@@ -203,6 +224,9 @@ extension GameScene: PopupDelegate {
 
         self.childNode(withName: "timer")?.removeFromParent()
         hidePopUpQuiz()
+        
+        attackIcon.alpha = 0
+        defenseIcon.alpha = 0
 
         if playerTurn == true {
             addChild(attack)
@@ -216,6 +240,7 @@ extension GameScene: PopupDelegate {
             Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
                 self.playerNode.beginAnimation(state: .walk)
                 self.enemyNode.beginAnimation(state: .walk)
+                self.defenseIcon.alpha = 1
             })
             playerTurn = false
         }
@@ -233,6 +258,8 @@ extension GameScene: PopupDelegate {
             Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
                 self.playerNode.beginAnimation(state: .walk)
                 self.enemyNode.beginAnimation(state: .walk)
+                self.attackIcon.alpha = 1
+                self.isUserInteractionEnabled = true
             })
             playerTurn = true
         }

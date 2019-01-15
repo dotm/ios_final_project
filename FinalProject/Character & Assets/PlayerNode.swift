@@ -16,9 +16,14 @@ class PlayerNode: SKSpriteNode {
     }
     
     init(position: CGPoint) {
-        let texture = SKTexture(imageNamed: "idle_penguin_01")
+        let texture = SKTexture(imageNamed: "penguin_idle_1")
         
-        super.init(texture: texture, color: .clear, size: texture.size())
+        let height = CGFloat(200)
+        let rescale = height/texture.size().height
+        let width = texture.size().width * rescale
+        let size = CGSize(width: width, height: height)
+        
+        super.init(texture: texture, color: .clear, size: size)
         self.position = position
         
     }
@@ -30,25 +35,25 @@ class PlayerNode: SKSpriteNode {
         
         switch state {
         case .attack:
-            let frames = ["attack_penguin"].map{textureAtlas.textureNamed($0)}
+            let frames = ["penguin_attack"].map{textureAtlas.textureNamed($0)}
             let animate = SKAction.animate(with: frames, timePerFrame: 1)
             let forever = SKAction.repeat(animate, count: 1)
             self.run(forever, withKey: PLAYER)
             
         case .walk:
-            let frames = ["idle_penguin_1","idle_penguin_2"].map{textureAtlas.textureNamed($0)}
-            let animate = SKAction.animate(with: frames, timePerFrame: 0.2)
+            let frames = ["penguin_idle_1","penguin_idle_2"].map{textureAtlas.textureNamed($0)}
+            let animate = SKAction.animate(with: frames, timePerFrame: 0.3)
             let forever = SKAction.repeatForever(animate)
             self.run(forever, withKey: PLAYER)
             
         case .defense:
-            let frames = ["defend_penguin"].map{textureAtlas.textureNamed($0)}
+            let frames = ["penguin_defend"].map{textureAtlas.textureNamed($0)}
             let animate = SKAction.animate(with: frames, timePerFrame: 1)
             let forever = SKAction.repeat(animate, count: 1)
             self.run(forever, withKey: PLAYER)
             
         case .stagger:
-            let frames = ["stagger_penguin"].map{textureAtlas.textureNamed($0)}
+            let frames = ["penguin_stagger"].map{textureAtlas.textureNamed($0)}
             let animate = SKAction.animate(with: frames, timePerFrame: 1)
             let forever = SKAction.repeat(animate, count: 1)
             self.run(forever, withKey: PLAYER)
