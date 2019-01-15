@@ -15,8 +15,13 @@ class EnemyNode: SKSpriteNode {
         case walk, attack, defense, stagger
     }
     
-    init(position: CGPoint) {
-        let texture = SKTexture(imageNamed: "idle_mob_01")
+    var enemy: Enemy!
+    
+    init(position: CGPoint, enemy: Enemy) {
+        
+        self.enemy = enemy
+        
+        let texture = SKTexture(imageNamed: enemy.textureStandbyNameA)
         
         let height = CGFloat(200)
         let rescale = height/texture.size().height
@@ -28,34 +33,34 @@ class EnemyNode: SKSpriteNode {
     }
     
     func beginAnimation(state: State) {
-        let PLAYER = "player"
-        self.removeAction(forKey: PLAYER)
-        let textureAtlas = SKTextureAtlas(named: "Mob")
+        let ENEMY = "enemy"
+        self.removeAction(forKey: ENEMY)
+        let textureAtlas = SKTextureAtlas(named: enemy.enemyName)
         
         switch state {
         case .attack:
-            let frames = ["attack_mob_01"].map{textureAtlas.textureNamed($0)}
-            let animate = SKAction.animate(with: frames, timePerFrame: 1)
+            let frames = [enemy.textureAttackNameA, enemy.textureAttackNameB,  enemy.textureAttackNameC,  enemy.textureAttackNameD].map{textureAtlas.textureNamed($0)}
+            let animate = SKAction.animate(with: frames, timePerFrame: 0.1)
             let forever = SKAction.repeat(animate, count: 1)
-            self.run(forever, withKey: PLAYER)
+            self.run(forever, withKey: ENEMY)
             
         case .walk:
-            let frames = ["idle_mob_01"].map{textureAtlas.textureNamed($0)}
-            let animate = SKAction.animate(with: frames, timePerFrame: 0.2)
+            let frames = [enemy.textureStandbyNameA,enemy.textureStandbyNameB].map{textureAtlas.textureNamed($0)}
+            let animate = SKAction.animate(with: frames, timePerFrame: 0.3)
             let forever = SKAction.repeatForever(animate)
-            self.run(forever, withKey: PLAYER)
+            self.run(forever, withKey: ENEMY)
             
         case .defense:
-            let frames = ["defense_mob_01"].map{textureAtlas.textureNamed($0)}
+            let frames = [enemy.textureDefenseName].map{textureAtlas.textureNamed($0)}
             let animate = SKAction.animate(with: frames, timePerFrame: 1)
             let forever = SKAction.repeat(animate, count: 1)
-            self.run(forever, withKey: PLAYER)
+            self.run(forever, withKey: ENEMY)
             
         case .stagger:
-            let frames = ["stagger_mob_01"].map{textureAtlas.textureNamed($0)}
+            let frames = [enemy.textureStaggerName].map{textureAtlas.textureNamed($0)}
             let animate = SKAction.animate(with: frames, timePerFrame: 1)
             let forever = SKAction.repeat(animate, count: 1)
-            self.run(forever, withKey: PLAYER)
+            self.run(forever, withKey: ENEMY)
         }
     }
     
