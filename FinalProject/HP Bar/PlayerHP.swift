@@ -9,27 +9,42 @@
 import Foundation
 import SpriteKit
 
-class PlayerHP: SKNode {
+class PlayerHP: SKSpriteNode {
     
     var arrHP : [SKSpriteNode] = []
     
     var currentHP: Int = 0
     var duration: Double = 0.2
-    
+
     private var onEmptyHP: (()->())!
     
     init(maxHP: Int, onEmptyHP: @escaping ()->() ) {
+        
+        print(111, UIScreen.main.bounds.height)
         
         self.onEmptyHP = onEmptyHP
         
         currentHP = maxHP
         
-        super.init()
-        
-        let totalWidthHP: CGFloat = 300.0
-        
+        let totalWidthHP: CGFloat = UIScreen.main.bounds.width * 0.4
         let width: CGFloat = (totalWidthHP / CGFloat(maxHP))
-        let height: CGFloat = 30.0
+        
+        let height: CGFloat
+        let yCoor: CGFloat
+        
+        if UIScreen.main.bounds.height < 500.0 {
+            height = UIScreen.main.bounds.height * 0.1
+            yCoor = 30
+        }
+        else
+        {
+            height = UIScreen.main.bounds.height * 0.05
+            yCoor = 30
+        }
+        
+        super.init(texture: nil, color: .clear, size: CGSize(width: totalWidthHP, height: height))
+        
+//        self.anchorPoint = CGPoint(x: 0, y: 0)
         
         for i in 0..<maxHP {
             
@@ -38,7 +53,8 @@ class PlayerHP: SKNode {
             arrHP.append(health)
             
             health.size = CGSize(width: width, height: height)
-            health.position = CGPoint(x: CGFloat(i) * width, y: 30)
+            health.anchorPoint = CGPoint(x: 0, y: 0)
+            health.position = CGPoint(x: CGFloat(i) * width, y: yCoor)
             
             addChild(health)
         }

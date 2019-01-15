@@ -23,7 +23,7 @@ class EnemyNode: SKSpriteNode {
         
         let texture = SKTexture(imageNamed: enemy.textureStandbyNameA)
         
-        let height = CGFloat(200)
+        let height = UIScreen.main.bounds.height * 0.45
         let rescale = height/texture.size().height
         let width = texture.size().width * rescale
         let size = CGSize(width: width, height: height)

@@ -18,7 +18,7 @@ class PlayerNode: SKSpriteNode {
     init(position: CGPoint) {
         let texture = SKTexture(imageNamed: "penguin_idle_1")
         
-        let height = CGFloat(200)
+        let height = UIScreen.main.bounds.height * 0.5
         let rescale = height/texture.size().height
         let width = texture.size().width * rescale
         let size = CGSize(width: width, height: height)

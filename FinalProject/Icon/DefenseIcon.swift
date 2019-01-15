@@ -14,7 +14,16 @@ class DefenseIcon: SKSpriteNode {
     init(position: CGPoint) {
         let texture = SKTexture(imageNamed: "defense")
         
-        super.init(texture: texture, color: .clear, size: CGSize(width: 150, height: 150))
+        let size: CGFloat
+        
+        if UIScreen.main.bounds.height > 500 {
+            size = UIScreen.main.bounds.height * 0.2
+        }
+        else {
+            size = UIScreen.main.bounds.height * 0.3
+        }
+        
+        super.init(texture: texture, color: .clear, size: CGSize(width: size, height: size))
         self.position = position
         
     }

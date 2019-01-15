@@ -77,8 +77,13 @@ class GameScene: SKScene {
         self.playerHP = playerHP
         self.enemyHP = enemyHP
         
-        playerHP.position = CGPoint(x: UIScreen.main.bounds.minX + 60, y: UIScreen.main.bounds.maxY - 70)
-        enemyHP.position = CGPoint(x: UIScreen.main.bounds.maxX - 300, y: UIScreen.main.bounds.maxY - 70)
+        let gapHP = UIScreen.main.bounds.width * 0.05
+        
+        playerHP.anchorPoint = CGPoint(x: 0, y: 0)
+        playerHP.position = CGPoint(x: UIScreen.main.bounds.midX - playerHP.size.width - gapHP, y: UIScreen.main.bounds.maxY - (UIScreen.main.bounds.height * 0.2))
+
+        enemyHP.anchorPoint = CGPoint(x: 0, y: 0)
+        enemyHP.position = CGPoint(x: UIScreen.main.bounds.midX + gapHP, y: UIScreen.main.bounds.maxY - (UIScreen.main.bounds.height * 0.2))
         
         addChild(background)
         addChild(playerNode)

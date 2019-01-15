@@ -12,7 +12,7 @@ import SpriteKit
 fileprivate let barHeight: CGFloat = 30
 fileprivate let barWidth: CGFloat = 300
 
-class EnemyHP: SKNode {
+class EnemyHP: SKSpriteNode {
     
     var arrHP : [SKSpriteNode] = []
     
@@ -28,12 +28,23 @@ class EnemyHP: SKNode {
         
         currentHP = 0
         
-        super.init()
-        
-        let totalWidthHP: CGFloat = 300.0
-        
+        let totalWidthHP: CGFloat = UIScreen.main.bounds.width * 0.4
         let width: CGFloat = (totalWidthHP / CGFloat(maxHP))
-        let height: CGFloat = 30.0
+        
+        let height: CGFloat
+        let yCoor: CGFloat
+        
+        if UIScreen.main.bounds.height < 500.0 {
+            height = UIScreen.main.bounds.height * 0.1
+            yCoor = 30
+        }
+        else
+        {
+            height = UIScreen.main.bounds.height * 0.05
+            yCoor = 30
+        }
+        
+        super.init(texture: nil, color: .clear, size: CGSize(width: totalWidthHP, height: height))
         
         for i in 0..<maxHP {
             
@@ -42,7 +53,8 @@ class EnemyHP: SKNode {
             arrHP.append(health)
             
             health.size = CGSize(width: width, height: height)
-            health.position = CGPoint(x: CGFloat(i) * width, y: 30)
+            health.anchorPoint = CGPoint(x: 0, y: 0)
+            health.position = CGPoint(x: CGFloat(i) * width, y: yCoor)
             
             addChild(health)
         }
