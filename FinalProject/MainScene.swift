@@ -65,7 +65,7 @@ class MainScene: SKScene {
             let location = touch.location(in: self)
             if playIcon!.contains(location) {
                 print("play icon touches")
-                let gameScene = GameScene(size: size)
+                let gameScene = GameScene(size: size, stage: stage1A)
                 self.scene?.view?.presentScene(gameScene, transition: .fade(withDuration: 0.8))
                 
             }
