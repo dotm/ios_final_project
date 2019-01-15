@@ -23,7 +23,7 @@ class SettingPopup: SKSpriteNode {
         self.position = position
         
         //setting button
-        closeButton.position = CGPoint(x: UIScreen.main.bounds.maxX+50, y: UIScreen.main.bounds.maxY+270)
+        closeButton.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
         closeButton.setScale(2.5)
         
         
