@@ -13,7 +13,7 @@ class PopupFrame: SKNode {
     
     let textureOuter = SKSpriteNode(imageNamed: "frame_outer_noTitle")
     let textureInner = SKSpriteNode(imageNamed: "frame_inner_noTitle")
-    var quizBox:ColorPopupQuiz?
+    var quizBox:BasePopupQuiz?
     
     init(position: CGPoint, gameDelegate: PopupDelegate, category: QuizCategory) {
         super.init()
@@ -31,7 +31,7 @@ class PopupFrame: SKNode {
         case .color:
             quizBox = ColorPopupQuiz(size: textureInner.size)
         default:
-            quizBox = ColorPopupQuiz(size: textureInner.size)
+            quizBox = DummyPopupQuiz(size: textureInner.size)
         }
         quizBox?.gameDelegate = gameDelegate
         // insert shape square to popupframe node
