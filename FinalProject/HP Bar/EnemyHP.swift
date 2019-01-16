@@ -14,19 +14,18 @@ fileprivate let barWidth: CGFloat = 300
 
 class EnemyHP: SKSpriteNode {
     
+    var currentHP: Int
     var arrHP : [SKSpriteNode] = []
     
-    var currentHP: Int = 0
     var duration: Double = 0.2
     
     private var onEmptyHP: (()->())!
-    
     
     init(maxHP: Int, onEmptyHP: @escaping ()->() ) {
         
         self.onEmptyHP = onEmptyHP
         
-        currentHP = 0
+        currentHP = maxHP
         
         let totalWidthHP: CGFloat = UIScreen.main.bounds.width * 0.4
         let width: CGFloat = (totalWidthHP / CGFloat(maxHP))
@@ -62,14 +61,13 @@ class EnemyHP: SKSpriteNode {
     }
     
     func decreaseHP() {
-        if currentHP < 4 {
+        currentHP = currentHP - 1
+        
+        if currentHP > 0 {
             let decrease = SKAction.fadeAlpha(to: 0.0, duration: duration)
-            
             arrHP[currentHP].run(decrease)
-            
-            currentHP = currentHP + 1
         }
-        else if currentHP == 4
+        else
         {
             let decrease = SKAction.fadeAlpha(to: 0.0, duration: duration)
             

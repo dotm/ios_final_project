@@ -100,7 +100,7 @@ class ColorPopupQuiz: SKNode {
         }
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let currTouch = currentTouchMoved as! SKSpriteNode? else { print("WTF") ;return}
+        guard let currTouch = currentTouchMoved as! SKSpriteNode? else {return}
         let colorMatched = currTouch.color == correctColor
         if colorMatched && nearDrop(currTouch.position)
         {

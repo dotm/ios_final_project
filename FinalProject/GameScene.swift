@@ -30,8 +30,12 @@ class GameScene: SKScene {
     
     var stage: Stage!
     var playerNode: PlayerNode!
+    var playerNodeLose: PlayerNode!
     var enemyNode: EnemyNode!
     var background: SKSpriteNode!
+    
+    var winFrame: WinFrame!
+    var loseFrame: LoseFrame!
     
     
     init(size: CGSize, stage: Stage) {
@@ -39,7 +43,11 @@ class GameScene: SKScene {
         
         let playerNode = PlayerNode(position: CGPoint(x: UIScreen.main.bounds.minX + (UIScreen.main.bounds.width * 0.15), y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.4)))
         let enemyNode = EnemyNode(position: CGPoint(x: UIScreen.main.bounds.maxX - (UIScreen.main.bounds.width * 0.25), y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.4)), enemy: stage.mobSpawn) //HEREEE
+        
+        let playerNodeLose = PlayerNode(position: CGPoint(x: UIScreen.main.bounds.minX + (UIScreen.main.bounds.width * 0.15), y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.4)))
+        
         self.playerNode = playerNode
+        self.playerNodeLose = playerNodeLose
         self.enemyNode = enemyNode
         
         let background = SKSpriteNode(imageNamed: stage.textureBackground) //HERE
@@ -56,21 +64,32 @@ class GameScene: SKScene {
     override func sceneDidLoad() {
         layer.position = CGPoint(x:  UIScreen.main.bounds.midX, y:  UIScreen.main.bounds.midY)
         
+        let winFrame = WinFrame(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY))
+        let loseFrame = LoseFrame(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY))
+        
+        self.winFrame = winFrame
+        self.loseFrame = loseFrame
+        
         let playerHP = PlayerHP(maxHP: 5) {
             self.defenseIcon.alpha = 0
             self.attackIcon.alpha = 0
             
             Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (_) in
                 self.addChild(layer)
+                self.playerNode.removeFromParent()
+                self.playerNodeLose.alpha = 1
+                self.addChild(loseFrame)
             })
         }
         
-        let enemyHP = EnemyHP(maxHP: 5) {
+        let enemyHP = EnemyHP(maxHP: stage.mobSpawn.enemyHP) {
             self.defenseIcon.alpha = 0
             self.attackIcon.alpha = 0
             
             Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (_) in
                 self.addChild(layer)
+                self.enemyNode.removeFromParent()
+                self.addChild(winFrame)
             })
         }
         
@@ -88,6 +107,10 @@ class GameScene: SKScene {
         addChild(background)
         addChild(playerNode)
         addChild(enemyNode)
+        
+        addChild(playerNodeLose)
+        playerNodeLose.beginAnimation(state: .lose)
+        playerNodeLose.alpha = 0
         
         addChild(playerHP)
         addChild(enemyHP)
@@ -110,6 +133,9 @@ class GameScene: SKScene {
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        winFrame.touchesBegan(touches, with: event)
+        loseFrame.touchesBegan(touches, with: event)
         
         for touch:AnyObject in touches
         {

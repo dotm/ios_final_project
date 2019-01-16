@@ -55,13 +55,8 @@ class TimerBar: SKSpriteNode {
     
     func changeSize() {
         let change = SKAction.resize(toWidth: 0, duration: duration)
-        let changeColorYellow = SKAction.colorize(with: .yellow, colorBlendFactor: 0, duration: duration/2)
-        let changeColorRed = SKAction.colorize(with: .red, colorBlendFactor: 0, duration: duration/2)
-        let changeColor = SKAction.sequence([changeColorYellow,changeColorRed])
         
-        let timerAnimation = SKAction.group([change,changeColor])
-        
-        timerFront!.run(timerAnimation) {
+        timerFront!.run(change) {
             self.complete()
         }
     }
