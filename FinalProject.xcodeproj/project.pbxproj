@@ -30,6 +30,13 @@
 		36E6D9BB21EC7AD900B40B49 /* HistoryIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E6D9BA21EC7AD900B40B49 /* HistoryIcon.swift */; };
 		36E6D9BD21EC7B0E00B40B49 /* HelpIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E6D9BC21EC7B0E00B40B49 /* HelpIcon.swift */; };
 		36E6D9BF21ED4F6C00B40B49 /* SettingPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E6D9BE21ED4F6C00B40B49 /* SettingPopup.swift */; };
+		36E6D9C821EEE47500B40B49 /* Quicksand_Book_Oblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 36E6D9C121EEE47400B40B49 /* Quicksand_Book_Oblique.otf */; };
+		36E6D9C921EEE47500B40B49 /* Quicksand_Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 36E6D9C221EEE47400B40B49 /* Quicksand_Light.otf */; };
+		36E6D9CA21EEE47500B40B49 /* Quicksand_Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 36E6D9C321EEE47400B40B49 /* Quicksand_Book.otf */; };
+		36E6D9CB21EEE47500B40B49 /* Quicksand_Light_Oblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 36E6D9C421EEE47400B40B49 /* Quicksand_Light_Oblique.otf */; };
+		36E6D9CC21EEE47500B40B49 /* Quicksand_Bold_Oblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 36E6D9C521EEE47400B40B49 /* Quicksand_Bold_Oblique.otf */; };
+		36E6D9CD21EEE47500B40B49 /* Quicksand_Dash.otf in Resources */ = {isa = PBXBuildFile; fileRef = 36E6D9C621EEE47500B40B49 /* Quicksand_Dash.otf */; };
+		36E6D9CE21EEE47500B40B49 /* Quicksand_Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 36E6D9C721EEE47500B40B49 /* Quicksand_Bold.otf */; };
 		3708912C21E2F7150065EC92 /* PopupDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3708912B21E2F7150065EC92 /* PopupDelegate.swift */; };
 		37255D0F21E203C400E64AA7 /* bgm in Resources */ = {isa = PBXBuildFile; fileRef = 37255D0E21E203C400E64AA7 /* bgm */; };
 		37391D3821E1F59900AE59E0 /* BackgroundMusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37391D3721E1F59900AE59E0 /* BackgroundMusicPlayer.swift */; };
@@ -79,6 +86,13 @@
 		36E6D9BA21EC7AD900B40B49 /* HistoryIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryIcon.swift; sourceTree = "<group>"; };
 		36E6D9BC21EC7B0E00B40B49 /* HelpIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpIcon.swift; sourceTree = "<group>"; };
 		36E6D9BE21ED4F6C00B40B49 /* SettingPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPopup.swift; sourceTree = "<group>"; };
+		36E6D9C121EEE47400B40B49 /* Quicksand_Book_Oblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Quicksand_Book_Oblique.otf; sourceTree = "<group>"; };
+		36E6D9C221EEE47400B40B49 /* Quicksand_Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Quicksand_Light.otf; sourceTree = "<group>"; };
+		36E6D9C321EEE47400B40B49 /* Quicksand_Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Quicksand_Book.otf; sourceTree = "<group>"; };
+		36E6D9C421EEE47400B40B49 /* Quicksand_Light_Oblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Quicksand_Light_Oblique.otf; sourceTree = "<group>"; };
+		36E6D9C521EEE47400B40B49 /* Quicksand_Bold_Oblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Quicksand_Bold_Oblique.otf; sourceTree = "<group>"; };
+		36E6D9C621EEE47500B40B49 /* Quicksand_Dash.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Quicksand_Dash.otf; sourceTree = "<group>"; };
+		36E6D9C721EEE47500B40B49 /* Quicksand_Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Quicksand_Bold.otf; sourceTree = "<group>"; };
 		3708912B21E2F7150065EC92 /* PopupDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupDelegate.swift; sourceTree = "<group>"; };
 		37255D0E21E203C400E64AA7 /* bgm */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bgm; sourceTree = "<group>"; };
 		37391D3721E1F59900AE59E0 /* BackgroundMusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundMusicPlayer.swift; sourceTree = "<group>"; };
@@ -180,6 +194,20 @@
 			path = "Timer Bar";
 			sourceTree = "<group>";
 		};
+		36E6D9C021EEE44E00B40B49 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				36E6D9C521EEE47400B40B49 /* Quicksand_Bold_Oblique.otf */,
+				36E6D9C721EEE47500B40B49 /* Quicksand_Bold.otf */,
+				36E6D9C121EEE47400B40B49 /* Quicksand_Book_Oblique.otf */,
+				36E6D9C321EEE47400B40B49 /* Quicksand_Book.otf */,
+				36E6D9C621EEE47500B40B49 /* Quicksand_Dash.otf */,
+				36E6D9C421EEE47400B40B49 /* Quicksand_Light_Oblique.otf */,
+				36E6D9C221EEE47400B40B49 /* Quicksand_Light.otf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
 		373A51C821EADE80002EDFC1 /* Local Persistence */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,6 +239,7 @@
 		376E6D9121DC736E005B830E /* FinalProject */ = {
 			isa = PBXGroup;
 			children = (
+				36E6D9C021EEE44E00B40B49 /* Font */,
 				373A51C821EADE80002EDFC1 /* Local Persistence */,
 				254A8FA021E838C4005974DA /* Struct */,
 				25AE54F021E71A7D005C4F1C /* Timer Bar */,
@@ -323,10 +352,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36E6D9C821EEE47500B40B49 /* Quicksand_Book_Oblique.otf in Resources */,
+				36E6D9CD21EEE47500B40B49 /* Quicksand_Dash.otf in Resources */,
 				37255D0F21E203C400E64AA7 /* bgm in Resources */,
+				36E6D9C921EEE47500B40B49 /* Quicksand_Light.otf in Resources */,
+				36E6D9CB21EEE47500B40B49 /* Quicksand_Light_Oblique.otf in Resources */,
+				36E6D9CC21EEE47500B40B49 /* Quicksand_Bold_Oblique.otf in Resources */,
 				376E6D9E21DC736E005B830E /* Main.storyboard in Resources */,
 				252CFC4721DF1F9800BA7C5A /* PopupQuiz.sks in Resources */,
+				36E6D9CE21EEE47500B40B49 /* Quicksand_Bold.otf in Resources */,
 				376E6DA021DC736F005B830E /* Assets.xcassets in Resources */,
+				36E6D9CA21EEE47500B40B49 /* Quicksand_Book.otf in Resources */,
 				376E6DA321DC736F005B830E /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,10 +10,9 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
-class ColorPopupQuiz: SKNode {
+class ColorPopupQuiz: BasePopupQuiz {
     
     //mark: Variable declared
-    var gameDelegate:PopupDelegate?
     var arrayColor:[UIColor]  = [UIColor.red, UIColor.blue , UIColor.yellow , UIColor.green , UIColor.cyan, UIColor.magenta, UIColor.purple]
     var frameQuestions: SKSpriteNode?
     var currentTouchMoved: SKNode?

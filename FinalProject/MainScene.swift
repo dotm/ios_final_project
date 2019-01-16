@@ -66,6 +66,8 @@ class MainScene: SKScene {
         helpIcon = HelpIcon(position: CGPoint(x: UIScreen.main.bounds.maxX - 35, y: UIScreen.main.bounds.maxY - 135 ))
         helpIcon?.setScale(0.2)
         
+        //penguin icon modifier
+        
         
         //adding to node
         addChild(background)
