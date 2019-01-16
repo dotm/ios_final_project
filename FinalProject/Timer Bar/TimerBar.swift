@@ -18,7 +18,7 @@ class TimerBar: SKSpriteNode {
     
     init(position: CGPoint, duration: Double, complete: @escaping ()->()) {
         
-        let size = CGSize(width: 400, height: 25)
+        let size = CGSize(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.height * 0.15)
         let anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
         self.complete = complete

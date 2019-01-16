@@ -14,7 +14,9 @@ class Damage: SKSpriteNode {
     init(position: CGPoint) {
         let texture = SKTexture(imageNamed: "explosion_01")
         
-        super.init(texture: texture, color: .clear, size: CGSize(width: 300, height: 300))
+        let size = UIScreen.main.bounds.height * 0.6
+        
+        super.init(texture: texture, color: .clear, size: CGSize(width: size, height: size))
         self.position = position
         
     }
