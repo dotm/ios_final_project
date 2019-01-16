@@ -14,7 +14,6 @@ class ColorPopupQuiz: SKNode {
     
     //mark: Variable declared
     var gameDelegate:PopupDelegate?
-    //let texture = SKSpriteNode(imageNamed: "Frame")
     var arrayColor:[UIColor]  = [UIColor.red, UIColor.blue , UIColor.yellow , UIColor.green , UIColor.cyan, UIColor.magenta, UIColor.purple]
     var frameQuestions: SKSpriteNode?
     var currentTouchMoved: SKNode?
@@ -23,8 +22,7 @@ class ColorPopupQuiz: SKNode {
     
     init(size:CGSize) {
         //generate frame
-        frameQuestions = SKSpriteNode(color: .clear, size: size)
-        
+        frameQuestions = SKSpriteNode(texture: nil,color: .clear, size: size)
         super.init()
         addChild(frameQuestions!)
         

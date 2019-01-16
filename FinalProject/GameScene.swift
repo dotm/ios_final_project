@@ -122,7 +122,7 @@ class GameScene: SKScene {
                 
                 addChild(layer)
                 
-                let timerBar = TimerBar(position: CGPoint(x: UIScreen.main.bounds.midX, y: 30), duration: stage.quizTime) //HERE
+                let timerBar = TimerBar(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.height * 0.1), duration: stage.quizTime) //HERE
                 {
                     self.handleAnswerWrong()
                 }
