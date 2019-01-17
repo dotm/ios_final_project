@@ -11,10 +11,10 @@ import SpriteKit
 
 class HelpIcon: SKSpriteNode {
     
-    init(position: CGPoint) {
+    init(position: CGPoint,size: CGSize) {
         let texture = SKTexture(imageNamed: "icon_help")
         
-        super.init(texture: texture, color: .clear, size: texture.size())
+        super.init(texture: texture, color: .clear, size: size)
         self.position = position
         
     }

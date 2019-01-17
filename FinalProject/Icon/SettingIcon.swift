@@ -11,10 +11,10 @@ import SpriteKit
 
 class SettingIcon: SKSpriteNode {
     
-    init(position: CGPoint) {
+    init(position: CGPoint, size: CGSize) {
         let texture = SKTexture(imageNamed: "icon_setting")
         
-        super.init(texture: texture, color: .clear, size: texture.size())
+        super.init(texture: texture, color: .clear, size: size)
         self.position = position
         
     }
