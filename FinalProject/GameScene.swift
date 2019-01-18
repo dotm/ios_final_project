@@ -13,7 +13,7 @@ fileprivate let layer = SKSpriteNode(color: UIColor(white: 0, alpha: 0.5), size:
 
 class GameScene: SKScene {
     
-    let attack = Attack(position: CGPoint(x: UIScreen.main.bounds.width * 0.83, y: UIScreen.main.bounds.height * 0.35))
+    let attack = Attack(position: CGPoint(x: UIScreen.main.bounds.width * 0.83, y: UIScreen.main.bounds.height * 0.5))
     let damage = Damage(position: CGPoint(x: UIScreen.main.bounds.width * 0.15, y: UIScreen.main.bounds.height * 0.35))
     
     let attackIcon = AttackIcon(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY))

@@ -11,21 +11,30 @@ import SpriteKit
 
 class Attack: SKSpriteNode {
     
+    var frameArr: [String] = []
+    
     init(position: CGPoint) {
-        let texture = SKTexture(imageNamed: "explosion_01")
+        let texture = SKTexture(imageNamed: "ice_spike_01")
         
-        let size = UIScreen.main.bounds.height * 0.6
+        let size = UIScreen.main.bounds.height * 0.8
         
         super.init(texture: texture, color: .clear, size: CGSize(width: size, height: size))
         self.position = position
         
+        var frameArr: [String] = []
+        
+        for i in 1...50 {
+            frameArr.append("ice_spike_\(i)")
+        }
+        
+        self.frameArr = frameArr
     }
     
     func BeginAttack(completion:@escaping ()->Void) {
-        let TextureAtlas = SKTextureAtlas(named: "Explosion")
+        let TextureAtlas = SKTextureAtlas(named: "Ice Spike")
         
-        let frames = ["explosion_01","explosion_02","explosion_03","explosion_04","explosion_05","explosion_06","explosion_07","explosion_08","explosion_010","explosion_011","explosion_012","explosion_013","explosion_014","explosion_015"].map{TextureAtlas.textureNamed($0)}
-        let animate = SKAction.animate(with: frames, timePerFrame: 0.1)
+        let frames = frameArr.map{TextureAtlas.textureNamed($0)}
+        let animate = SKAction.animate(with: frames, timePerFrame: 0.02)
         let forever = SKAction.repeat(animate, count: 1)
         self.run(forever) {
             completion()

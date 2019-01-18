@@ -14,11 +14,15 @@ struct Stage {
     var quizCategory: QuizCategory
     var mobSpawn: Enemy
     var quizTime: Double
+    var nextStage: String
 }
 
 var stage1A = Stage(
     textureBackground: "background_snow",
     quizCategory: .color,
     mobSpawn: mobA,
-    quizTime: 5
+    quizTime: 5,
+    nextStage: "stage2A"
 )
+
+
