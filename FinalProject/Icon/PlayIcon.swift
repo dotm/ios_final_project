@@ -11,10 +11,10 @@ import SpriteKit
 
 class PlayIcon: SKSpriteNode {
     
-    init(position: CGPoint) {
+    init(position: CGPoint, size: CGSize) {
         let texture = SKTexture(imageNamed: "play_btn")
         
-        super.init(texture: texture, color: .clear, size: texture.size())
+        super.init(texture: texture, color: .clear, size: size)
         self.position = position
         
     }
