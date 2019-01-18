@@ -10,6 +10,11 @@ import Foundation
 import AVFoundation
 
 enum BackgroundMusicPlayer {
+    private static var volume: Float! {
+        didSet {
+            activePlayer?.setVolume(volume, fadeDuration: 1)
+        }
+    }
     private static var activePlayer: AVAudioPlayer?
     private static var mainMenu_audioPlayer: AVAudioPlayer!
     private static var battleScene_audioPlayer: AVAudioPlayer!
@@ -29,9 +34,36 @@ enum BackgroundMusicPlayer {
             battleScene_audioPlayer = try AVAudioPlayer(contentsOf: battleScene_songURL, fileTypeHint: SONG_FILE_TYPE)
             battleScene_audioPlayer.numberOfLoops = infiniteNumber_ofLoops
             
+            loadVolume()
         } catch {
             print(error.localizedDescription)
         }
+    }
+    static func setVolume(_ volume: Float){
+        self.volume = volume
+        saveVolume()
+    }
+    static func getVolume() -> Float {
+        return volume
+    }
+    static func mute(){
+        setVolume(0.0)
+    }
+    static func isMuted() -> Bool {
+        return volume == 0
+    }
+    private static let VOLUME_KEY = "volume"
+    private static func saveVolume(){
+        UserDefaults.standard.set(volume, forKey: VOLUME_KEY)
+    }
+    private static func loadVolume(){
+        let volume: Float
+        if UserDefaults.standard.object(forKey: VOLUME_KEY) == nil {
+            volume = 0.0
+        }else{
+            volume = UserDefaults.standard.float(forKey: VOLUME_KEY)
+        }
+        self.volume = volume
     }
     static func playMainMenuSong(){
         fadeOutCurrentSong_andStart(audioPlayer: mainMenu_audioPlayer)
@@ -46,14 +78,14 @@ enum BackgroundMusicPlayer {
             Timer.scheduledTimer(withTimeInterval: fade_inSeconds, repeats: false) { (_) in
                 activePlayer.stop()
                 
-                audioPlayer.volume = 1.0
+                audioPlayer.volume = self.volume
                 audioPlayer.currentTime = 0
                 audioPlayer.play()
                 
                 self.activePlayer = audioPlayer
             }
         }else{
-            audioPlayer.volume = 1.0
+            audioPlayer.volume = self.volume
             audioPlayer.currentTime = 0
             audioPlayer.play()
             
