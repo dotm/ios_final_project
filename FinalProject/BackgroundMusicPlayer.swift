@@ -10,6 +10,7 @@ import Foundation
 import AVFoundation
 
 enum BackgroundMusicPlayer {
+    private static var volume: Double!
     private static var activePlayer: AVAudioPlayer?
     private static var mainMenu_audioPlayer: AVAudioPlayer!
     private static var battleScene_audioPlayer: AVAudioPlayer!
@@ -29,9 +30,37 @@ enum BackgroundMusicPlayer {
             battleScene_audioPlayer = try AVAudioPlayer(contentsOf: battleScene_songURL, fileTypeHint: SONG_FILE_TYPE)
             battleScene_audioPlayer.numberOfLoops = infiniteNumber_ofLoops
             
+            loadVolume()
         } catch {
             print(error.localizedDescription)
         }
+    }
+    static func setVolume(_ volume: Double){
+        self.volume = volume
+        saveVolume()
+    }
+    static func getVolume() -> Double {
+        return volume
+    }
+    static func mute(){
+        setVolume(0.0)
+    }
+    static func isMuted() -> Bool {
+        return volume == 0
+    }
+    private static let VOLUME_KEY = "volume"
+    private static func saveVolume(){
+        UserDefaults.standard.set(volume, forKey: VOLUME_KEY)
+    }
+    private static func loadVolume(){
+        let volume: Double
+        if UserDefaults.standard.object(forKey: VOLUME_KEY) == nil {
+            volume = 0.0
+        }else{
+            volume = UserDefaults.standard.double(forKey: VOLUME_KEY)
+        }
+        print(111,volume)
+        self.volume = volume
     }
     static func playMainMenuSong(){
         fadeOutCurrentSong_andStart(audioPlayer: mainMenu_audioPlayer)
