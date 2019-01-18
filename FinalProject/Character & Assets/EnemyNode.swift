@@ -12,7 +12,7 @@ import SpriteKit
 class EnemyNode: SKSpriteNode {
     
     enum State{
-        case walk, attack, defense, stagger
+        case walk, attack, defense, stagger, lose
     }
     
     var enemy: Enemy!
@@ -58,6 +58,12 @@ class EnemyNode: SKSpriteNode {
             
         case .stagger:
             let frames = [enemy.textureStaggerName].map{textureAtlas.textureNamed($0)}
+            let animate = SKAction.animate(with: frames, timePerFrame: 1)
+            let forever = SKAction.repeat(animate, count: 1)
+            self.run(forever, withKey: ENEMY)
+            
+        case .lose:
+            let frames = ["lose_mob"].map{textureAtlas.textureNamed($0)}
             let animate = SKAction.animate(with: frames, timePerFrame: 1)
             let forever = SKAction.repeat(animate, count: 1)
             self.run(forever, withKey: ENEMY)

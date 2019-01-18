@@ -10,6 +10,7 @@ import Foundation
 
 struct Stage {
     
+    var stageName: String
     var textureBackground: String
     var quizCategory: QuizCategory
     var mobSpawn: Enemy
@@ -18,6 +19,8 @@ struct Stage {
 }
 
 var stage1A = Stage(
+    
+    stageName: "stage1A",
     textureBackground: "background_snow",
     quizCategory: .color,
     mobSpawn: mobA,

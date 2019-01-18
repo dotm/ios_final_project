@@ -14,7 +14,7 @@ fileprivate let layer = SKSpriteNode(color: UIColor(white: 0, alpha: 0.5), size:
 class GameScene: SKScene {
     
     let attack = Attack(position: CGPoint(x: UIScreen.main.bounds.width * 0.83, y: UIScreen.main.bounds.height * 0.5))
-    let damage = Damage(position: CGPoint(x: UIScreen.main.bounds.width * 0.15, y: UIScreen.main.bounds.height * 0.35))
+    let damage = Damage(position: CGPoint(x: UIScreen.main.bounds.width * 0.3, y: UIScreen.main.bounds.height * 0.35))
     
     let attackIcon = AttackIcon(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY))
     let defenseIcon = DefenseIcon(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY))
@@ -32,6 +32,7 @@ class GameScene: SKScene {
     var playerNode: PlayerNode!
     var playerNodeLose: PlayerNode!
     var enemyNode: EnemyNode!
+    var enemyNodeLose: EnemyNode!
     var background: SKSpriteNode!
     
     var winFrame: WinFrame!
@@ -45,10 +46,12 @@ class GameScene: SKScene {
         let enemyNode = EnemyNode(position: CGPoint(x: UIScreen.main.bounds.maxX - (UIScreen.main.bounds.width * 0.25), y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.4)), enemy: stage.mobSpawn) //HEREEE
         
         let playerNodeLose = PlayerNode(position: CGPoint(x: UIScreen.main.bounds.minX + (UIScreen.main.bounds.width * 0.15), y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.4)))
+        let enemyNodeLose = EnemyNode(position: CGPoint(x: UIScreen.main.bounds.maxX - (UIScreen.main.bounds.width * 0.25), y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.4)), enemy: stage.mobSpawn)
         
         self.playerNode = playerNode
         self.playerNodeLose = playerNodeLose
         self.enemyNode = enemyNode
+        self.enemyNodeLose = enemyNodeLose
         
         let background = SKSpriteNode(imageNamed: stage.textureBackground) //HERE
         background.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
@@ -89,6 +92,7 @@ class GameScene: SKScene {
             Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (_) in
                 self.addChild(layer)
                 self.enemyNode.removeFromParent()
+                self.enemyNodeLose.alpha = 1
                 self.addChild(winFrame)
             })
         }
@@ -111,6 +115,10 @@ class GameScene: SKScene {
         addChild(playerNodeLose)
         playerNodeLose.beginAnimation(state: .lose)
         playerNodeLose.alpha = 0
+        
+        addChild(enemyNodeLose)
+        enemyNodeLose.beginAnimation(state: .lose)
+        enemyNodeLose.alpha = 0
         
         addChild(playerHP)
         addChild(enemyHP)
@@ -213,10 +221,10 @@ extension GameScene: PopupDelegate {
         
         if playerTurn == true {
             playerNode.beginAnimation(state: .attack)
+            self.enemyNode.beginAnimation(state: .stagger)
             addChild(attack)
             attack.BeginAttack {
                 self.attack.removeFromParent()
-                self.enemyNode.beginAnimation(state: .stagger)
                 self.isUserInteractionEnabled = true
             }
             
@@ -272,15 +280,16 @@ extension GameScene: PopupDelegate {
                 self.playerNode.beginAnimation(state: .walk)
                 self.enemyNode.beginAnimation(state: .walk)
                 self.defenseIcon.alpha = 1
+                self.isUserInteractionEnabled = true
             })
             playerTurn = false
         }
         else {
             addChild(damage)
             enemyNode.beginAnimation(state: .attack)
+            self.playerNode.beginAnimation(state: .stagger)
             damage.BeginDamage {
                 self.damage.removeFromParent()
-                self.playerNode.beginAnimation(state: .stagger)
                 self.isUserInteractionEnabled = true
             }
             
