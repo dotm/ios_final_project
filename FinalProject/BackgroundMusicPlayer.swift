@@ -10,7 +10,11 @@ import Foundation
 import AVFoundation
 
 enum BackgroundMusicPlayer {
-    private static var volume: Double!
+    private static var volume: Float! {
+        didSet {
+            activePlayer?.setVolume(volume, fadeDuration: 1)
+        }
+    }
     private static var activePlayer: AVAudioPlayer?
     private static var mainMenu_audioPlayer: AVAudioPlayer!
     private static var battleScene_audioPlayer: AVAudioPlayer!
@@ -35,11 +39,11 @@ enum BackgroundMusicPlayer {
             print(error.localizedDescription)
         }
     }
-    static func setVolume(_ volume: Double){
+    static func setVolume(_ volume: Float){
         self.volume = volume
         saveVolume()
     }
-    static func getVolume() -> Double {
+    static func getVolume() -> Float {
         return volume
     }
     static func mute(){
@@ -53,13 +57,12 @@ enum BackgroundMusicPlayer {
         UserDefaults.standard.set(volume, forKey: VOLUME_KEY)
     }
     private static func loadVolume(){
-        let volume: Double
+        let volume: Float
         if UserDefaults.standard.object(forKey: VOLUME_KEY) == nil {
             volume = 0.0
         }else{
-            volume = UserDefaults.standard.double(forKey: VOLUME_KEY)
+            volume = UserDefaults.standard.float(forKey: VOLUME_KEY)
         }
-        print(111,volume)
         self.volume = volume
     }
     static func playMainMenuSong(){
@@ -75,14 +78,14 @@ enum BackgroundMusicPlayer {
             Timer.scheduledTimer(withTimeInterval: fade_inSeconds, repeats: false) { (_) in
                 activePlayer.stop()
                 
-                audioPlayer.volume = 1.0
+                audioPlayer.volume = self.volume
                 audioPlayer.currentTime = 0
                 audioPlayer.play()
                 
                 self.activePlayer = audioPlayer
             }
         }else{
-            audioPlayer.volume = 1.0
+            audioPlayer.volume = self.volume
             audioPlayer.currentTime = 0
             audioPlayer.play()
             
