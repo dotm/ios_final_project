@@ -18,6 +18,9 @@ class MainScene: SKScene {
     var settingIcon: SettingIcon!
     var historyIcon: HistoryIcon!
     var helpIcon:HelpIcon!
+    
+   
+    
     override init(size: CGSize) {
         super.init(size: size)
         setupMainBackground()
@@ -25,6 +28,9 @@ class MainScene: SKScene {
         setupSettingIcon()
         setupHistoryIcon()
         setupHelpIcon()
+        
+    
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -33,6 +39,10 @@ class MainScene: SKScene {
     
     override func sceneDidLoad() {
         BackgroundMusicPlayer.playMainMenuSong()
+        let playerNode = PlayerNode(position: CGPoint(x: UIScreen.main.bounds.minX + (UIScreen.main.bounds.width * 0.15), y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.4)))
+        
+        addChild(playerNode)
+        playerNode.beginAnimation(state: .standby)
     }
     
     private func setupMainBackground () {

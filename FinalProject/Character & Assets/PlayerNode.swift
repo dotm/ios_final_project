@@ -12,11 +12,12 @@ import SpriteKit
 class PlayerNode: SKSpriteNode {
     
     enum State{
-        case walk, attack, defense, stagger, lose
+        case walk, attack, defense, stagger, lose, standby
     }
     
     var walkFrameArr: [String] = []
     var staggerFrameArr: [String] = []
+    var standbyFrameArr: [String] = []
     
     init(position: CGPoint) {
         let texture = SKTexture(imageNamed: "idle_penguin0")
@@ -31,6 +32,7 @@ class PlayerNode: SKSpriteNode {
         
         var walkFrameArr: [String] = []
         var staggerFrameArr: [String] = []
+        var standbyFrameArr: [String] = []
         
         for i in 0...23 {
             walkFrameArr.append("idle_penguin\(i)")
@@ -40,8 +42,13 @@ class PlayerNode: SKSpriteNode {
             staggerFrameArr.append("stagger_penguin_\(i)")
         }
         
+        for i in 0...59 {
+            standbyFrameArr.append("front_half_eyes 2_\(i)")
+        }
+        
         self.walkFrameArr = walkFrameArr
         self.staggerFrameArr = staggerFrameArr
+        self.standbyFrameArr = standbyFrameArr
         
     }
     
@@ -79,6 +86,12 @@ class PlayerNode: SKSpriteNode {
             let frames = ["penguin_sad"].map{textureAtlas.textureNamed($0)}
             let animate = SKAction.animate(with: frames, timePerFrame: 1)
             let forever = SKAction.repeat(animate, count: 1)
+            self.run(forever, withKey: PLAYER)
+            
+        case .standby:
+            let frames = standbyFrameArr.map{textureAtlas.textureNamed($0)}
+            let animate = SKAction.animate(with: frames, timePerFrame: 0.02)
+            let forever = SKAction.repeatForever(animate)
             self.run(forever, withKey: PLAYER)
         }
     }
