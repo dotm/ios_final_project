@@ -210,13 +210,13 @@
 			path = "Timer Bar";
 			sourceTree = "<group>";
 		};
-		25E16BF221EEE348000BF6C9 /* WinLose Frame */ = {
+		25E16BF221EEE348000BF6C9 /* WinLose Scene */ = {
 			isa = PBXGroup;
 			children = (
 				25E16BF321EEE35E000BF6C9 /* WinFrame.swift */,
 				25E16BF521EEE6E3000BF6C9 /* LoseFrame.swift */,
 			);
-			path = "WinLose Frame";
+			path = "WinLose Scene";
 			sourceTree = "<group>";
 		};
 		364C25A221EF28D000B081A0 /* Recovered References */ = {
@@ -289,7 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				364C25A321EF28F600B081A0 /* Font */,
-				25E16BF221EEE348000BF6C9 /* WinLose Frame */,
+				25E16BF221EEE348000BF6C9 /* WinLose Scene */,
 				373A51C821EADE80002EDFC1 /* Local Persistence */,
 				254A8FA021E838C4005974DA /* Struct */,
 				25AE54F021E71A7D005C4F1C /* Timer Bar */,

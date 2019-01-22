@@ -64,7 +64,7 @@ class EnemyHP: SKSpriteNode {
     
     func decreaseHP() {
         
-        if currentHP < maxHP {
+        if currentHP < maxHP - 1 {
             let decrease = SKAction.fadeAlpha(to: 0.0, duration: duration)
             arrHP[currentHP].run(decrease)
             
