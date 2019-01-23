@@ -15,7 +15,7 @@ struct Stage {
     var quizCategory: QuizCategory
     var mobSpawn: Enemy
     var quizTime: Double
-    var nextStage: String
+    var nextStage: [Stage]
 }
 
 var stage1A = Stage(
@@ -25,7 +25,27 @@ var stage1A = Stage(
     quizCategory: .color,
     mobSpawn: mobA,
     quizTime: 5,
-    nextStage: "stage2A"
+    nextStage: [stage2A]
+)
+
+var stage2A = Stage(
+    
+    stageName: "stage2A",
+    textureBackground: "background_snow",
+    quizCategory: .color,
+    mobSpawn: mobA,
+    quizTime: 5,
+    nextStage: [stage3A]
+)
+
+var stage3A = Stage(
+    
+    stageName: "stage3A",
+    textureBackground: "background_snow",
+    quizCategory: .color,
+    mobSpawn: mobA,
+    quizTime: 5,
+    nextStage: []
 )
 
 

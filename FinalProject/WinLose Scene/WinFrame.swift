@@ -12,12 +12,14 @@ import GameplayKit
 class WinFrame: SKScene {
     
     private var returnButton: SKSpriteNode!
-    private var replayButton: SKSpriteNode!
+    private var nextStageButton: SKSpriteNode!
     
     var background: SKSpriteNode!
     var pose: SKSpriteNode!
     
-    override init(size: CGSize) {
+    var currentStage: Stage!
+    
+    init(size: CGSize, currentStage: Stage) {
         let background = SKSpriteNode(imageNamed: "frame_victory")
         background.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         background.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
@@ -28,6 +30,8 @@ class WinFrame: SKScene {
         loseEnemy.size = CGSize(width: loseEnemy.size.width, height: loseEnemy.size.height)
         loseEnemy.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
         self.pose = loseEnemy
+        
+        self.currentStage = currentStage
         
         super.init(size: size)
     }
@@ -57,7 +61,7 @@ class WinFrame: SKScene {
 
         addChild(replayButton)
 
-        self.replayButton = replayButton
+        self.nextStageButton = replayButton
 
     }
 
@@ -69,9 +73,21 @@ class WinFrame: SKScene {
                 let mainScene = MainScene(size: (scene?.size)!)
                 self.scene?.view?.presentScene(mainScene, transition: .fade(withDuration: 0.8))
             }
-            else if replayButton.contains(location) {
-                let gameScene = GameScene(size: (scene?.size)!, stage: stage1A)
-                self.scene?.view?.presentScene(gameScene, transition: .fade(withDuration: 0.8))
+            else if nextStageButton.contains(location) {
+                
+                let nextScene: SKScene
+                
+                if let nextStage = currentStage.nextStage.first {
+                    nextScene = GameScene(size: (scene?.size)!, stage: nextStage)
+                }
+                else
+                {
+                    nextScene = MainScene(size: (scene!.size))
+                }
+                
+                self.scene?.view?.presentScene(nextScene, transition: .fade(withDuration: 0.8))
+                
+                print(111,currentStage)
             }
         }
     }

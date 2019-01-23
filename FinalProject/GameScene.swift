@@ -75,7 +75,7 @@ class GameScene: SKScene {
             self.attackIcon.alpha = 0
             
             Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (_) in
-                let victoryScene = WinFrame(size: self.scene!.size)
+                let victoryScene = WinFrame(size: self.scene!.size, currentStage: self.stage)
                 self.scene?.view?.presentScene(victoryScene, transition: .fade(withDuration: 0.8))
             })
         }
