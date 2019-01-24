@@ -11,8 +11,8 @@ import SpriteKit
 
 class PopupFrame: SKNode {
     
-    let textureOuter = SKSpriteNode(imageNamed: "frame_outer_noTitle")
-    let textureInner = SKSpriteNode(imageNamed: "frame_inner_noTitle")
+    let textureOuter = SKSpriteNode(imageNamed: "frame_crystal")
+//    let textureInner = SKSpriteNode(imageNamed: "frame_inner_noTitle")
     var quizBox:BasePopupQuiz?
     
     init(position: CGPoint, gameDelegate: PopupDelegate, category: QuizCategory) {
@@ -20,18 +20,18 @@ class PopupFrame: SKNode {
         self.position = position
         textureOuter.size = CGSize(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.height * 0.6)
         
-        textureInner.size = textureOuter.size
-        textureInner.setScale(0.9)
-        
-        self.addChild(textureInner)
+//        textureInner.size = textureOuter.size
+//        textureInner.setScale(0.9)
+//
+//        self.addChild(textureInner)
         self.addChild(textureOuter)
         
         // create instance shapeSquare
         switch category {
         case .color:
-            quizBox = ColorPopupQuiz(size: textureInner.size)
+            quizBox = ColorPopupQuiz(size: textureOuter.size)
         default:
-            quizBox = DummyPopupQuiz(size: textureInner.size)
+            quizBox = DummyPopupQuiz(size: textureOuter.size)
         }
         quizBox?.gameDelegate = gameDelegate
         // insert shape square to popupframe node
@@ -39,7 +39,7 @@ class PopupFrame: SKNode {
         // adding interactions for frame
         // setting z location node
         textureOuter.zPosition = 1
-        textureInner.zPosition = 2
+//        textureInner.zPosition = 2
         quizBox!.zPosition = 3
     }
     

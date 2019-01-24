@@ -35,7 +35,7 @@ var mobA = Enemy(
     textureAttackNameD: "attack_mob_04",
     textureDefenseName: "defense_mob_01",
     textureStaggerName: "stagger_mob_01",
-    enemyHP: 1
+    enemyHP: 2
 )
 
 //var mobB = Enemy(

@@ -107,7 +107,7 @@ class ColorPopupQuiz: BasePopupQuiz {
         }
         else
         {
-            
+            gameDelegate?.handleAnswerWrong()
         }
         currentTouchMoved = nil
         

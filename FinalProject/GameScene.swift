@@ -9,23 +9,14 @@
 import SpriteKit
 import GameplayKit
 
-fileprivate let layer = SKSpriteNode(color: UIColor(white: 0, alpha: 0.5), size: UIScreen.main.bounds.size)
-
 class GameScene: SKScene {
     
     let attack = Attack(position: CGPoint(x: UIScreen.main.bounds.width * 0.83, y: UIScreen.main.bounds.height * 0.5))
-    let damage = Damage(position: CGPoint(x: UIScreen.main.bounds.width * 0.3, y: UIScreen.main.bounds.height * 0.35))
-    
-    let attackIcon = AttackIcon(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY))
-    let defenseIcon = DefenseIcon(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY))
-    
-    var playerTurn: Bool = true
 
     private var popupframe: PopupFrame?
     
     private var popupflag: String = "false"
     
-    private var playerHP: PlayerHP!
     private var enemyHP: EnemyHP!
     
     var stage: Stage!
@@ -34,8 +25,6 @@ class GameScene: SKScene {
     var background: SKSpriteNode!
     
     var winFrame: WinFrame!
-    var loseFrame: LoseFrame!
-    
     
     init(size: CGSize, stage: Stage) {
         self.stage = stage
@@ -58,21 +47,8 @@ class GameScene: SKScene {
     }
     
     override func sceneDidLoad() {
-        layer.position = CGPoint(x:  UIScreen.main.bounds.midX, y:  UIScreen.main.bounds.midY)
-        
-        let playerHP = PlayerHP(maxHP: 5) {
-            self.defenseIcon.alpha = 0
-            self.attackIcon.alpha = 0
-            
-            Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (_) in
-                let victoryScene = LoseFrame(size: self.scene!.size)
-                self.scene?.view?.presentScene(victoryScene, transition: .fade(withDuration: 0.8))
-            })
-        }
         
         let enemyHP = EnemyHP(maxHP: stage.mobSpawn.enemyHP) {
-            self.defenseIcon.alpha = 0
-            self.attackIcon.alpha = 0
             
             Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (_) in
                 let victoryScene = WinFrame(size: self.scene!.size, currentStage: self.stage)
@@ -80,13 +56,9 @@ class GameScene: SKScene {
             })
         }
         
-        self.playerHP = playerHP
         self.enemyHP = enemyHP
         
         let gapHP = UIScreen.main.bounds.width * 0.05
-        
-        playerHP.anchorPoint = CGPoint(x: 0, y: 0)
-        playerHP.position = CGPoint(x: UIScreen.main.bounds.midX - playerHP.size.width - gapHP, y: UIScreen.main.bounds.maxY - (UIScreen.main.bounds.height * 0.2))
 
         enemyHP.anchorPoint = CGPoint(x: 0, y: 0)
         enemyHP.position = CGPoint(x: UIScreen.main.bounds.midX + gapHP, y: UIScreen.main.bounds.maxY - (UIScreen.main.bounds.height * 0.2))
@@ -95,18 +67,11 @@ class GameScene: SKScene {
         addChild(playerNode)
         addChild(enemyNode)
         
-        addChild(playerHP)
         addChild(enemyHP)
         
-        addChild(attackIcon)
-        addChild(defenseIcon)
+        showPopUpQuiz()
         
-        if playerTurn == true {
-            defenseIcon.alpha = 0
-        }
-        else {
-            attackIcon.alpha = 1
-        }
+        popupflag = "true"
 
         
         playerNode.beginAnimation(state: .walk)
@@ -117,34 +82,6 @@ class GameScene: SKScene {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        for touch:AnyObject in touches
-        {
-            let location = touch.location(in: self)
-            
-            if popupflag == "false" {
-                guard attackIcon.contains(location) || defenseIcon.contains(location) else {return}
-                
-                displayIcon()
-                
-                addChild(layer)
-                
-                let timerBar = TimerBar(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.height * 0.1), duration: stage.quizTime) //HERE
-                {
-                    self.handleAnswerWrong()
-                }
-                timerBar.name = "timer"
-                addChild(timerBar)
-                timerBar.changeSize()
-                
-                showPopUpQuiz()
-                
-                popupflag = "true"
-            } else {
-                // calling touch began in popupframe method
-                popupframe?.touchesBegan(touches, with: event)
-            }
-            
-        }
 
     }
     
@@ -154,19 +91,7 @@ class GameScene: SKScene {
     }
     
     func hidePopUpQuiz() {
-        layer.removeFromParent()
         popupframe?.removeFromParent()
-    }
-    
-    func displayIcon() {
-        if playerTurn == true {
-            attackIcon.alpha = 0
-            defenseIcon.alpha = 1
-        }
-        else {
-            attackIcon.alpha = 1
-            defenseIcon.alpha = 0
-        }
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -184,97 +109,47 @@ extension GameScene: PopupDelegate {
     func handleAnswerCorrect() {
         
         isUserInteractionEnabled = false
-        
-        self.childNode(withName: "timer")?.removeFromParent()
+
         hidePopUpQuiz()
-        
-        attackIcon.alpha = 0
-        defenseIcon.alpha = 0
-        
-        if playerTurn == true {
-            playerNode.beginAnimation(state: .attack)
-            self.enemyNode.beginAnimation(state: .stagger)
-            addChild(attack)
-            attack.BeginAttack {
-                self.attack.removeFromParent()
-                self.isUserInteractionEnabled = true
-            }
-            
-            enemyHP.decreaseHP()
-            Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
-                self.enemyNode.beginAnimation(state: .walk)
-                self.playerNode.beginAnimation(state: .walk)
-                self.defenseIcon.alpha = 1
-            })
-            playerTurn = false
+        playerNode.beginAnimation(state: .attack)
+        self.enemyNode.beginAnimation(state: .stagger)
+        addChild(attack)
+        attack.BeginAttack {
+            self.attack.removeFromParent()
+            self.isUserInteractionEnabled = true
         }
-        else {
-            
-            playerNode.beginAnimation(state: .defense)
-            enemyNode.beginAnimation(state: .attack)
-            addChild(damage)
-            damage.BeginDamage {
-                self.damage.removeFromParent()
-                self.isUserInteractionEnabled = true
-            }
-            
-            Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
-                self.playerNode.beginAnimation(state: .walk)
-                self.enemyNode.beginAnimation(state: .walk)
-                self.attackIcon.alpha = 1
-                self.isUserInteractionEnabled = true
-            })
-            playerTurn = true
-        }
+        
+        enemyHP.decreaseHP()
+        Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
+            self.enemyNode.beginAnimation(state: .walk)
+            self.playerNode.beginAnimation(state: .walk)
+            self.showPopUpQuiz()
+        })
         
         popupflag = "false"
+        
+        
     }
     
     func handleAnswerWrong() {
         isUserInteractionEnabled = false
 
-        self.childNode(withName: "timer")?.removeFromParent()
         hidePopUpQuiz()
         
-        attackIcon.alpha = 0
-        defenseIcon.alpha = 0
-
-        if playerTurn == true {
-            addChild(attack)
-            playerNode.beginAnimation(state: .attack)
-            self.enemyNode.beginAnimation(state: .defense)
-            attack.BeginAttack {
-                self.attack.removeFromParent()
-                self.isUserInteractionEnabled = true
-            }
-            
-            Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
-                self.playerNode.beginAnimation(state: .walk)
-                self.enemyNode.beginAnimation(state: .walk)
-                self.defenseIcon.alpha = 1
-                self.isUserInteractionEnabled = true
-            })
-            playerTurn = false
+        addChild(attack)
+        playerNode.beginAnimation(state: .attack)
+        self.enemyNode.beginAnimation(state: .defense)
+        attack.BeginAttack {
+            self.attack.removeFromParent()
+            self.isUserInteractionEnabled = true
         }
-        else {
-            addChild(damage)
-            enemyNode.beginAnimation(state: .attack)
-            self.playerNode.beginAnimation(state: .stagger)
-            damage.BeginDamage {
-                self.damage.removeFromParent()
-                self.isUserInteractionEnabled = true
-            }
-            
-            playerHP.decreaseHP()
-            
-            Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
-                self.playerNode.beginAnimation(state: .walk)
-                self.enemyNode.beginAnimation(state: .walk)
-                self.attackIcon.alpha = 1
-                self.isUserInteractionEnabled = true
-            })
-            playerTurn = true
-        }
+        
+        Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
+            self.playerNode.beginAnimation(state: .walk)
+            self.enemyNode.beginAnimation(state: .walk)
+            self.isUserInteractionEnabled = true
+            self.showPopUpQuiz()
+        })
 
         popupflag = "false"
     }
