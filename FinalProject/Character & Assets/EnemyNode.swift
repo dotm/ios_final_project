@@ -23,7 +23,7 @@ class EnemyNode: SKSpriteNode {
         
         let texture = SKTexture(imageNamed: enemy.textureStandbyNameA)
         
-        let height = UIScreen.main.bounds.height * 0.45
+        let height = UIScreen.main.bounds.height * 0.2
         let rescale = height/texture.size().height
         let width = texture.size().width * rescale
         let size = CGSize(width: width, height: height)
@@ -70,13 +70,18 @@ class EnemyNode: SKSpriteNode {
         }
     }
     
-    func dodge(){
-
-        let moveUp = SKAction.moveBy(x: 150, y: -150, duration: 0.2)
-        let moveBack = SKAction.move(to: position, duration: 0.2)
-        let dodgeAnimation = SKAction.sequence([moveUp,moveBack])
+    func dies(){
+        let textureAtlas = SKTextureAtlas(named: enemy.enemyName)
         
-        self.run(dodgeAnimation)
+        let frames = [enemy.textureStaggerName].map{textureAtlas.textureNamed($0)}
+        let animate = SKAction.animate(with: frames, timePerFrame: 1)
+        let stagger = SKAction.repeat(animate, count: 1)
+        
+        let decrease = SKAction.fadeAlpha(to: 0.0, duration: 0.2)
+        
+        let sequence = SKAction.sequence([stagger,decrease])
+        
+        self.run(sequence)
     }
     
     required init?(coder aDecoder: NSCoder) {

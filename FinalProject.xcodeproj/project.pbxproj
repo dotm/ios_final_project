@@ -18,10 +18,9 @@
 		255EF52E21E59B240098FFD9 /* AttackIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255EF52D21E59B240098FFD9 /* AttackIcon.swift */; };
 		255EF53021E59B340098FFD9 /* DefenseIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255EF52F21E59B340098FFD9 /* DefenseIcon.swift */; };
 		255EF53221E59F4E0098FFD9 /* Damage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255EF53121E59F4E0098FFD9 /* Damage.swift */; };
-		259A8FA421E2F6CD00CFA23A /* PlayerHP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259A8FA321E2F6CD00CFA23A /* PlayerHP.swift */; };
-		259A8FA621E2F6D800CFA23A /* EnemyHP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259A8FA521E2F6D800CFA23A /* EnemyHP.swift */; };
 		259A8FA821E306E800CFA23A /* PopupFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259A8FA721E306E800CFA23A /* PopupFrame.swift */; };
 		25AE54EE21E6F019005C4F1C /* TimerBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AE54ED21E6F019005C4F1C /* TimerBar.swift */; };
+		25BDD1FE21FC4CA50011A079 /* EnemyGroupNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BDD1FD21FC4CA50011A079 /* EnemyGroupNode.swift */; };
 		25E16BF421EEE35E000BF6C9 /* WinFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E16BF321EEE35E000BF6C9 /* WinFrame.swift */; };
 		25E16BF621EEE6E3000BF6C9 /* LoseFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E16BF521EEE6E3000BF6C9 /* LoseFrame.swift */; };
 		25ED1BF921DE140600FB2CD4 /* Attack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ED1BF821DE140600FB2CD4 /* Attack.swift */; };
@@ -78,10 +77,9 @@
 		255EF52D21E59B240098FFD9 /* AttackIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackIcon.swift; sourceTree = "<group>"; };
 		255EF52F21E59B340098FFD9 /* DefenseIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefenseIcon.swift; sourceTree = "<group>"; };
 		255EF53121E59F4E0098FFD9 /* Damage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Damage.swift; sourceTree = "<group>"; };
-		259A8FA321E2F6CD00CFA23A /* PlayerHP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHP.swift; sourceTree = "<group>"; };
-		259A8FA521E2F6D800CFA23A /* EnemyHP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyHP.swift; sourceTree = "<group>"; };
 		259A8FA721E306E800CFA23A /* PopupFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupFrame.swift; sourceTree = "<group>"; };
 		25AE54ED21E6F019005C4F1C /* TimerBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerBar.swift; sourceTree = "<group>"; };
+		25BDD1FD21FC4CA50011A079 /* EnemyGroupNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyGroupNode.swift; sourceTree = "<group>"; };
 		25E16BF321EEE35E000BF6C9 /* WinFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinFrame.swift; sourceTree = "<group>"; };
 		25E16BF521EEE6E3000BF6C9 /* LoseFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoseFrame.swift; sourceTree = "<group>"; };
 		25ED1BF821DE140600FB2CD4 /* Attack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attack.swift; sourceTree = "<group>"; };
@@ -160,15 +158,6 @@
 			path = QuizPopup;
 			sourceTree = "<group>";
 		};
-		253144D021E43F9E00629058 /* HP Bar */ = {
-			isa = PBXGroup;
-			children = (
-				259A8FA321E2F6CD00CFA23A /* PlayerHP.swift */,
-				259A8FA521E2F6D800CFA23A /* EnemyHP.swift */,
-			);
-			path = "HP Bar";
-			sourceTree = "<group>";
-		};
 		254A8FA021E838C4005974DA /* Struct */ = {
 			isa = PBXGroup;
 			children = (
@@ -183,6 +172,7 @@
 			children = (
 				2515616E21DDF0A7008294FE /* PlayerNode.swift */,
 				2515617021DDF47B008294FE /* EnemyNode.swift */,
+				25BDD1FD21FC4CA50011A079 /* EnemyGroupNode.swift */,
 				25ED1BF821DE140600FB2CD4 /* Attack.swift */,
 				255EF53121E59F4E0098FFD9 /* Damage.swift */,
 			);
@@ -295,7 +285,6 @@
 				25AE54F021E71A7D005C4F1C /* Timer Bar */,
 				25AE54EF21E71A2D005C4F1C /* Icon */,
 				255EF52C21E596750098FFD9 /* Character & Assets */,
-				253144D021E43F9E00629058 /* HP Bar */,
 				252CFC3F21DF1F9800BA7C5A /* QuizPopup */,
 				364C25BC21F0D70B00B081A0 /* MainScreen */,
 				376E6D9221DC736E005B830E /* AppDelegate.swift */,
@@ -439,8 +428,6 @@
 				364C25B321F01E5F00B081A0 /* ChooseMode.swift in Sources */,
 				36E6D9BB21EC7AD900B40B49 /* HistoryIcon.swift in Sources */,
 				252CFC4621DF1F9800BA7C5A /* ShapeQuestion.swift in Sources */,
-				259A8FA421E2F6CD00CFA23A /* PlayerHP.swift in Sources */,
-				259A8FA621E2F6D800CFA23A /* EnemyHP.swift in Sources */,
 				255EF53221E59F4E0098FFD9 /* Damage.swift in Sources */,
 				25E16BF621EEE6E3000BF6C9 /* LoseFrame.swift in Sources */,
 				364C25B521F0706100B081A0 /* Utilities.swift in Sources */,
@@ -467,6 +454,7 @@
 				36E6D9BD21EC7B0E00B40B49 /* HelpIcon.swift in Sources */,
 				255EF53021E59B340098FFD9 /* DefenseIcon.swift in Sources */,
 				254A8FA221E83956005974DA /* EnemyStruct.swift in Sources */,
+				25BDD1FE21FC4CA50011A079 /* EnemyGroupNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

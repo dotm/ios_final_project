@@ -17,11 +17,10 @@ class GameScene: SKScene {
     
     private var popupflag: String = "false"
     
-    private var enemyHP: EnemyHP!
-    
     var stage: Stage!
     var playerNode: PlayerNode!
-    var enemyNode: EnemyNode!
+    var enemyGroupNode: EnemyGroupNode!
+    
     var background: SKSpriteNode!
     
     var winFrame: WinFrame!
@@ -30,12 +29,10 @@ class GameScene: SKScene {
         self.stage = stage
         
         let playerNode = PlayerNode(position: CGPoint(x: UIScreen.main.bounds.minX + (UIScreen.main.bounds.width * 0.15), y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.4)))
-        let enemyNode = EnemyNode(position: CGPoint(x: UIScreen.main.bounds.maxX - (UIScreen.main.bounds.width * 0.25), y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.4)), enemy: stage.mobSpawn) //HEREEE
         
         self.playerNode = playerNode
-        self.enemyNode = enemyNode
-        
-        let background = SKSpriteNode(imageNamed: stage.textureBackground) //HERE
+
+        let background = SKSpriteNode(imageNamed: stage.textureBackground)
         background.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         background.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
         self.background = background
@@ -48,7 +45,7 @@ class GameScene: SKScene {
     
     override func sceneDidLoad() {
         
-        let enemyHP = EnemyHP(maxHP: stage.mobSpawn.enemyHP) {
+        let enemyGroupNode = EnemyGroupNode(position: CGPoint(x: UIScreen.main.bounds.maxX - (UIScreen.main.bounds.width * 0.25), y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.4)), enemyAmount: stage.mobSpawn.enemyHP, enemy: stage.mobSpawn) {
             
             Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (_) in
                 let victoryScene = WinFrame(size: self.scene!.size, currentStage: self.stage)
@@ -56,18 +53,11 @@ class GameScene: SKScene {
             })
         }
         
-        self.enemyHP = enemyHP
-        
-        let gapHP = UIScreen.main.bounds.width * 0.05
-
-        enemyHP.anchorPoint = CGPoint(x: 0, y: 0)
-        enemyHP.position = CGPoint(x: UIScreen.main.bounds.midX + gapHP, y: UIScreen.main.bounds.maxY - (UIScreen.main.bounds.height * 0.2))
+        self.enemyGroupNode = enemyGroupNode
         
         addChild(background)
         addChild(playerNode)
-        addChild(enemyNode)
-        
-        addChild(enemyHP)
+        addChild(enemyGroupNode)
         
         showPopUpQuiz()
         
@@ -75,7 +65,6 @@ class GameScene: SKScene {
 
         
         playerNode.beginAnimation(state: .walk)
-        enemyNode.beginAnimation(state: .walk)
         
         BackgroundMusicPlayer.playBattleSceneSong()
     }
@@ -112,16 +101,15 @@ extension GameScene: PopupDelegate {
 
         hidePopUpQuiz()
         playerNode.beginAnimation(state: .attack)
-        self.enemyNode.beginAnimation(state: .stagger)
         addChild(attack)
         attack.BeginAttack {
             self.attack.removeFromParent()
             self.isUserInteractionEnabled = true
         }
         
-        enemyHP.decreaseHP()
+        enemyGroupNode.decreaseEnemy()
+        
         Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
-            self.enemyNode.beginAnimation(state: .walk)
             self.playerNode.beginAnimation(state: .walk)
             self.showPopUpQuiz()
         })
@@ -138,7 +126,6 @@ extension GameScene: PopupDelegate {
         
         addChild(attack)
         playerNode.beginAnimation(state: .attack)
-        self.enemyNode.beginAnimation(state: .defense)
         attack.BeginAttack {
             self.attack.removeFromParent()
             self.isUserInteractionEnabled = true
@@ -146,7 +133,6 @@ extension GameScene: PopupDelegate {
         
         Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
             self.playerNode.beginAnimation(state: .walk)
-            self.enemyNode.beginAnimation(state: .walk)
             self.isUserInteractionEnabled = true
             self.showPopUpQuiz()
         })
