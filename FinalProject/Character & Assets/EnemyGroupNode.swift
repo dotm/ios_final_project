@@ -21,9 +21,10 @@ class EnemyGroupNode: SKSpriteNode {
     
     init(position: CGPoint, enemyAmount: Int, enemy: Enemy, onEmptyEnemy: @escaping ()->() ) {
         
-        let height: CGFloat = UIScreen.main.bounds.height * 0.5
+        let width: CGFloat = UIScreen.main.bounds.height * 0.5
+        let height: CGFloat = UIScreen.main.bounds.height * 0.3
         
-        super.init(texture: nil, color: .clear, size: CGSize(width: height, height: height))
+        super.init(texture: nil, color: .clear, size: CGSize(width: width, height: height))
         self.position = position
         self.onEmptyEnemy = onEmptyEnemy
         self.enemyAmount = enemyAmount
@@ -65,6 +66,12 @@ class EnemyGroupNode: SKSpriteNode {
         
         if indexEnemy == enemyAmount {
             onEmptyEnemy()
+        }
+    }
+    
+    func defense() {
+        for i in 0...arrEnemy.count - 1 {
+            arrEnemy[i].defense()
         }
     }
 }

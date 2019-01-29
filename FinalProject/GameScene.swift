@@ -11,31 +11,20 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    let attack = Attack(position: CGPoint(x: UIScreen.main.bounds.width * 0.83, y: UIScreen.main.bounds.height * 0.5))
+    //MARK: VARIABLES
 
     private var popupframe: PopupFrame?
-    
     private var popupflag: String = "false"
     
     var stage: Stage!
     var playerNode: PlayerNode!
     var enemyGroupNode: EnemyGroupNode!
-    
     var background: SKSpriteNode!
+    var attack: Attack!
     
-    var winFrame: WinFrame!
-    
+    //MARK: INITIALIZER
     init(size: CGSize, stage: Stage) {
         self.stage = stage
-        
-        let playerNode = PlayerNode(position: CGPoint(x: UIScreen.main.bounds.minX + (UIScreen.main.bounds.width * 0.15), y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.4)))
-        
-        self.playerNode = playerNode
-
-        let background = SKSpriteNode(imageNamed: stage.textureBackground)
-        background.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-        background.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
-        self.background = background
         
         super.init(size: size)
     }
@@ -45,55 +34,23 @@ class GameScene: SKScene {
     
     override func sceneDidLoad() {
         
-        let enemyGroupNode = EnemyGroupNode(position: CGPoint(x: UIScreen.main.bounds.maxX - (UIScreen.main.bounds.width * 0.25), y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.4)), enemyAmount: stage.mobSpawn.enemyHP, enemy: stage.mobSpawn) {
-            
-            Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (_) in
-                let victoryScene = WinFrame(size: self.scene!.size, currentStage: self.stage)
-                self.scene?.view?.presentScene(victoryScene, transition: .fade(withDuration: 0.8))
-            })
-        }
-        
-        self.enemyGroupNode = enemyGroupNode
-        
-        addChild(background)
-        addChild(playerNode)
-        addChild(enemyGroupNode)
+        setupAttack()
+        setupBackground()
+        setupEnemyGroupNode()
+        setupPlayerNode()
         
         showPopUpQuiz()
         
         popupflag = "true"
-
         
         playerNode.beginAnimation(state: .walk)
         
         BackgroundMusicPlayer.playBattleSceneSong()
     }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-
-    }
-    
-    func showPopUpQuiz() {
-        self.popupframe = PopupFrame(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY), gameDelegate: self, category: stage.quizCategory)
-        addChild(popupframe!)
-    }
-    
-    func hidePopUpQuiz() {
-        popupframe?.removeFromParent()
-    }
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-    }
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        popupframe?.touchesMoved(touches, with: event)
-    }
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        popupframe?.touchesEnded(touches, with: event)
-    }
 }
 
+
+//MARK: FUNCTION
 extension GameScene: PopupDelegate {
     func handleAnswerCorrect() {
         
@@ -116,7 +73,6 @@ extension GameScene: PopupDelegate {
         
         popupflag = "false"
         
-        
     }
     
     func handleAnswerWrong() {
@@ -131,6 +87,8 @@ extension GameScene: PopupDelegate {
             self.isUserInteractionEnabled = true
         }
         
+        enemyGroupNode.defense()
+        
         Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
             self.playerNode.beginAnimation(state: .walk)
             self.isUserInteractionEnabled = true
@@ -140,4 +98,56 @@ extension GameScene: PopupDelegate {
         popupflag = "false"
     }
     
+    func setupEnemyGroupNode() {
+        let enemyGroupNode = EnemyGroupNode(position: CGPoint(x: UIScreen.main.bounds.maxX - (UIScreen.main.bounds.width * 0.25), y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.3)), enemyAmount: stage.mobSpawn.enemyHP, enemy: stage.mobSpawn) {
+            
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (_) in
+                let victoryScene = WinFrame(size: self.scene!.size, currentStage: self.stage)
+                self.scene?.view?.presentScene(victoryScene, transition: .fade(withDuration: 0.8))
+            })
+        }
+        
+        self.enemyGroupNode = enemyGroupNode
+        addChild(enemyGroupNode)
+    }
+    
+    func setupBackground() {
+        let background = SKSpriteNode(imageNamed: stage.textureBackground)
+        background.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        background.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+        self.background = background
+        
+        addChild(background)
+    }
+    
+    func setupPlayerNode() {
+        let playerNode = PlayerNode(position: CGPoint(x: UIScreen.main.bounds.minX + (UIScreen.main.bounds.width * 0.15), y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.4)))
+        self.playerNode = playerNode
+        addChild(playerNode)
+    }
+    
+    func setupAttack() {
+        let attack = Attack(position: CGPoint(x: UIScreen.main.bounds.midX + (UIScreen.main.bounds.midX/2), y: UIScreen.main.bounds.midY / 1.2))
+        attack.alpha = 0.7
+        self.attack = attack
+    }
+    
+    func showPopUpQuiz() {
+        self.popupframe = PopupFrame(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY), gameDelegate: self, category: stage.quizCategory)
+        addChild(popupframe!)
+    }
+    
+    func hidePopUpQuiz() {
+        popupframe?.removeFromParent()
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        // Called before each frame is rendered
+    }
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        popupframe?.touchesMoved(touches, with: event)
+    }
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        popupframe?.touchesEnded(touches, with: event)
+    }
 }
