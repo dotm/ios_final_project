@@ -60,19 +60,20 @@ extension GameScene: PopupDelegate {
         playerNode.beginAnimation(state: .attack)
         addChild(attack)
         attack.BeginAttack {
+            
             self.attack.removeFromParent()
-            self.isUserInteractionEnabled = true
+            self.enemyGroupNode.decreaseEnemy()
+            
+            Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
+                self.playerNode.beginAnimation(state: .walk)
+                self.showPopUpQuiz()
+                
+                
+                self.isUserInteractionEnabled = true
+            })
+            
+            self.popupflag = "false"
         }
-        
-        enemyGroupNode.decreaseEnemy()
-        
-        Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
-            self.playerNode.beginAnimation(state: .walk)
-            self.showPopUpQuiz()
-        })
-        
-        popupflag = "false"
-        
     }
     
     func handleAnswerWrong() {
