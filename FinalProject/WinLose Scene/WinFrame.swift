@@ -86,8 +86,6 @@ class WinFrame: SKScene {
                 }
                 
                 self.scene?.view?.presentScene(nextScene, transition: .fade(withDuration: 0.8))
-                
-                print(111,currentStage)
             }
         }
     }

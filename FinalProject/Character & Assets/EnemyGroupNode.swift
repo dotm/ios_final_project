@@ -29,27 +29,18 @@ class EnemyGroupNode: SKSpriteNode {
         self.onEmptyEnemy = onEmptyEnemy
         self.enemyAmount = enemyAmount
         
-        print(111, UIScreen.main.bounds.maxX)
-        print(222, UIScreen.main.bounds.maxY)
-        
         for _ in 0...enemyAmount - 1 {
 
             let x = CGFloat.random(in: (-self.frame.width/3)...(self.frame.width/3))
             let y = CGFloat.random(in: (-self.frame.width/3)...(self.frame.width/3))
 
             let enemyNode = EnemyNode(position: CGPoint(x: x, y: y), enemy: enemy)
-            print(777,x)
-            print(666,y)
 
             arrEnemy.append(enemyNode)
             addChild(enemyNode)
             
             enemyNode.beginAnimation(state: .walk)
         }
-        
-        print(999,self.frame.minX,self.frame.maxX)
-        print(888,self.frame.minY,self.frame.maxY)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

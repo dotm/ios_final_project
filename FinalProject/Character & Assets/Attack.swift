@@ -18,7 +18,7 @@ class Attack: SKSpriteNode {
         
         let size = UIScreen.main.bounds.height * 0.6
         
-        super.init(texture: texture, color: .clear, size: CGSize(width: size * 3, height: size))
+        super.init(texture: texture, color: .clear, size: CGSize(width: size * 5, height: size))
         self.position = position
         
         var frameArr: [String] = []
