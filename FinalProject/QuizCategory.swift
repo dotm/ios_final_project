@@ -11,4 +11,5 @@ enum QuizCategory: String {
     case shape
     case alphabet
     case numbers
+    case tracing
 }

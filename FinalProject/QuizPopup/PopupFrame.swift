@@ -31,6 +31,8 @@ class PopupFrame: SKNode {
         switch category {
         case .color:
             quizBox = ColorPopupQuiz(size: textureOuter.size)
+        case .tracing:
+            quizBox = TracingPopupQuiz(size: textureOuter.size, imageNamed: "tracing_2")
         default:
             quizBox = DummyPopupQuiz(size: textureOuter.size)
         }

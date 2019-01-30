@@ -20,12 +20,12 @@ class TracingPopupQuiz: BasePopupQuiz {
     
     private weak var backgroundTraceQuiz: SKSpriteNode!
     
-    init(size:CGSize) {
+    init(size:CGSize, imageNamed:String) {
         super.init()
         let questionBackgroundColor = UIColor.clear
         let canvasPosition = CGPoint(x: 0, y: 0)
         let canvasSize = CGSize(width: 200, height: 200)
-        let questionImage = UIImage(named: "2_1")!
+        let questionImage = UIImage(named: imageNamed)!
 
         let questionBackground = SKSpriteNode(texture: SKTexture(image: questionImage))
         questionBackground.position = canvasPosition
