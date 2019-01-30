@@ -57,7 +57,7 @@ class WinFrame: SKScene {
         }
         
         celebration.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        celebration.size = CGSize(width: celebration.size.width, height: celebration.size.height)
+        celebration.size = CGSize(width: celebration.size.width / 6, height: celebration.size.height / 6)
         celebration.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
         
         addChild(celebration)
