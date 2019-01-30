@@ -18,6 +18,7 @@ class PopupFrame: SKNode {
     init(position: CGPoint, gameDelegate: PopupDelegate, category: QuizCategory) {
         super.init()
         self.position = position
+        textureOuter.alpha = 0
         textureOuter.size = CGSize(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.height * 0.6)
         
 //        textureInner.size = textureOuter.size

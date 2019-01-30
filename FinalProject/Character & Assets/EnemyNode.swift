@@ -84,6 +84,22 @@ class EnemyNode: SKSpriteNode {
         self.run(sequence)
     }
     
+    func defense() {
+        let textureAtlas = SKTextureAtlas(named: enemy.enemyName)
+        
+        let framesDefense = [enemy.textureDefenseName].map{textureAtlas.textureNamed($0)}
+        let animateDefense = SKAction.animate(with: framesDefense, timePerFrame: 1)
+        let defense = SKAction.repeat(animateDefense, count: 1)
+        
+        let framesWalk = [enemy.textureStandbyNameA,enemy.textureStandbyNameB].map{textureAtlas.textureNamed($0)}
+        let animateWalk = SKAction.animate(with: framesWalk, timePerFrame: 0.3)
+        let walk = SKAction.repeatForever(animateWalk)
+        
+        let sequence = SKAction.sequence([defense,walk])
+        
+        self.run(sequence)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
