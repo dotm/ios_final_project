@@ -20,61 +20,18 @@ class WinFrame: SKScene {
     var currentStage: Stage!
     
     init(size: CGSize, currentStage: Stage) {
-        let background = SKSpriteNode(imageNamed: "frame_victory")
-        background.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-        background.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
-        self.background = background
-        
-        let loseEnemy = SKSpriteNode(imageNamed: "penguin_mainpage")
-        loseEnemy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        loseEnemy.size = CGSize(width: loseEnemy.size.width, height: loseEnemy.size.height)
-        loseEnemy.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
-        self.pose = loseEnemy
-        
         self.currentStage = currentStage
         
         super.init(size: size)
     }
     
     override func sceneDidLoad() {
-        addChild(background)
-        addChild(pose)
-        
-        setupReplayButton()
-        setupReturnButton()
-    }
-    
-    func setupReturnButton(){
-        let returnButton = SKSpriteNode(texture: SKTexture(imageNamed: "icon_exit"), color: .clear, size: CGSize(width: (self.frame.width / 8), height: (self.frame.width / 8)))
-
-        returnButton.position = CGPoint(x: UIScreen.main.bounds.width / 3, y: UIScreen.main.bounds.height * 0.15)
-
-        addChild(returnButton)
-
-        self.returnButton = returnButton
-    }
-
-    func setupReplayButton() {
-        let replayButton = SKSpriteNode(texture: SKTexture(imageNamed: "icon_ok"), color: .clear, size: CGSize(width: (self.frame.width / 8), height: (self.frame.width / 8)))
-
-        replayButton.position = CGPoint(x: UIScreen.main.bounds.width * 2 / 3, y: UIScreen.main.bounds.height * 0.15)
-
-        addChild(replayButton)
-
-        self.nextStageButton = replayButton
-
+        setupBackgroundImage()
+        setupCelebrationImage()
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch:AnyObject in touches
-        {
-            let location = touch.location(in: self)
-            if returnButton.contains(location) {
-                let mainScene = MainScene(size: (scene?.size)!)
-                self.scene?.view?.presentScene(mainScene, transition: .fade(withDuration: 0.8))
-            }
-            else if nextStageButton.contains(location) {
-                
+        
                 let nextScene: SKScene
                 
                 if let nextStage = currentStage.nextStage.first {
@@ -86,8 +43,32 @@ class WinFrame: SKScene {
                 }
                 
                 self.scene?.view?.presentScene(nextScene, transition: .fade(withDuration: 0.8))
-            }
+    }
+    
+    func setupCelebrationImage() {
+        let celebration: SKSpriteNode!
+        
+        if energyAmount < 3 {
+            celebration = SKSpriteNode(imageNamed: "win_normal")
+            energyAmount += 1
         }
+        else {
+            celebration = SKSpriteNode(imageNamed: "win_final")
+        }
+        
+        celebration.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        celebration.size = CGSize(width: celebration.size.width, height: celebration.size.height)
+        celebration.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+        
+        addChild(celebration)
+    }
+    
+    func setupBackgroundImage() {
+        let background = SKSpriteNode(imageNamed: "frame_victory")
+        background.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        background.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+        
+        addChild(background)
     }
     
     required init?(coder aDecoder: NSCoder) {

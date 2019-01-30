@@ -34,7 +34,7 @@ class Attack: SKSpriteNode {
         let TextureAtlas = SKTextureAtlas(named: "Kamehameha")
         
         let frames = frameArr.map{TextureAtlas.textureNamed($0)}
-        let animate = SKAction.animate(with: frames, timePerFrame: 0.02)
+        let animate = SKAction.animate(with: frames, timePerFrame: 0.01)
         let attack = SKAction.repeat(animate, count: 1)
         self.run(attack) {
             completion()

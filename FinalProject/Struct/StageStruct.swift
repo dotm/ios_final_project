@@ -22,7 +22,7 @@ var stage1A = Stage(
     
     stageName: "stage1A",
     textureBackground: "background_snow",
-    quizCategory: .color,
+    quizCategory: .tracing,
     mobSpawn: mobA,
     quizTime: 5,
     nextStage: [stage2A]
@@ -32,7 +32,7 @@ var stage2A = Stage(
     
     stageName: "stage2A",
     textureBackground: "background_snow",
-    quizCategory: .color,
+    quizCategory: .tracing,
     mobSpawn: mobA,
     quizTime: 5,
     nextStage: [stage3A]
@@ -42,7 +42,7 @@ var stage3A = Stage(
     
     stageName: "stage3A",
     textureBackground: "background_snow",
-    quizCategory: .color,
+    quizCategory: .tracing,
     mobSpawn: mobA,
     quizTime: 5,
     nextStage: []
