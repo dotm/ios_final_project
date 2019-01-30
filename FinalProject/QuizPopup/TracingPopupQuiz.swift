@@ -66,8 +66,9 @@ class TracingPopupQuiz: BasePopupQuiz {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {return}
         let touchLocation = touch.location(in: self)
+        guard questionBackground.contains(touchLocation) else {return}
         let alphaQuestions = questionBackground.getColor(touch: touch).cgColor.alpha
-        guard alphaQuestions == 1 && questionBackground.contains(touchLocation) else {return}
+        guard alphaQuestions == 1 else {return}
         
         let currentPoint = touch.location(in: self)
         lastPoint = currentPoint
