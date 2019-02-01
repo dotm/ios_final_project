@@ -68,6 +68,7 @@ class WinFrame: SKScene {
         }
         else {
             celebration.finalWinSetup()
+            energyAmount = 0
         }
     }
     

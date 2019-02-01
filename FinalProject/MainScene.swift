@@ -15,9 +15,6 @@ fileprivate let layer = SKSpriteNode(color: UIColor(white: 0, alpha: 0.8), size:
 class MainScene: SKScene {
     var backgroundImg:SKSpriteNode!
     var playIcon:PlayIcon!
-    var settingIcon: SettingIcon!
-    var historyIcon: HistoryIcon!
-    var helpIcon:HelpIcon!
     
     override init(size: CGSize) {
         super.init(size: size)
