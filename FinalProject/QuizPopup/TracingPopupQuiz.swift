@@ -22,6 +22,9 @@ class TracingPopupQuiz: BasePopupQuiz {
     
     private var currentlyChecking = false
     
+    deinit {
+        print(222)
+    }
     init(size:CGSize, imageNamed:String) {
         super.init()
         let questionBackgroundColor = UIColor.clear
@@ -99,12 +102,11 @@ class TracingPopupQuiz: BasePopupQuiz {
         if  player_traceCorrectly {
             print("correct")
             gameDelegate?.handleAnswerCorrect()
-            
-            Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (_) in
-                self.currentlyChecking = false
-            }
         } else {
             print("wrong")
+        }
+        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (_) in
+            self.currentlyChecking = false
         }
     }
     
