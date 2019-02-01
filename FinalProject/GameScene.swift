@@ -55,7 +55,7 @@ extension GameScene: PopupDelegate {
     func handleAnswerCorrect() {
         
         isUserInteractionEnabled = false
-
+        
         hidePopUpQuiz()
         playerNode.beginAnimation(state: .attack)
         addChild(attack)

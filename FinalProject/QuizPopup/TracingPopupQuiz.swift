@@ -24,7 +24,7 @@ class TracingPopupQuiz: BasePopupQuiz {
         super.init()
         let questionBackgroundColor = UIColor.clear
         let canvasPosition = CGPoint(x: 0, y: 0)
-        let canvasSize = CGSize(width: 200, height: 200)
+        let canvasSize = CGSize(width: 230, height: 230)
         let questionImage = UIImage(named: imageNamed)!
 
         let questionBackground = SKSpriteNode(texture: SKTexture(image: questionImage))
@@ -83,7 +83,7 @@ class TracingPopupQuiz: BasePopupQuiz {
     private func check_answer() {
         let difference = differenceNode.getImage()!
         let correctTracingRatio = difference.getRatio_ofBlackPixels_fromAllPixels()
-        let allowableMarginOfError_percentage = 0.18// 0.01 == 1 %
+        let allowableMarginOfError_percentage = 0.06// 0.01 == 1 %
         let required_correctTracingRatio = (original_isTransparent - allowableMarginOfError_percentage)
         
         let player_traceCorrectly = correctTracingRatio > required_correctTracingRatio
@@ -124,7 +124,7 @@ class TracingPopupQuiz: BasePopupQuiz {
         
         context.setLineCap(.round)
         context.setBlendMode(.normal)
-        context.setLineWidth(30.0)
+        context.setLineWidth(40.0)
         context.setStrokeColor(UIColor.black.cgColor)
         
         context.strokePath()
