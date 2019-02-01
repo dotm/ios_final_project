@@ -9,7 +9,6 @@ import SpriteKit
 
 protocol PopupDelegate {
     func handleAnswerCorrect()
-    func handleAnswerWrong()
 }
 
 class BasePopupQuiz:SKNode{

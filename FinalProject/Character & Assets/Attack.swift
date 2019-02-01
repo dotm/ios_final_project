@@ -26,7 +26,7 @@ class Attack: SKSpriteNode {
         for i in 1...50 {
             frameArr.append("k_\(i)")
         }
-        
+        self.alpha = 0
         self.frameArr = frameArr
     }
     
@@ -36,7 +36,9 @@ class Attack: SKSpriteNode {
         let frames = frameArr.map{TextureAtlas.textureNamed($0)}
         let animate = SKAction.animate(with: frames, timePerFrame: 0.01)
         let attack = SKAction.repeat(animate, count: 1)
+        self.alpha = 0.7
         self.run(attack) {
+            self.alpha = 0
             completion()
         }
     }

@@ -68,7 +68,6 @@ class DummyPopupQuiz: BasePopupQuiz {
             }
             else if shape2.contains(location) {
                 print("shape 2 touched")
-                gameDelegate?.handleAnswerWrong()
             }
             else {
                 print("you are touching other")

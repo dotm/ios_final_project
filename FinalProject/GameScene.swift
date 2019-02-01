@@ -14,7 +14,6 @@ class GameScene: SKScene {
     //MARK: VARIABLES
 
     private var popupframe: PopupFrame?
-    private var popupflag: String = "false"
     
     var stage: Stage!
     var playerNode: PlayerNode!
@@ -34,14 +33,12 @@ class GameScene: SKScene {
     
     override func sceneDidLoad() {
         
-        setupAttack()
         setupBackground()
         setupEnemyGroupNode()
         setupPlayerNode()
+        setupAttack()
         
         showPopUpQuiz()
-        
-        popupflag = "true"
         
         playerNode.beginAnimation(state: .walk)
         
@@ -58,10 +55,7 @@ extension GameScene: PopupDelegate {
 
         hidePopUpQuiz()
         playerNode.beginAnimation(state: .attack)
-        addChild(attack)
         attack.BeginAttack {
-            
-            self.attack.removeFromParent()
             self.enemyGroupNode.decreaseEnemy()
             
             Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
@@ -71,32 +65,7 @@ extension GameScene: PopupDelegate {
                 
                 self.isUserInteractionEnabled = true
             })
-            
-            self.popupflag = "false"
         }
-    }
-    
-    func handleAnswerWrong() {
-        isUserInteractionEnabled = false
-
-        hidePopUpQuiz()
-        
-        addChild(attack)
-        playerNode.beginAnimation(state: .attack)
-        attack.BeginAttack {
-            self.attack.removeFromParent()
-            self.isUserInteractionEnabled = true
-        }
-        
-        enemyGroupNode.defense()
-        
-        Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
-            self.playerNode.beginAnimation(state: .walk)
-            self.isUserInteractionEnabled = true
-            self.showPopUpQuiz()
-        })
-
-        popupflag = "false"
     }
     
     func setupEnemyGroupNode() {
@@ -145,7 +114,7 @@ extension GameScene: PopupDelegate {
             attack = Attack(position: CGPoint(x: UIScreen.main.bounds.midX + (UIScreen.main.bounds.midX/2), y: UIScreen.main.bounds.midY / 1.2))
         }
         
-        attack.alpha = 0.7
+        addChild(attack)
         self.attack = attack
     }
     

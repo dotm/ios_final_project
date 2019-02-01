@@ -20,6 +20,8 @@ class TracingPopupQuiz: BasePopupQuiz {
     
     private weak var backgroundTraceQuiz: SKSpriteNode!
     
+    private var currentlyChecking = false
+    
     init(size:CGSize, imageNamed:String) {
         super.init()
         let questionBackgroundColor = UIColor.clear
@@ -81,6 +83,12 @@ class TracingPopupQuiz: BasePopupQuiz {
     }
     
     private func check_answer() {
+        guard currentlyChecking == false else {
+            print("NOOO")
+            return
+        }
+        
+        currentlyChecking = true
         let difference = differenceNode.getImage()!
         let correctTracingRatio = difference.getRatio_ofBlackPixels_fromAllPixels()
         let allowableMarginOfError_percentage = 0.18// 0.01 == 1 %
@@ -91,6 +99,10 @@ class TracingPopupQuiz: BasePopupQuiz {
         if  player_traceCorrectly {
             print("correct")
             gameDelegate?.handleAnswerCorrect()
+            
+            Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (_) in
+                self.currentlyChecking = false
+            }
         } else {
             print("wrong")
         }
