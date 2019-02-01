@@ -18,6 +18,9 @@ class PlayerNode: SKSpriteNode {
     var walkFrameArr: [String] = []
     var staggerFrameArr: [String] = []
     var standbyFrameArr: [String] = []
+    var normalWinArr: [String] = []
+    var finalWinArr: [String] = []
+    var jugglingArr: [String] = []
     
     init(position: CGPoint) {
         let texture = SKTexture(imageNamed: "idle_penguin0")
@@ -33,6 +36,9 @@ class PlayerNode: SKSpriteNode {
         var walkFrameArr: [String] = []
         var staggerFrameArr: [String] = []
         var standbyFrameArr: [String] = []
+        var normalWinArr: [String] = []
+        var finalWinArr: [String] = []
+        var jugglingArr: [String] = []
         
         for i in 0...23 {
             walkFrameArr.append("idle_penguin\(i)")
@@ -46,9 +52,24 @@ class PlayerNode: SKSpriteNode {
             standbyFrameArr.append("front_half_eyes 2_\(i)")
         }
         
+        for i in 0...29 {
+            normalWinArr.append("normalWinFrames_\(i)")
+        }
+        
+        for i in 1...12 {
+            jugglingArr.append("juggling_\(i)")
+        }
+        
+        for i in 0...59 {
+            finalWinArr.append("finalCelebration_\(i)")
+        }
+        
         self.walkFrameArr = walkFrameArr
         self.staggerFrameArr = staggerFrameArr
         self.standbyFrameArr = standbyFrameArr
+        self.normalWinArr = normalWinArr
+        self.finalWinArr = finalWinArr
+        self.jugglingArr = jugglingArr
         
     }
     
@@ -94,6 +115,36 @@ class PlayerNode: SKSpriteNode {
             let forever = SKAction.repeatForever(animate)
             self.run(forever, withKey: PLAYER)
         }
+    }
+    
+    func normalWinSetup() {
+        let textureAtlas = SKTextureAtlas(named: "Normal Win Frame")
+        
+        let frames = normalWinArr.map{textureAtlas.textureNamed($0)}
+        let animate = SKAction.animate(with: frames, timePerFrame: 0.2)
+        let normalWin = SKAction.repeat(animate, count: 1)
+        
+        self.run(normalWin)
+    }
+    
+    func finalWinSetup() {
+        let textureAtlas = SKTextureAtlas(named: "Final Win Frame")
+        
+        let frames = finalWinArr.map{textureAtlas.textureNamed($0)}
+        let animate = SKAction.animate(with: frames, timePerFrame: 0.2)
+        let finalWin = SKAction.repeat(animate, count: 1)
+        
+        self.run(finalWin)
+    }
+    
+    func jugglingSetup() {
+        let textureAtlas = SKTextureAtlas(named: "Juggling")
+        
+        let frames = jugglingArr.map{textureAtlas.textureNamed($0)}
+        let animate = SKAction.animate(with: frames, timePerFrame: 0.08)
+        let juggling = SKAction.repeatForever(animate)
+        
+        self.run(juggling)
     }
     
     required init?(coder aDecoder: NSCoder) {

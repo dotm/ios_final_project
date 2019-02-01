@@ -113,7 +113,15 @@ extension GameScene: PopupDelegate {
     }
     
     func setupBackground() {
-        let background = SKSpriteNode(imageNamed: stage.textureBackground)
+        let background: SKSpriteNode!
+        
+        if UIDevice.current.is_iPad(){
+            background = SKSpriteNode(imageNamed: stage.ipadBattleBackground)
+        }
+        else {
+            background = SKSpriteNode(imageNamed: stage.iphoneBattleBackground)
+        }
+        
         background.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         background.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
         self.background = background

@@ -11,7 +11,8 @@ import Foundation
 struct Stage {
     
     var stageName: String
-    var textureBackground: String
+    var ipadBattleBackground: String
+    var iphoneBattleBackground: String
     var quizCategory: QuizCategory
     var mobSpawn: Enemy
     var quizTime: Double
@@ -21,7 +22,8 @@ struct Stage {
 var stage1A = Stage(
     
     stageName: "stage1A",
-    textureBackground: "background_snow",
+    ipadBattleBackground: "background_ipad_1",
+    iphoneBattleBackground: "background_iphone_1",
     quizCategory: .tracing,
     mobSpawn: mobA,
     quizTime: 5,
@@ -31,7 +33,8 @@ var stage1A = Stage(
 var stage2A = Stage(
     
     stageName: "stage2A",
-    textureBackground: "background_snow",
+    ipadBattleBackground: "background_ipad_1",
+    iphoneBattleBackground: "background_iphone_1",
     quizCategory: .tracing,
     mobSpawn: mobA,
     quizTime: 5,
@@ -41,7 +44,8 @@ var stage2A = Stage(
 var stage3A = Stage(
     
     stageName: "stage3A",
-    textureBackground: "background_snow",
+    ipadBattleBackground: "background_ipad_1",
+    iphoneBattleBackground: "background_iphone_1",
     quizCategory: .tracing,
     mobSpawn: mobA,
     quizTime: 5,
