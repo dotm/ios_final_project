@@ -121,7 +121,7 @@ class PlayerNode: SKSpriteNode {
         let textureAtlas = SKTextureAtlas(named: "Normal Win Frame")
         
         let frames = normalWinArr.map{textureAtlas.textureNamed($0)}
-        let animate = SKAction.animate(with: frames, timePerFrame: 0.02)
+        let animate = SKAction.animate(with: frames, timePerFrame: 0.05)
         let normalWin = SKAction.repeat(animate, count: 1)
         
         self.run(normalWin)
@@ -131,7 +131,7 @@ class PlayerNode: SKSpriteNode {
         let textureAtlas = SKTextureAtlas(named: "Final Win Frame")
         
         let frames = finalWinArr.map{textureAtlas.textureNamed($0)}
-        let animate = SKAction.animate(with: frames, timePerFrame: 0.02)
+        let animate = SKAction.animate(with: frames, timePerFrame: 0.05)
         let finalWin = SKAction.repeat(animate, count: 1)
         
         self.run(finalWin)

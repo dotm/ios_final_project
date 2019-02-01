@@ -71,7 +71,7 @@ extension GameScene: PopupDelegate {
     func setupEnemyGroupNode() {
         let enemyGroupNode = EnemyGroupNode(position: CGPoint(x: UIScreen.main.bounds.maxX - (UIScreen.main.bounds.width * 0.25), y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.3)), enemyAmount: stage.mobSpawn.enemyHP, enemy: stage.mobSpawn) {
             
-            Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (_) in
+            Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { (_) in
                 let victoryScene = WinFrame(size: self.scene!.size, currentStage: self.stage)
                 self.scene?.view?.presentScene(victoryScene, transition: .fade(withDuration: 0.8))
             })
