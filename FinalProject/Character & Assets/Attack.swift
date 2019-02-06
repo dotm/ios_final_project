@@ -20,6 +20,7 @@ class Attack: SKSpriteNode {
         
         super.init(texture: texture, color: .clear, size: CGSize(width: size * 5, height: size))
         self.position = position
+        self.anchorPoint = CGPoint(x: 0.05, y: 0.5)
         
         var frameArr: [String] = []
         

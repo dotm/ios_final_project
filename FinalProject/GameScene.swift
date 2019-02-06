@@ -107,12 +107,7 @@ extension GameScene: PopupDelegate {
     func setupAttack() {
         let attack: Attack!
         
-        if UIDevice.current.is_iPad(){
-            attack = Attack(position: CGPoint(x: UIScreen.main.bounds.midX + (UIScreen.main.bounds.midX * 1.2), y: UIScreen.main.bounds.midY / 1.2))
-        }
-        else {
-            attack = Attack(position: CGPoint(x: UIScreen.main.bounds.midX + (UIScreen.main.bounds.midX/2), y: UIScreen.main.bounds.midY / 1.2))
-        }
+        attack = Attack(position: CGPoint(x: playerNode.position.x, y: UIScreen.main.bounds.midY / 1.2))
         
         addChild(attack)
         self.attack = attack
