@@ -38,7 +38,7 @@ class PopupFrame: SKNode {
         case .color:
             quizBox = ColorPopupQuiz(size: textureOuter.size)
         case .tracing:
-            quizBox = TracingPopupQuiz(size: textureOuter.size, imageNamed: "A1" )
+            quizBox = TracingPopupQuiz(size: textureOuter.size, alphabetName: "A")
         default:
             quizBox = DummyPopupQuiz(size: textureOuter.size)
         }

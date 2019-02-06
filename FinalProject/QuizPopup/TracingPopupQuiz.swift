@@ -21,17 +21,26 @@ class TracingPopupQuiz: BasePopupQuiz {
     private weak var backgroundTraceQuiz: SKSpriteNode!
     
     private var currentlyChecking = false
-    
-    deinit {
-        print(222)
-    }
-    init(size:CGSize, imageNamed:String) {
+    private var colorStroke:UIColor!
+    private var imageArray:[UIImage]!
+   
+    init(size:CGSize, alphabetName:String) {
         super.init()
         let questionBackgroundColor = UIColor.clear
         let canvasPosition = CGPoint(x: 0, y: 0)
         let canvasSize = CGSize(width: 230, height: 230)
-        let questionImage = UIImage(named: imageNamed)!
+        
 
+        var pathsOfImage = Bundle.main.paths(forResourcesOfType: "png", inDirectory: "Alphabet/A")
+        pathsOfImage.sort()
+        
+        imageArray = pathsOfImage.map({ (path) -> UIImage in
+            return UIImage(contentsOfFile: path)!
+        })
+        
+        let questionImage = imageArray[0]
+//        imageArray = UIImage
+        
         let questionBackground = SKSpriteNode(texture: SKTexture(image: questionImage))
         questionBackground.position = canvasPosition
         questionBackground.size = canvasSize
@@ -79,6 +88,7 @@ class TracingPopupQuiz: BasePopupQuiz {
         lastPoint = touchLocation
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
         add_difference_to_differenceNode()
         check_answer()
     }
