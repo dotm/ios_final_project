@@ -38,7 +38,7 @@ class PopupFrame: SKNode {
         case .color:
             quizBox = ColorPopupQuiz(size: textureOuter.size)
         case .tracing:
-            quizBox = TracingPopupQuiz(size: textureOuter.size, imageNamed: alphabetArr.randomElement()!)
+            quizBox = TracingPopupQuiz(size: textureOuter.size, imageNamed: "A1" )
         default:
             quizBox = DummyPopupQuiz(size: textureOuter.size)
         }
@@ -57,7 +57,6 @@ class PopupFrame: SKNode {
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // calling shapeSquare action in this class
-        print("touched frame")
         quizBox?.touchesBegan(touches, with: event)
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -125,6 +125,9 @@ extension GameScene: PopupDelegate {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        popupframe?.touchesBegan(touches, with: event)
+    }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         popupframe?.touchesMoved(touches, with: event)
     }
