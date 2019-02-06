@@ -63,10 +63,10 @@ class TracingPopupQuiz: BasePopupQuiz {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {return}
         let touchLocation = touch.location(in: self)
+        guard questionBackground.contains(touchLocation) else {return}
         let alphaQuestions = questionBackground.getColor(touch: touch).cgColor.alpha
-        guard alphaQuestions == 1 && questionBackground.contains(touchLocation) else {return}
+        guard alphaQuestions == 1 else {return}
         lastPoint = touchLocation
-        
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {return}
@@ -74,11 +74,9 @@ class TracingPopupQuiz: BasePopupQuiz {
         guard questionBackground.contains(touchLocation) else {return}
         let alphaQuestions = questionBackground.getColor(touch: touch).cgColor.alpha
         guard alphaQuestions == 1 else {return}
-        
-        let currentPoint = touch.location(in: self)
-        lastPoint = currentPoint
-        drawLine(from: lastPoint, to: currentPoint)
-        
+        guard lastPoint != CGPoint.zero else { lastPoint = touchLocation ;return}
+        drawLine(from: lastPoint, to: touchLocation)
+        lastPoint = touchLocation
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         add_difference_to_differenceNode()
@@ -86,10 +84,7 @@ class TracingPopupQuiz: BasePopupQuiz {
     }
     
     private func check_answer() {
-        guard currentlyChecking == false else {
-            print("NOOO")
-            return
-        }
+        guard currentlyChecking == false else { return }
         
         currentlyChecking = true
         let difference = differenceNode.getImage()!
