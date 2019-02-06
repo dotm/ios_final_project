@@ -14,15 +14,16 @@ class TracingPopupQuiz: BasePopupQuiz {
     private weak var answerCanvas: SKSpriteNode!
     
     private weak var differenceNode: SKSpriteNode!
+    private weak var backgroundTraceQuiz: SKSpriteNode!
     
     private var original_isTransparent: Double!
     private var lastPoint = CGPoint.zero
     
-    private weak var backgroundTraceQuiz: SKSpriteNode!
-    
     private var currentlyChecking = false
     private var colorStroke:UIColor!
     private var imageArray:[UIImage]!
+    
+    private var tracingDisable:Bool = false
    
     init(size:CGSize, alphabetName:String) {
         super.init()
@@ -30,16 +31,15 @@ class TracingPopupQuiz: BasePopupQuiz {
         let canvasPosition = CGPoint(x: 0, y: 0)
         let canvasSize = CGSize(width: 230, height: 230)
         
-
+        colorStroke = UIColor(named: "A_Color")
+        
         var pathsOfImage = Bundle.main.paths(forResourcesOfType: "png", inDirectory: "Alphabet/A")
         pathsOfImage.sort()
-        
         imageArray = pathsOfImage.map({ (path) -> UIImage in
             return UIImage(contentsOfFile: path)!
         })
         
         let questionImage = imageArray[0]
-//        imageArray = UIImage
         
         let questionBackground = SKSpriteNode(texture: SKTexture(image: questionImage))
         questionBackground.position = canvasPosition
@@ -73,13 +73,20 @@ class TracingPopupQuiz: BasePopupQuiz {
         guard let touch = touches.first else {return}
         let touchLocation = touch.location(in: self)
         guard questionBackground.contains(touchLocation) else {return}
-        let alphaQuestions = questionBackground.getColor(touch: touch).cgColor.alpha
-        guard alphaQuestions == 1 else {return}
+        
+        let startPositionColorCorrect = questionBackground.getColor(touch: touch).cgColor.isColorNearBlack()
+        guard startPositionColorCorrect else {
+            tracingDisable = true
+            return
+        }
+        
         lastPoint = touchLocation
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard tracingDisable == false else {return}
         guard let touch = touches.first else {return}
         let touchLocation = touch.location(in: self)
+    
         guard questionBackground.contains(touchLocation) else {return}
         let alphaQuestions = questionBackground.getColor(touch: touch).cgColor.alpha
         guard alphaQuestions == 1 else {return}
@@ -88,7 +95,7 @@ class TracingPopupQuiz: BasePopupQuiz {
         lastPoint = touchLocation
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        guard tracingDisable == false else { tracingDisable = false; return}
         add_difference_to_differenceNode()
         check_answer()
     }
@@ -158,6 +165,15 @@ class TracingPopupQuiz: BasePopupQuiz {
         let y = (UIScreen.main.bounds.maxY - point.y) - 2*(UIScreen.main.bounds.midY - answerCanvas.frame.midY)
         return CGPoint(x: x, y: y)
     }
+    
+    private func handleStrokeCorrect() {
+        //transisi next pic
+    }
+    
+    private func handleStrokeWrong() {
+        //erase stroke
+    }
+
 }
 
 public extension UIImage {
@@ -271,5 +287,18 @@ public extension SKSpriteNode {
         
         let color = image.getColor(x: x, y: y)
         return color
+    }
+}
+
+public extension CGColor {
+    func isColorNearBlack() -> Bool {
+        guard let color = self.components else {return false}
+        let red = color[0]
+        let green = color[1]
+        let blue = color[2]
+        let alpha = color[3]
+        guard alpha == 1.0 else {return false}
+        
+        return (red <= 0.3 && green <= 0.3 && blue <= 0.3)
     }
 }
