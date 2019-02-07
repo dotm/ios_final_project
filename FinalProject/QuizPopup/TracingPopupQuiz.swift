@@ -24,7 +24,10 @@ class TracingPopupQuiz: BasePopupQuiz {
     private var imageArray:[UIImage]!
     
     private var tracingDisable:Bool = false
-   
+    
+    private var defaultAnswerImage:UIImage!
+    private var indexImage:Int = 0
+    
     init(size:CGSize, alphabetName:String) {
         super.init()
         let questionBackgroundColor = UIColor.clear
@@ -39,15 +42,16 @@ class TracingPopupQuiz: BasePopupQuiz {
             return UIImage(contentsOfFile: path)!
         })
         
-        let questionImage = imageArray[0]
+        let questionImage = imageArray[indexImage]
         
         let questionBackground = SKSpriteNode(texture: SKTexture(image: questionImage))
         questionBackground.position = canvasPosition
         questionBackground.size = canvasSize
         addChild(questionBackground)
         self.questionBackground = questionBackground
-
-        let answerCanvasTexture = SKTexture(image: UIImage(color: questionBackgroundColor, size: questionImage.size)!)
+        
+        defaultAnswerImage = UIImage(color: questionBackgroundColor, size: questionImage.size)
+        let answerCanvasTexture = SKTexture(image: defaultAnswerImage)
         let answerCanvas = SKSpriteNode(texture: answerCanvasTexture)
         answerCanvas.position = canvasPosition
         answerCanvas.size = canvasSize
@@ -57,7 +61,7 @@ class TracingPopupQuiz: BasePopupQuiz {
 
         //delete differenceNode after testing
         let differenceNode = SKSpriteNode(texture: SKTexture(image: UIImage(color: questionBackgroundColor, size: canvasSize)!))
-        let outsideOfScreen = CGPoint(x: UIScreen.main.bounds.maxX , y: UIScreen.main.bounds.maxY)
+        let outsideOfScreen = CGPoint(x: UIScreen.main.bounds.midX , y: UIScreen.main.bounds.midY-250) //max x max y hilang
         differenceNode.position = outsideOfScreen
         differenceNode.size = canvasSize
         addChild(differenceNode)
@@ -90,14 +94,18 @@ class TracingPopupQuiz: BasePopupQuiz {
         guard questionBackground.contains(touchLocation) else {return}
         let alphaQuestions = questionBackground.getColor(touch: touch).cgColor.alpha
         guard alphaQuestions == 1 else {return}
-        guard lastPoint != CGPoint.zero else { lastPoint = touchLocation ;return}
+        guard lastPoint != CGPoint.zero else {lastPoint = touchLocation ;return}
         drawLine(from: lastPoint, to: touchLocation)
         lastPoint = touchLocation
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard tracingDisable == false else { tracingDisable = false; return}
         add_difference_to_differenceNode()
-        check_answer()
+        let diffrenceBlackPixel = differenceNode.getImage()?.getRatio_ofBlackPixels_fromAllPixels()
+        guard diffrenceBlackPixel == 0 else { handleStrokeWrong() ;return}
+        
+        indexImage += 1
+        handleStrokeCorrect()
     }
     
     private func check_answer() {
@@ -137,7 +145,6 @@ class TracingPopupQuiz: BasePopupQuiz {
     }
     
     private func drawLine(from fromPoint: CGPoint, to toPoint: CGPoint) {
-        //guard answerCanvas.contains(fromPoint) && answerCanvas.contains(toPoint) else {return}
         
         UIGraphicsBeginImageContext(answerCanvas.frame.size)
         guard let context = UIGraphicsGetCurrentContext() else {return}
@@ -151,7 +158,7 @@ class TracingPopupQuiz: BasePopupQuiz {
         context.setLineCap(.round)
         context.setBlendMode(.normal)
         context.setLineWidth(40.0)
-        context.setStrokeColor(UIColor.black.cgColor)
+        context.setStrokeColor(colorStroke.cgColor)
         
         context.strokePath()
         
@@ -168,10 +175,33 @@ class TracingPopupQuiz: BasePopupQuiz {
     
     private func handleStrokeCorrect() {
         //transisi next pic
+    
+        guard indexImage == imageArray.count else {
+            DispatchQueue.main.async {
+                self.questionBackground.texture = SKTexture(image: self.imageArray[self.indexImage]) //next image
+                self.answerCanvas.texture = SKTexture(image: self.defaultAnswerImage) //reset canvas
+            }
+            return
+        }
+        gameDelegate?.handleAnswerCorrect()
     }
     
     private func handleStrokeWrong() {
         //erase stroke
+        answerCanvas.texture = SKTexture(image: defaultAnswerImage)
+        animationAnswerWrong(node: questionBackground)
+    }
+    
+    private func animationAnswerWrong(node:SKSpriteNode) {
+        let originNode = node.position
+        let x = originNode.x
+        let y = originNode.y
+        let deltaX: CGFloat = 5.0
+        let bounceRight = SKAction.move(to: CGPoint(x: x + deltaX, y: y), duration: 0.1)
+        let bounceLeft = SKAction.move(to: CGPoint(x: x - deltaX, y: y), duration: 0.1)
+        let backToOrigin = SKAction.move(to: originNode, duration: 0.1)
+        let sequence = SKAction.sequence([bounceRight,bounceLeft,bounceRight,bounceLeft, backToOrigin])
+        node.run(sequence)
     }
 
 }
