@@ -58,8 +58,8 @@ class MainScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let gameScene = GameScene(size: size, stage: stage1A)
-        self.scene?.view?.presentScene(gameScene, transition: .fade(withDuration: 0.8))
+        let tutorialScene = TutorialScene(size: size)
+        self.scene?.view?.presentScene(tutorialScene, transition: .fade(withDuration: 0.8))
     }
 }
 
