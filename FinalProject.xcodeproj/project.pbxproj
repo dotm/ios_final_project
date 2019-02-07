@@ -17,6 +17,7 @@
 		254A8FA221E83956005974DA /* EnemyStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254A8FA121E83956005974DA /* EnemyStruct.swift */; };
 		254A8FA421E83965005974DA /* StageStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254A8FA321E83965005974DA /* StageStruct.swift */; };
 		256658AA220BE120004691B2 /* TutorialNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256658A9220BE120004691B2 /* TutorialNode.swift */; };
+		256658AD220BF53D004691B2 /* SkipButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256658AC220BF53D004691B2 /* SkipButton.swift */; };
 		259A8FA821E306E800CFA23A /* PopupFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259A8FA721E306E800CFA23A /* PopupFrame.swift */; };
 		25BDD1FE21FC4CA50011A079 /* EnemyGroupNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BDD1FD21FC4CA50011A079 /* EnemyGroupNode.swift */; };
 		25D05F76220AC1BE00889F13 /* TutorialScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D05F75220AC1BE00889F13 /* TutorialScene.swift */; };
@@ -69,6 +70,7 @@
 		254A8FA121E83956005974DA /* EnemyStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyStruct.swift; sourceTree = "<group>"; };
 		254A8FA321E83965005974DA /* StageStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageStruct.swift; sourceTree = "<group>"; };
 		256658A9220BE120004691B2 /* TutorialNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialNode.swift; sourceTree = "<group>"; };
+		256658AC220BF53D004691B2 /* SkipButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkipButton.swift; sourceTree = "<group>"; };
 		259A8FA721E306E800CFA23A /* PopupFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupFrame.swift; sourceTree = "<group>"; };
 		25BDD1FD21FC4CA50011A079 /* EnemyGroupNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyGroupNode.swift; sourceTree = "<group>"; };
 		25D05F75220AC1BE00889F13 /* TutorialScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialScene.swift; sourceTree = "<group>"; };
@@ -166,6 +168,14 @@
 			path = "Character & Assets";
 			sourceTree = "<group>";
 		};
+		256658AB220BF4E3004691B2 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				256658AC220BF53D004691B2 /* SkipButton.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
 		25AE54EF21E71A2D005C4F1C /* Icon */ = {
 			isa = PBXGroup;
 			children = (
@@ -242,6 +252,7 @@
 		376E6D9121DC736E005B830E /* FinalProject */ = {
 			isa = PBXGroup;
 			children = (
+				256658AB220BF4E3004691B2 /* Button */,
 				364C25A321EF28F600B081A0 /* Font */,
 				25E16BF221EEE348000BF6C9 /* Win Frame */,
 				373A51C821EADE80002EDFC1 /* Local Persistence */,
@@ -386,6 +397,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				256658AD220BF53D004691B2 /* SkipButton.swift in Sources */,
 				376E6D9921DC736E005B830E /* GameScene.swift in Sources */,
 				3631F36C21E5B6E3004917F4 /* ColorPopupQuiz.swift in Sources */,
 				368F259A22000F2F00861929 /* TracingPopupQuiz.swift in Sources */,

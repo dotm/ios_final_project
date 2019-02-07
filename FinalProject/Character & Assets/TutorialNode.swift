@@ -32,14 +32,16 @@ class TutorialNode: SKSpriteNode {
         let textureAtlas = SKTextureAtlas(named: "Tutorial")
         
         let frames = tutorialArr.map{textureAtlas.textureNamed($0)}
-        let animate = SKAction.animate(with: frames, timePerFrame: 0.15)
+        let animate = SKAction.animate(with: frames, timePerFrame: 0.1)
         let tutorial = SKAction.repeat(animate, count: 1)
         
         self.run(tutorial, completion: skipTutorial)
     }
     
     func skipTutorial() {
-        tutorialSkip = true
+//        tutorialSkip = true
+        let gameScene = GameScene(size: self.scene!.size, stage: stage1A)
+        self.scene?.view?.presentScene(gameScene, transition: .fade(withDuration: 0.5))
     }
     
     required init?(coder aDecoder: NSCoder) {

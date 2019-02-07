@@ -19,6 +19,10 @@ class TutorialScene: SKScene {
     override func sceneDidLoad() {
         setupBackground()
         setupTutorialNode()
+        
+//        if tutorialSkip == true {
+//            setupSkipButton()
+//        }
     }
     
     func setupBackground() {
@@ -44,15 +48,21 @@ class TutorialScene: SKScene {
         tutorialNode.startTutorialAnimation()
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if tutorialSkip == true {
-            let gameScene = GameScene(size: size, stage: stage1A)
-            self.scene?.view?.presentScene(gameScene, transition: .fade(withDuration: 0.8))
-        }
-        else {
-            
-        }
-    }
+//    func setupSkipButton() {
+//        let skipButton = SkipButton(position: CGPoint(x: UIScreen.main.bounds.maxX * 0.7, y: UIScreen.main.bounds.maxY * 0.7))
+//
+//        addChild(skipButton)
+//    }
+    
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        if tutorialSkip == true {
+//            let gameScene = GameScene(size: size, stage: stage1A)
+//            self.scene?.view?.presentScene(gameScene, transition: .fade(withDuration: 0.8))
+//        }
+//        else {
+//
+//        }
+//    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
