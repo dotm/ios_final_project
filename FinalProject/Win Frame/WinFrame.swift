@@ -11,9 +11,6 @@ import GameplayKit
 
 class WinFrame: SKScene {
     
-    private var returnButton: SKSpriteNode!
-    private var nextStageButton: SKSpriteNode!
-    
     var background: SKSpriteNode!
     var pose: SKSpriteNode!
     
@@ -58,7 +55,6 @@ class WinFrame: SKScene {
             celebration.size = CGSize(width: celebration.size.width * 1.5, height: celebration.size.height * 1.5)
 
         }
-        celebration.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
 
         addChild(celebration)
         
