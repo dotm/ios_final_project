@@ -96,6 +96,11 @@ extension GameScene: PopupDelegate {
         self.background = background
         
         addChild(background)
+        
+        guard let snowParticle = SKEmitterNode(fileNamed: "SnowParticle") else { return }
+        snowParticle.position = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
+        
+        self.addChild(snowParticle)
     }
     
     func setupPlayerNode() {

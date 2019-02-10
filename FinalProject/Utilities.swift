@@ -16,6 +16,9 @@ extension UIDevice {
     func isNot_iPad() -> Bool {
         return !is_iPad()
     }
+    func feedbackSupportLevel() -> NSNumber {
+        return (self.value(forKey: "_feedbackSupportLevel") as? NSNumber)!
+    }
 }
 
 extension CGSize {
@@ -30,4 +33,16 @@ extension CGSize {
     }
 }
 
+extension String {
+    static func randomOneCharacter(length: Int = 1) -> String {
+        let base = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        var randomString: String = ""
+        
+        for _ in 0..<length {
+            let randomValue = arc4random_uniform(UInt32(base.count))
+            randomString += "\(base[base.index(base.startIndex, offsetBy: Int(randomValue))])"
+        }
+        return randomString
+    }
+}
 

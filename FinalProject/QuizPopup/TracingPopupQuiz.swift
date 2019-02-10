@@ -8,6 +8,7 @@
 
 import Foundation
 import SpriteKit
+import AudioToolbox
 
 class TracingPopupQuiz: BasePopupQuiz {
     private weak var questionBackground: SKSpriteNode!
@@ -34,9 +35,9 @@ class TracingPopupQuiz: BasePopupQuiz {
         let canvasPosition = CGPoint(x: 0, y: 0)
         let canvasSize = CGSize(width: 230, height: 230)
         
-        colorStroke = UIColor(named: "A_Color")
+        colorStroke = UIColor(named: "\(alphabetName)_Color")
         
-        var pathsOfImage = Bundle.main.paths(forResourcesOfType: "png", inDirectory: "Alphabet/A")
+        var pathsOfImage = Bundle.main.paths(forResourcesOfType: "png", inDirectory: "Alphabet/\(alphabetName)")
         pathsOfImage.sort()
         imageArray = pathsOfImage.map({ (path) -> UIImage in
             return UIImage(contentsOfFile: path)!
@@ -61,7 +62,7 @@ class TracingPopupQuiz: BasePopupQuiz {
 
         //delete differenceNode after testing
         let differenceNode = SKSpriteNode(texture: SKTexture(image: UIImage(color: questionBackgroundColor, size: canvasSize)!))
-        let outsideOfScreen = CGPoint(x: UIScreen.main.bounds.midX , y: UIScreen.main.bounds.midY-250) //max x max y hilang
+        let outsideOfScreen = CGPoint(x: UIScreen.main.bounds.maxX , y: UIScreen.main.bounds.maxY) //max x max y hilang
         differenceNode.position = outsideOfScreen
         differenceNode.size = canvasSize
         addChild(differenceNode)
@@ -190,6 +191,19 @@ class TracingPopupQuiz: BasePopupQuiz {
         //erase stroke
         answerCanvas.texture = SKTexture(image: defaultAnswerImage)
         animationAnswerWrong(node: questionBackground)
+        //handle feedback
+        let feedbackSupportLevel = UIDevice.current.feedbackSupportLevel() == 2
+        handleFeedbackWrong(feedbackSupportLevel)
+    }
+    private func handleFeedbackWrong(_ feedbackSupportLevel:Bool)
+    {
+        if feedbackSupportLevel {
+            let hapticFeedbackWrong = UINotificationFeedbackGenerator()
+            hapticFeedbackWrong.notificationOccurred(.error)
+        } else {
+            AudioServicesPlaySystemSound(1521)
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        }
     }
     
     private func animationAnswerWrong(node:SKSpriteNode) {
