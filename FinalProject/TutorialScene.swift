@@ -41,7 +41,7 @@ class TutorialScene: SKScene {
             tutorialNode.size = CGSize(width: tutorialNode.size.width * 2, height: tutorialNode.size.height * 2)
         }
         else {
-            tutorialNode.size = CGSize(width: tutorialNode.size.width * 2, height: tutorialNode.size.height * 2)
+            tutorialNode.size = CGSize(width: tutorialNode.size.width * 1.5, height: tutorialNode.size.height * 1.5)
         }
         
         addChild(tutorialNode)
