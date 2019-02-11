@@ -103,11 +103,8 @@ class TracingPopupQuiz: BasePopupQuiz {
         lastPoint = touchLocation
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard tracingDisable == false else {
-            tracingDisable = false
-            handleStrokeWrong()
-            return
-        }
+        tracingDisable = false
+        
         add_difference_to_differenceNode()
         let originalBlackPixelRatio = questionBackground.getImage()!.getRatio_ofBlackPixels_fromAllPixels()
         let answerRatioBlackPixel = differenceNode.getImage()!.getRatio_ofBlackPixels_fromAllPixels()
