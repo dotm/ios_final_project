@@ -9,6 +9,7 @@
 import SpriteKit
 import GameplayKit
 import CoreGraphics
+import LocalAuthentication
 
 fileprivate let layer = SKSpriteNode(color: UIColor(white: 0, alpha: 0.8), size: UIScreen.main.bounds.size)
 
@@ -58,8 +59,28 @@ class MainScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let tutorialScene = TutorialScene(size: size)
-        self.scene?.view?.presentScene(tutorialScene, transition: .fade(withDuration: 0.8))
+        if energyAmount == 2 {
+            authenticateUser()
+        }
+        else {
+            let tutorialScene = TutorialScene(size: size)
+            self.scene?.view?.presentScene(tutorialScene, transition: .fade(withDuration: 0.8))
+        }
+    }
+}
+
+func authenticateUser() {
+    let context = LAContext()
+    
+    context.evaluatePolicy(LAPolicy.deviceOwnerAuthentication, localizedReason: "Ask mom to open it for you") {(success, error) in
+        
+        guard success else {
+            
+            
+            return
+        }
+        
+        energyAmount = 0
     }
 }
 

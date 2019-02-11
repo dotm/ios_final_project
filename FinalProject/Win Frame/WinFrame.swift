@@ -64,12 +64,11 @@ class WinFrame: SKScene {
         }
         else {
             celebration.finalWinSetup()
-            energyAmount = 0
         }
     }
     
     func setupBackgroundImage() {
-        let background = SKSpriteNode(imageNamed: "frame_victory")
+        let background = SKSpriteNode(imageNamed: "Frame")
         background.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         background.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
         
