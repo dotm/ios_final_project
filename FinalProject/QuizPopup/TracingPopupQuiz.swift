@@ -8,6 +8,7 @@
 
 import Foundation
 import SpriteKit
+import AudioToolbox
 
 class TracingPopupQuiz: BasePopupQuiz {
     private weak var questionBackground: SKSpriteNode!
@@ -34,9 +35,9 @@ class TracingPopupQuiz: BasePopupQuiz {
         let canvasPosition = CGPoint(x: 0, y: 0)
         let canvasSize = CGSize(width: 230, height: 230)
         
-        colorStroke = UIColor(named: "A_Color")
+        colorStroke = UIColor(named: "\(alphabetName)_Color")
         
-        var pathsOfImage = Bundle.main.paths(forResourcesOfType: "png", inDirectory: "Alphabet/A")
+        var pathsOfImage = Bundle.main.paths(forResourcesOfType: "png", inDirectory: "Alphabet/\(alphabetName)")
         pathsOfImage.sort()
         imageArray = pathsOfImage.map({ (path) -> UIImage in
             return UIImage(contentsOfFile: path)!
@@ -61,7 +62,7 @@ class TracingPopupQuiz: BasePopupQuiz {
 
         //delete differenceNode after testing
         let differenceNode = SKSpriteNode(texture: SKTexture(image: UIImage(color: questionBackgroundColor, size: canvasSize)!))
-        let outsideOfScreen = CGPoint(x: UIScreen.main.bounds.midX , y: UIScreen.main.bounds.midY-250) //max x max y hilang
+        let outsideOfScreen = CGPoint(x: UIScreen.main.bounds.maxX , y: UIScreen.main.bounds.maxY) //max x max y hilang
         differenceNode.position = outsideOfScreen
         differenceNode.size = canvasSize
         addChild(differenceNode)
@@ -93,16 +94,25 @@ class TracingPopupQuiz: BasePopupQuiz {
     
         guard questionBackground.contains(touchLocation) else {return}
         let alphaQuestions = questionBackground.getColor(touch: touch).cgColor.alpha
-        guard alphaQuestions == 1 else {return}
+        guard alphaQuestions == 1 else {
+            tracingDisable = true
+            return
+        }
         guard lastPoint != CGPoint.zero else {lastPoint = touchLocation ;return}
         drawLine(from: lastPoint, to: touchLocation)
         lastPoint = touchLocation
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard tracingDisable == false else { tracingDisable = false; return}
+        guard tracingDisable == false else {
+            tracingDisable = false
+            handleStrokeWrong()
+            return
+        }
         add_difference_to_differenceNode()
-        let diffrenceBlackPixel = differenceNode.getImage()?.getRatio_ofBlackPixels_fromAllPixels()
-        guard diffrenceBlackPixel == 0 else { handleStrokeWrong() ;return}
+        let originalBlackPixelRatio = questionBackground.getImage()!.getRatio_ofBlackPixels_fromAllPixels()
+        let answerRatioBlackPixel = differenceNode.getImage()!.getRatio_ofBlackPixels_fromAllPixels()
+        let acceptableRatioCorrectAnswer = originalBlackPixelRatio - (originalBlackPixelRatio * (1 - 0.07))
+        guard answerRatioBlackPixel <= acceptableRatioCorrectAnswer else { handleStrokeWrong() ;return}
         
         indexImage += 1
         handleStrokeCorrect()
@@ -190,6 +200,19 @@ class TracingPopupQuiz: BasePopupQuiz {
         //erase stroke
         answerCanvas.texture = SKTexture(image: defaultAnswerImage)
         animationAnswerWrong(node: questionBackground)
+        //handle feedback
+        let isfeedbackSupportLevel2 = UIDevice.current.feedbackSupportLevel() == 2
+        handleFeedbackWrong(isfeedbackSupportLevel2)
+    }
+    private func handleFeedbackWrong(_ isfeedbackSupportLevel2:Bool)
+    {
+        if isfeedbackSupportLevel2 {
+            let hapticFeedbackWrong = UINotificationFeedbackGenerator()
+            hapticFeedbackWrong.notificationOccurred(.error)
+        } else {
+            AudioServicesPlaySystemSound(1521)
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        }
     }
     
     private func animationAnswerWrong(node:SKSpriteNode) {
@@ -238,7 +261,8 @@ public extension CGImage {
                 let b = pixels[pixelStartIndex + 2]
                 let a = pixels[pixelStartIndex + 3]
                 
-                let pixel_isBlack = (r < 30 && g < 30 && b < 30 && a == 255)
+                let allowableError = UInt8(nearBlack)
+                let pixel_isBlack = (r < allowableError && g < allowableError && b < allowableError && a == 255)
                 if pixel_isBlack {
                     totalBlackPixels += 1
                 }
@@ -319,7 +343,7 @@ public extension SKSpriteNode {
         return color
     }
 }
-
+let nearBlack: CGFloat = 70
 public extension CGColor {
     func isColorNearBlack() -> Bool {
         guard let color = self.components else {return false}
@@ -329,6 +353,7 @@ public extension CGColor {
         let alpha = color[3]
         guard alpha == 1.0 else {return false}
         
-        return (red <= 0.3 && green <= 0.3 && blue <= 0.3)
+        let allowableError:CGFloat = nearBlack/255.0
+        return (red < allowableError && green < allowableError && blue < allowableError)
     }
 }

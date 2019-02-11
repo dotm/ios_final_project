@@ -27,18 +27,12 @@ class PopupFrame: SKNode {
 //        self.addChild(textureInner)
         self.addChild(textureOuter)
         
-        var alphabetArr: [String] = []
-        
-        for i in 1...26 {
-            alphabetArr.append("alphabet_\(i)")
-        }
-        
         // create instance shapeSquare
         switch category {
         case .color:
             quizBox = ColorPopupQuiz(size: textureOuter.size)
         case .tracing:
-            quizBox = TracingPopupQuiz(size: textureOuter.size, alphabetName: "A")
+            quizBox = TracingPopupQuiz(size: textureOuter.size, alphabetName: String.randomOneCharacter(length: 1))
         default:
             quizBox = DummyPopupQuiz(size: textureOuter.size)
         }
