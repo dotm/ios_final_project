@@ -32,7 +32,7 @@ class TutorialNode: SKSpriteNode {
         let textureAtlas = SKTextureAtlas(named: "Tutorial")
         
         let frames = tutorialArr.map{textureAtlas.textureNamed($0)}
-        let animate = SKAction.animate(with: frames, timePerFrame: 0.1)
+        let animate = SKAction.animate(with: frames, timePerFrame: 0.08)
         let tutorial = SKAction.repeat(animate, count: 1)
         
         self.run(tutorial, completion: skipTutorial)
