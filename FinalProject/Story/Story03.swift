@@ -8,14 +8,23 @@
 
 import Foundation
 import SpriteKit
+import AVFoundation
 
 class Story03: SKScene {
     
     var background: SKSpriteNode!
+    var sound: AVAudioPlayer?
     
     override init(size: CGSize) {
         super.init(size: size)
         setupStory03()
+        setupSFX()
+    }
+    
+    override func sceneDidLoad() {
+        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (_) in
+            self.sound?.play()
+        }
     }
     
     func setupStory03() {
@@ -33,6 +42,18 @@ class Story03: SKScene {
         self.background = background
         
         addChild(background)
+    }
+    
+    func setupSFX() {
+        let soundURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "bingung", ofType: "mp3")!)
+        
+        do {
+            try sound = AVAudioPlayer(contentsOf: soundURL)
+            sound?.prepareToPlay()
+        }
+        catch {
+            print("error: \(error.localizedDescription)")
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
