@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import AVFoundation
 
 class WinFrame: SKScene {
     
@@ -15,6 +16,8 @@ class WinFrame: SKScene {
     var pose: SKSpriteNode!
     
     var currentStage: Stage!
+    
+    var sound: AVAudioPlayer?
     
     init(size: CGSize, currentStage: Stage) {
         
@@ -24,8 +27,12 @@ class WinFrame: SKScene {
     }
     
     override func sceneDidLoad() {
+        setupSFX()
         setupBackgroundImage()
         setupCelebrationImage()
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (_) in
+            self.sound?.play()
+        }
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -64,6 +71,7 @@ class WinFrame: SKScene {
         }
         else {
             celebration.finalWinSetup()
+            energyAmount = 0
         }
     }
     
@@ -73,6 +81,25 @@ class WinFrame: SKScene {
         background.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
         
         addChild(background)
+    }
+    
+    func setupSFX() {
+        let soundURL: URL?
+        
+        if energyAmount < 2 {
+            soundURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "woohoo", ofType: "mp3")!)
+        }
+        else {
+            soundURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "yeay", ofType: "mp3")!)
+        }
+        
+        do {
+            try sound = AVAudioPlayer(contentsOf: soundURL!)
+            sound?.prepareToPlay()
+        }
+        catch {
+            print("error: \(error.localizedDescription)")
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
