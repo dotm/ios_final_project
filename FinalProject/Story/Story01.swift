@@ -45,7 +45,7 @@ class Story01: SKScene {
     }
     
     func setupSFX() {
-        let soundURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "bukamulut", ofType: "mp3")!)
+        let soundURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "\(sfxReference)bukamulut", ofType: "mp3")!)
         
         do {
             try sound = AVAudioPlayer(contentsOf: soundURL)

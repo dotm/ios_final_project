@@ -87,10 +87,10 @@ class WinFrame: SKScene {
         let soundURL: URL?
         
         if energyAmount < 2 {
-            soundURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "woohoo", ofType: "mp3")!)
+            soundURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "\(sfxReference)woohoo", ofType: "mp3")!)
         }
         else {
-            soundURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "yeay", ofType: "mp3")!)
+            soundURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "\(sfxReference)yeay", ofType: "mp3")!)
         }
         
         do {

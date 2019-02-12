@@ -10,3 +10,4 @@ import Foundation
 
 var energyAmount: Int = 0
 var tutorialSkip: Bool = false
+let sfxReference: String = "/sfx/Bubu_sound/"
