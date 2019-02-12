@@ -103,16 +103,20 @@ class TracingPopupQuiz: BasePopupQuiz {
         lastPoint = touchLocation
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard tracingDisable == false else {
-            tracingDisable = false
-            handleStrokeWrong()
-            return
-        }
+//        guard tracingDisable == false else {
+//            tracingDisable = false
+//            handleStrokeWrong()
+//            return
+//        }
         add_difference_to_differenceNode()
         let originalBlackPixelRatio = questionBackground.getImage()!.getRatio_ofBlackPixels_fromAllPixels()
         let answerRatioBlackPixel = differenceNode.getImage()!.getRatio_ofBlackPixels_fromAllPixels()
         let acceptableRatioCorrectAnswer = originalBlackPixelRatio - (originalBlackPixelRatio * (1 - 0.07))
-        guard answerRatioBlackPixel <= acceptableRatioCorrectAnswer else { handleStrokeWrong() ;return}
+        guard answerRatioBlackPixel <= acceptableRatioCorrectAnswer else {
+            tracingDisable = false
+            handleStrokeWrong()
+            return
+        }
         
         indexImage += 1
         handleStrokeCorrect()
@@ -261,7 +265,7 @@ public extension CGImage {
                 let b = pixels[pixelStartIndex + 2]
                 let a = pixels[pixelStartIndex + 3]
                 
-                let allowableError = UInt8(nearBlack)
+                let allowableError = UInt8(30)
                 let pixel_isBlack = (r < allowableError && g < allowableError && b < allowableError && a == 255)
                 if pixel_isBlack {
                     totalBlackPixels += 1
@@ -343,7 +347,6 @@ public extension SKSpriteNode {
         return color
     }
 }
-let nearBlack: CGFloat = 70
 public extension CGColor {
     func isColorNearBlack() -> Bool {
         guard let color = self.components else {return false}
@@ -353,7 +356,7 @@ public extension CGColor {
         let alpha = color[3]
         guard alpha == 1.0 else {return false}
         
-        let allowableError:CGFloat = nearBlack/255.0
+        let allowableError:CGFloat = 70/255.0
         return (red < allowableError && green < allowableError && blue < allowableError)
     }
 }

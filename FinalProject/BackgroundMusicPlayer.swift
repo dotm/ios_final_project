@@ -59,7 +59,7 @@ enum BackgroundMusicPlayer {
     private static func loadVolume(){
         let volume: Float
         if UserDefaults.standard.object(forKey: VOLUME_KEY) == nil {
-            volume = 0.0
+            volume = 1.0
         }else{
             volume = UserDefaults.standard.float(forKey: VOLUME_KEY)
         }
@@ -72,7 +72,7 @@ enum BackgroundMusicPlayer {
         fadeOutCurrentSong_andStart(audioPlayer: battleScene_audioPlayer)
     }
     private static func fadeOutCurrentSong_andStart(audioPlayer: AVAudioPlayer){
-        let fade_inSeconds = 5.0
+        let fade_inSeconds = 1.0
         if let activePlayer = activePlayer {
             activePlayer.setVolume(0, fadeDuration: fade_inSeconds)
             Timer.scheduledTimer(withTimeInterval: fade_inSeconds, repeats: false) { (_) in
