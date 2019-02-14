@@ -47,13 +47,7 @@ class Story03: SKScene {
     func setupSFX() {
         let soundURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "\(sfxReference)bingung", ofType: "mp3")!)
         
-        do {
-            try sound = AVAudioPlayer(contentsOf: soundURL)
-            sound?.prepareToPlay()
-        }
-        catch {
-            print("error: \(error.localizedDescription)")
-        }
+        SFXPlayer.playSfx(soundEffectUrl: soundURL)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

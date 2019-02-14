@@ -87,7 +87,7 @@ class WinFrame: SKScene {
     }
     
     func setupSFX() {
-        let soundURL: URL?
+        let soundURL: URL
         
         if energyAmount < 2 {
             soundURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "\(sfxReference)woohoo", ofType: "mp3")!)
@@ -96,13 +96,7 @@ class WinFrame: SKScene {
             soundURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "\(sfxReference)yeay", ofType: "mp3")!)
         }
         
-        do {
-            try sound = AVAudioPlayer(contentsOf: soundURL!)
-            sound?.prepareToPlay()
-        }
-        catch {
-            print("error: \(error.localizedDescription)")
-        }
+        SFXPlayer.playSfx(soundEffectUrl: soundURL)
     }
     
     required init?(coder aDecoder: NSCoder) {
