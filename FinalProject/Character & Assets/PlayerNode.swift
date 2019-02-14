@@ -222,7 +222,7 @@ class PlayerNode: SKSpriteNode {
         let textureAtlas = SKTextureAtlas(named: "penguin")
         
         let frames = runArr.map{textureAtlas.textureNamed($0)}
-        let animate = SKAction.animate(with: frames, timePerFrame: 0.08)
+        let animate = SKAction.animate(with: frames, timePerFrame: 0.1)
         let run = SKAction.repeatForever(animate)
         
         self.run(run)
