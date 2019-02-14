@@ -12,7 +12,7 @@ import AVFoundation
 enum BackgroundMusicPlayer {
     private static var volume: Float! {
         didSet {
-            activePlayer?.setVolume(volume, fadeDuration: 1)
+            setVolume(volume, duration: 1)
         }
     }
     private static var activePlayer: AVAudioPlayer?
@@ -42,6 +42,9 @@ enum BackgroundMusicPlayer {
     static func setVolume(_ volume: Float){
         self.volume = volume
         saveVolume()
+    }
+    static func setVolume(_ volume: Float, duration: TimeInterval){
+        activePlayer?.setVolume(volume, fadeDuration: duration)
     }
     static func getVolume() -> Float {
         return volume
