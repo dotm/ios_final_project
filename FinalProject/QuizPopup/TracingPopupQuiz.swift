@@ -21,7 +21,7 @@ class TracingPopupQuiz: BasePopupQuiz {
     private var original_isTransparent: Double!
     private var lastPoint = CGPoint.zero
     
-    private var currentlyChecking = false
+    private var tracingAlreadyCorrect = false
     private var colorStroke:UIColor!
     private var imageArray:[UIImage]!
     
@@ -85,6 +85,7 @@ class TracingPopupQuiz: BasePopupQuiz {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard tracingAlreadyCorrect == false else { return }
         guard let touch = touches.first else {return}
         let touchLocation = touch.location(in: self)
         guard questionBackground.contains(touchLocation) else {return}
@@ -98,6 +99,7 @@ class TracingPopupQuiz: BasePopupQuiz {
         lastPoint = touchLocation
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard tracingAlreadyCorrect == false else { return }
         guard tracingDisable == false else {return}
         guard let touch = touches.first else {return}
         let touchLocation = touch.location(in: self)
@@ -114,6 +116,7 @@ class TracingPopupQuiz: BasePopupQuiz {
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         tracingDisable = false
+        guard tracingAlreadyCorrect == false else { return }
         
         add_difference_to_differenceNode()
         let originalBlackPixelRatio = questionBackground.getImage()!.getRatio_ofBlackPixels_fromAllPixels()
@@ -126,28 +129,6 @@ class TracingPopupQuiz: BasePopupQuiz {
         
         indexImage += 1
         handleStrokeCorrect()
-    }
-    
-    private func check_answer() {
-        guard currentlyChecking == false else { return }
-        
-        currentlyChecking = true
-        let difference = differenceNode.getImage()!
-        let correctTracingRatio = difference.getRatio_ofBlackPixels_fromAllPixels()
-        let allowableMarginOfError_percentage = 0.06// 0.01 == 1 %
-        let required_correctTracingRatio = (original_isTransparent - allowableMarginOfError_percentage)
-        
-        let player_traceCorrectly = correctTracingRatio > required_correctTracingRatio
-        
-        if  player_traceCorrectly {
-            print("correct")
-            gameDelegate?.handleAnswerCorrect()
-        } else {
-            print("wrong")
-        }
-        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (_) in
-            self.currentlyChecking = false
-        }
     }
     
     private func add_difference_to_differenceNode(){
@@ -202,7 +183,8 @@ class TracingPopupQuiz: BasePopupQuiz {
             return
         }
         
-        answerCanvas.removeFromParent()
+        tracingAlreadyCorrect = true
+        answerCanvas.texture = nil
         questionBackground.texture = SKTexture(imageNamed: alphabetName)
         playAlphabetSound {
             self.gameDelegate?.handleAnswerCorrect()
