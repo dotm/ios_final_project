@@ -9,6 +9,7 @@
 import Foundation
 import SpriteKit
 import AudioToolbox
+import AVFoundation
 
 class TracingPopupQuiz: BasePopupQuiz {
     private weak var questionBackground: SKSpriteNode!
@@ -28,6 +29,9 @@ class TracingPopupQuiz: BasePopupQuiz {
     
     private var defaultAnswerImage:UIImage!
     private var indexImage:Int = 0
+    
+    private var alphabetSoundUrl:URL!
+    private var alphabetName:String!
     
     init(size:CGSize, alphabetName:String) {
         super.init()
@@ -69,6 +73,12 @@ class TracingPopupQuiz: BasePopupQuiz {
         self.differenceNode = differenceNode
         add_difference_to_differenceNode()
         original_isTransparent = differenceNode.getImage()!.getRatio_ofNotTransparentPixels()
+        
+        let alphabetSoundUrl = URL(fileURLWithPath: Bundle.main.path(forResource: "\(alphabetSfxReference)/audio_\(alphabetName)", ofType: "mp3")!)
+        self.alphabetSoundUrl = alphabetSoundUrl
+        
+        self.alphabetName = alphabetName
+        
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -103,17 +113,13 @@ class TracingPopupQuiz: BasePopupQuiz {
         lastPoint = touchLocation
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        guard tracingDisable == false else {
-//            tracingDisable = false
-//            handleStrokeWrong()
-//            return
-//        }
+        tracingDisable = false
+        
         add_difference_to_differenceNode()
         let originalBlackPixelRatio = questionBackground.getImage()!.getRatio_ofBlackPixels_fromAllPixels()
         let answerRatioBlackPixel = differenceNode.getImage()!.getRatio_ofBlackPixels_fromAllPixels()
         let acceptableRatioCorrectAnswer = originalBlackPixelRatio - (originalBlackPixelRatio * (1 - 0.07))
         guard answerRatioBlackPixel <= acceptableRatioCorrectAnswer else {
-            tracingDisable = false
             handleStrokeWrong()
             return
         }
@@ -191,13 +197,16 @@ class TracingPopupQuiz: BasePopupQuiz {
         //transisi next pic
     
         guard indexImage == imageArray.count else {
-            DispatchQueue.main.async {
-                self.questionBackground.texture = SKTexture(image: self.imageArray[self.indexImage]) //next image
-                self.answerCanvas.texture = SKTexture(image: self.defaultAnswerImage) //reset canvas
-            }
+            self.questionBackground.texture = SKTexture(image: self.imageArray[self.indexImage]) //next image
+            self.answerCanvas.texture = SKTexture(image: self.defaultAnswerImage) //reset canvas
             return
         }
-        gameDelegate?.handleAnswerCorrect()
+        
+        answerCanvas.removeFromParent()
+        questionBackground.texture = SKTexture(imageNamed: alphabetName)
+        playAlphabetSound {
+            self.gameDelegate?.handleAnswerCorrect()
+        }
     }
     
     private func handleStrokeWrong() {
@@ -229,6 +238,10 @@ class TracingPopupQuiz: BasePopupQuiz {
         let backToOrigin = SKAction.move(to: originNode, duration: 0.1)
         let sequence = SKAction.sequence([bounceRight,bounceLeft,bounceRight,bounceLeft, backToOrigin])
         node.run(sequence)
+    }
+    
+    private func playAlphabetSound(completion: (()->())?) {
+        SFXPlayer.playSfx(soundEffectUrl: alphabetSoundUrl, completion: completion)
     }
 
 }
