@@ -60,16 +60,19 @@ class WinFrame: SKScene {
         }
         else {
             celebration.size = CGSize(width: celebration.size.width * 1.5, height: celebration.size.height * 1.5)
-
         }
 
         addChild(celebration)
         
-        if energyAmount < 2 {
+        if energyAmount == 0 {
             celebration.normalWinSetup()
             energyAmount += 1
         }
-        else {
+        else if  energyAmount == 1{
+            celebration.secondWinSetup()
+            energyAmount += 1
+        }
+        else if energyAmount == 2{
             celebration.finalWinSetup()
             energyAmount = 0
         }

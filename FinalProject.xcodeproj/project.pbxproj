@@ -16,6 +16,8 @@
 		2547BE4822014D6800AE1BF5 /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2547BE4722014D6800AE1BF5 /* Variables.swift */; };
 		254A8FA221E83956005974DA /* EnemyStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254A8FA121E83956005974DA /* EnemyStruct.swift */; };
 		254A8FA421E83965005974DA /* StageStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254A8FA321E83965005974DA /* StageStruct.swift */; };
+		2556A49B221418DF00904CFB /* HomeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2556A49A221418DF00904CFB /* HomeNode.swift */; };
+		2556A49D2214341200904CFB /* EnemyHomeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2556A49C2214341200904CFB /* EnemyHomeNode.swift */; };
 		256658AA220BE120004691B2 /* TutorialNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256658A9220BE120004691B2 /* TutorialNode.swift */; };
 		256658AD220BF53D004691B2 /* SkipButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256658AC220BF53D004691B2 /* SkipButton.swift */; };
 		259A8FA821E306E800CFA23A /* PopupFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259A8FA721E306E800CFA23A /* PopupFrame.swift */; };
@@ -75,6 +77,8 @@
 		2547BE4722014D6800AE1BF5 /* Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
 		254A8FA121E83956005974DA /* EnemyStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyStruct.swift; sourceTree = "<group>"; };
 		254A8FA321E83965005974DA /* StageStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageStruct.swift; sourceTree = "<group>"; };
+		2556A49A221418DF00904CFB /* HomeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNode.swift; sourceTree = "<group>"; };
+		2556A49C2214341200904CFB /* EnemyHomeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyHomeNode.swift; sourceTree = "<group>"; };
 		256658A9220BE120004691B2 /* TutorialNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialNode.swift; sourceTree = "<group>"; };
 		256658AC220BF53D004691B2 /* SkipButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkipButton.swift; sourceTree = "<group>"; };
 		259A8FA721E306E800CFA23A /* PopupFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupFrame.swift; sourceTree = "<group>"; };
@@ -176,6 +180,8 @@
 				25BDD1FD21FC4CA50011A079 /* EnemyGroupNode.swift */,
 				25ED1BF821DE140600FB2CD4 /* Attack.swift */,
 				256658A9220BE120004691B2 /* TutorialNode.swift */,
+				2556A49A221418DF00904CFB /* HomeNode.swift */,
+				2556A49C2214341200904CFB /* EnemyHomeNode.swift */,
 			);
 			path = "Character & Assets";
 			sourceTree = "<group>";
@@ -434,6 +440,7 @@
 				252CFC4521DF1F9800BA7C5A /* QnA.swift in Sources */,
 				376E6D9B21DC736E005B830E /* GameViewController.swift in Sources */,
 				36E6D9B721EC71D400B40B49 /* PlayIcon.swift in Sources */,
+				2556A49B221418DF00904CFB /* HomeNode.swift in Sources */,
 				3708912C21E2F7150065EC92 /* PopupDelegate.swift in Sources */,
 				254A8FA421E83965005974DA /* StageStruct.swift in Sources */,
 				2515617121DDF47B008294FE /* EnemyNode.swift in Sources */,
@@ -451,6 +458,7 @@
 				252CFC4421DF1F9800BA7C5A /* DummyPopupQuiz.swift in Sources */,
 				36EB7034221514A100B0BDE8 /* SoundEffectPlayer.swift in Sources */,
 				375BB4CB21EB51FC000969D9 /* QuizCategory.swift in Sources */,
+				2556A49D2214341200904CFB /* EnemyHomeNode.swift in Sources */,
 				254A8FA221E83956005974DA /* EnemyStruct.swift in Sources */,
 				25BDD1FE21FC4CA50011A079 /* EnemyGroupNode.swift in Sources */,
 				25ED9545221157B5002E174A /* Story03.swift in Sources */,

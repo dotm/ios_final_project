@@ -28,9 +28,22 @@ class MainScene: SKScene {
     
     override func sceneDidLoad() {
         BackgroundMusicPlayer.playMainMenuSong()
-        let playerNode = PlayerNode(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.3)))
-        addChild(playerNode)
-        playerNode.jugglingSetup()
+//        let playerNode = PlayerNode(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.3)))
+//        addChild(playerNode)
+//        playerNode.jugglingSetup()
+        
+        let standbyNode: HomeNode
+        
+        if UIDevice.current.is_iPad(){
+            standbyNode = HomeNode(position: CGPoint(x: UIScreen.main.bounds.minX - 200, y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.2)))
+        }
+        else {
+            standbyNode = HomeNode(position: CGPoint(x: UIScreen.main.bounds.minX - 200, y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.23)))
+        }
+
+        addChild(standbyNode)
+        standbyNode.moving()
+//        standbyNode.xScale = standbyNode.xScale * -1
     }
     
     private func setupMainBackground () {
