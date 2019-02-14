@@ -42,6 +42,11 @@ class Story04: SKScene {
         self.background = background
         
         addChild(background)
+        
+        Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { (_) in
+            let mainScene = MainScene(size: self.size)
+            self.scene?.view?.presentScene(mainScene, transition: .fade(withDuration: 0.8))
+        }
     }
     
     func setupSFX() {
@@ -50,10 +55,10 @@ class Story04: SKScene {
         SFXPlayer.playSfx(soundEffectUrl: soundURL)
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let mainScene = MainScene(size: size)
-        self.scene?.view?.presentScene(mainScene, transition: .fade(withDuration: 0.8))
-    }
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        let mainScene = MainScene(size: size)
+//        self.scene?.view?.presentScene(mainScene, transition: .fade(withDuration: 0.8))
+//    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
