@@ -27,7 +27,6 @@ class WinFrame: SKScene {
     }
     
     override func sceneDidLoad() {
-        BackgroundMusicPlayer.mute()
         setupSFX()
         setupBackgroundImage()
         setupCelebrationImage()
@@ -94,7 +93,7 @@ class WinFrame: SKScene {
             soundURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "\(sfxReference)finalWin", ofType: "mp3")!)
         }
         
-        SFXPlayer.playSfx(soundEffectUrl: soundURL)
+        SFXPlayer.playSfx(soundEffectUrl: soundURL, volume: 0.0)
     }
     
     required init?(coder aDecoder: NSCoder) {
