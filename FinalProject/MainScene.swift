@@ -52,10 +52,10 @@ class MainScene: SKScene {
         let screenHeight = UIScreen.main.bounds.height
         let textureImage:SKTexture
         if UIDevice.current.is_iPad(){
-            textureImage = SKTexture(imageNamed: "homescreen_ipad_1")
+            textureImage = SKTexture(imageNamed: "homescreen_bubu_ipad")
         }
         else {
-            textureImage = SKTexture(imageNamed: "homescreen_iphone_1")
+            textureImage = SKTexture(imageNamed: "homescreen_bubu_iphone")
         }
         let size = CGSize(width: screenWidth, height: screenHeight)
         let backgroundImg = SKSpriteNode(texture: textureImage, color: .clear, size: size)
