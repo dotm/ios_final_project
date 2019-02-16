@@ -27,6 +27,7 @@ class MainScene: SKScene {
     }
     
     override func sceneDidLoad() {
+        BackgroundMusicPlayer.setVolume(1.0)
         BackgroundMusicPlayer.playMainMenuSong()
 //        let playerNode = PlayerNode(position: CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.minY + (UIScreen.main.bounds.height * 0.3)))
 //        addChild(playerNode)

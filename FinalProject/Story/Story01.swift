@@ -32,12 +32,14 @@ class Story01: SKScene {
         
         if UIDevice.current.is_iPad(){
             background = SKSpriteNode(imageNamed: "story1_iphone")
+            background.size = CGSize(width: background.size.width * 1.5, height: background.size.height * 1.5)
         }
         else {
             background = SKSpriteNode(imageNamed: "story1_iphone")
+            background.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         }
         
-        background.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        
         background.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
         self.background = background
         

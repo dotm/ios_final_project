@@ -27,12 +27,10 @@ class WinFrame: SKScene {
     }
     
     override func sceneDidLoad() {
+        BackgroundMusicPlayer.mute()
         setupSFX()
         setupBackgroundImage()
         setupCelebrationImage()
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (_) in
-            self.sound?.play()
-        }
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -93,7 +91,7 @@ class WinFrame: SKScene {
             soundURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "\(sfxReference)woohoo", ofType: "mp3")!)
         }
         else {
-            soundURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "\(sfxReference)yeay", ofType: "mp3")!)
+            soundURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "\(sfxReference)finalWin", ofType: "mp3")!)
         }
         
         SFXPlayer.playSfx(soundEffectUrl: soundURL)

@@ -42,6 +42,7 @@ class GameScene: SKScene {
         
         playerNode.beginAnimation(state: .walk)
         
+        BackgroundMusicPlayer.setVolume(1.0)
         BackgroundMusicPlayer.playBattleSceneSong()
     }
 }

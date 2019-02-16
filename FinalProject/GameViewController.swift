@@ -15,14 +15,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let scene: SKScene!
-        
-        if UIDevice.current.is_iPad(){
-            scene = MainScene(size: view.bounds.size)
-        }
-        else {
-            scene = Story01(size: view.bounds.size)
-        }
+        let scene: SKScene = Story01(size: view.bounds.size)
         
         let skView = view as! SKView
 //        skView.showsFPS = true
