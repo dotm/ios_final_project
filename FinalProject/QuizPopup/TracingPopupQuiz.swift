@@ -74,7 +74,8 @@ class TracingPopupQuiz: BasePopupQuiz {
         add_difference_to_differenceNode()
         original_isTransparent = differenceNode.getImage()!.getRatio_ofNotTransparentPixels()
         
-        let alphabetSoundUrl = URL(fileURLWithPath: Bundle.main.path(forResource: "\(alphabetSfxReference)/audio_\(alphabetName)", ofType: "mp3")!)
+        let userDeviceCountryCode = NSLocale.current.regionCode == "ID" ? "ID" : "EN"
+        let alphabetSoundUrl = URL(fileURLWithPath: Bundle.main.path(forResource: "\(alphabetSfxReference)_\(userDeviceCountryCode)/audio_\(alphabetName)", ofType: "mp3")!)
         self.alphabetSoundUrl = alphabetSoundUrl
         
         self.alphabetName = alphabetName
@@ -186,6 +187,7 @@ class TracingPopupQuiz: BasePopupQuiz {
         tracingAlreadyCorrect = true
         answerCanvas.texture = nil
         questionBackground.texture = SKTexture(imageNamed: alphabetName)
+        animationFinishTracing(node: questionBackground)
         playAlphabetSound {
             self.gameDelegate?.handleAnswerCorrect()
         }
@@ -198,6 +200,9 @@ class TracingPopupQuiz: BasePopupQuiz {
         //handle feedback
         let isfeedbackSupportLevel2 = UIDevice.current.feedbackSupportLevel() == 2
         handleFeedbackWrong(isfeedbackSupportLevel2)
+        let wrongSoundUrl = URL(fileURLWithPath: Bundle.main.path(forResource: "\(sfxReference)/sedih", ofType: "mp3")!)
+        SFXPlayer.playSfx(soundEffectUrl: wrongSoundUrl)
+        
     }
     private func handleFeedbackWrong(_ isfeedbackSupportLevel2:Bool)
     {
@@ -220,6 +225,19 @@ class TracingPopupQuiz: BasePopupQuiz {
         let backToOrigin = SKAction.move(to: originNode, duration: 0.1)
         let sequence = SKAction.sequence([bounceRight,bounceLeft,bounceRight,bounceLeft, backToOrigin])
         node.run(sequence)
+    }
+    
+    private func animationFinishTracing(node:SKSpriteNode) {
+        let originNodeSize = node.size
+        let originHeight = originNodeSize.height
+        let originWidth = originNodeSize.width
+        let firstScale = SKAction.scale(to: CGSize(width: originWidth + (originWidth * 0.1), height: originHeight + (originHeight * 0.1)), duration: 0.1)
+        let secondScale = SKAction.scale(to: CGSize(width: originWidth + (originWidth * 0.2), height: originHeight + (originHeight * 0.2)), duration: 0.1)
+        let backToOrigin = SKAction.scale(to: originNodeSize, duration: 0.1)
+        let arrayActionSequence:[SKAction] = [firstScale,secondScale,firstScale,backToOrigin,firstScale,secondScale,firstScale,backToOrigin]
+        let animationSequence = SKAction.sequence(arrayActionSequence)
+        node.run(animationSequence)
+        
     }
     
     private func playAlphabetSound(completion: (()->())?) {
