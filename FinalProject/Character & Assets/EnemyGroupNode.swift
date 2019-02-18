@@ -48,6 +48,7 @@ class EnemyGroupNode: SKSpriteNode {
     }
     
     func decreaseEnemy() {
+        guard indexEnemy < arrEnemy.count else { return }
         
         let currentArr = arrEnemy[indexEnemy]
         

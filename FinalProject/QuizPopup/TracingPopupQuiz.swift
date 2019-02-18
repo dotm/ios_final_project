@@ -33,6 +33,8 @@ class TracingPopupQuiz: BasePopupQuiz {
     private var alphabetSoundUrl:URL!
     private var alphabetName:String!
     
+    private var isStillAnimation = false
+    
     init(size:CGSize, alphabetName:String) {
         super.init()
         let questionBackgroundColor = UIColor.clear
@@ -115,10 +117,14 @@ class TracingPopupQuiz: BasePopupQuiz {
         drawLine(from: lastPoint, to: touchLocation)
         lastPoint = touchLocation
     }
+    private var currentlyCheckingAnswer = false
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         tracingDisable = false
+        print(tracingDisable, tracingAlreadyCorrect, currentlyCheckingAnswer)
         guard tracingAlreadyCorrect == false else { return }
+        guard currentlyCheckingAnswer == false else { return }
         
+        currentlyCheckingAnswer = true
         add_difference_to_differenceNode()
         let originalBlackPixelRatio = questionBackground.getImage()!.getRatio_ofBlackPixels_fromAllPixels()
         let answerRatioBlackPixel = differenceNode.getImage()!.getRatio_ofBlackPixels_fromAllPixels()
@@ -177,10 +183,12 @@ class TracingPopupQuiz: BasePopupQuiz {
     
     private func handleStrokeCorrect() {
         //transisi next pic
-    
+        tracingDisable = true
+        currentlyCheckingAnswer = false
         guard indexImage == imageArray.count else {
             self.questionBackground.texture = SKTexture(image: self.imageArray[self.indexImage]) //next image
             self.answerCanvas.texture = SKTexture(image: self.defaultAnswerImage) //reset canvas
+            tracingDisable = false
             return
         }
         
@@ -202,7 +210,7 @@ class TracingPopupQuiz: BasePopupQuiz {
         handleFeedbackWrong(isfeedbackSupportLevel2)
         let wrongSoundUrl = URL(fileURLWithPath: Bundle.main.path(forResource: "\(sfxReference)/sedih", ofType: "mp3")!)
         SFXPlayer.playSfx(soundEffectUrl: wrongSoundUrl)
-        
+        currentlyCheckingAnswer = false
     }
     private func handleFeedbackWrong(_ isfeedbackSupportLevel2:Bool)
     {
@@ -216,6 +224,7 @@ class TracingPopupQuiz: BasePopupQuiz {
     }
     
     private func animationAnswerWrong(node:SKSpriteNode) {
+        guard isStillAnimation == false else {return}
         let originNode = node.position
         let x = originNode.x
         let y = originNode.y
@@ -224,7 +233,11 @@ class TracingPopupQuiz: BasePopupQuiz {
         let bounceLeft = SKAction.move(to: CGPoint(x: x - deltaX, y: y), duration: 0.1)
         let backToOrigin = SKAction.move(to: originNode, duration: 0.1)
         let sequence = SKAction.sequence([bounceRight,bounceLeft,bounceRight,bounceLeft, backToOrigin])
-        node.run(sequence)
+        isStillAnimation = true
+        node.run(sequence) {
+            node.position = originNode
+            self.isStillAnimation = false
+        }
     }
     
     private func animationFinishTracing(node:SKSpriteNode) {
