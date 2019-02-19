@@ -120,7 +120,6 @@ class TracingPopupQuiz: BasePopupQuiz {
     private var currentlyCheckingAnswer = false
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         tracingDisable = false
-        print(tracingDisable, tracingAlreadyCorrect, currentlyCheckingAnswer)
         guard tracingAlreadyCorrect == false else { return }
         guard currentlyCheckingAnswer == false else { return }
         

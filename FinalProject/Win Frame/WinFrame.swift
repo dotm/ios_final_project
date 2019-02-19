@@ -93,7 +93,7 @@ class WinFrame: SKScene {
             soundURL = URL.init(fileURLWithPath: Bundle.main.path(forResource: "\(sfxReference)finalWin", ofType: "mp3")!)
         }
         
-        SFXPlayer.playSfx(soundEffectUrl: soundURL, volume: 0.0)
+        SFXPlayer.playSfx(soundEffectUrl: soundURL, fadeOutBgmVolume: 0.0)
     }
     
     required init?(coder aDecoder: NSCoder) {
