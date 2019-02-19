@@ -17,35 +17,33 @@ enum SFXPlayer {
     static func playSfx(soundEffectUrl:URL, completion: (()->())?) {
         player.playSfx(soundEffectUrl: soundEffectUrl, completion: completion)
     }
-    static func playSfx(soundEffectUrl:URL, volume: Float, completion: (()->())?) {
-        player.playSfx(soundEffectUrl: soundEffectUrl, volume: volume, completion: completion)
+    static func playSfx(soundEffectUrl:URL, fadeOutBgmVolume: Float, completion: (()->())?) {
+        player.playSfx(soundEffectUrl: soundEffectUrl, fadeOutBgmVolume: fadeOutBgmVolume, fadeOutBgmDuration:nil, completion: completion)
     }
-    static func playSfx(soundEffectUrl:URL, volume: Float) {
-        player.playSfx(soundEffectUrl: soundEffectUrl, volume: volume, completion: nil)
+    static func playSfx(soundEffectUrl:URL, fadeOutBgmVolume: Float) {
+        player.playSfx(soundEffectUrl: soundEffectUrl, fadeOutBgmVolume: fadeOutBgmVolume, fadeOutBgmDuration:nil , completion: nil)
     }
+    static func playSfx(soundEffectUrl:URL, fadeOutBgmVolume: Float, fadeOutBgmDuration: Double, completion: (()->())?) {
+        player.playSfx(soundEffectUrl: soundEffectUrl, fadeOutBgmVolume: fadeOutBgmVolume, fadeOutBgmDuration: fadeOutBgmDuration, completion: completion)
+    }
+    
 }
-fileprivate let fade_outBgm = 0.3
 fileprivate class SoundEffectPlayer: NSObject {
+    var fade_outBgm = 0.3
     var soundEffectPlayer: AVAudioPlayer?
     var completion: (()->())?
     
     func playSfx(soundEffectUrl:URL, completion: (()->())?) {
-        self.completion = completion
-        BackgroundMusicPlayer.setVolume(0.2, duration: fade_outBgm)
-        Timer.scheduledTimer(withTimeInterval: fade_outBgm, repeats: false) { (_) in
-            do {
-                self.soundEffectPlayer = try AVAudioPlayer(contentsOf: soundEffectUrl)
-                self.soundEffectPlayer?.delegate = self
-                self.soundEffectPlayer?.volume = 1.0
-                self.soundEffectPlayer?.play()
-            } catch {
-                print("error : \(error.localizedDescription)")
-            }
-        }
+        playSfx(soundEffectUrl: soundEffectUrl, fadeOutBgmVolume: 0.2 ,fadeOutBgmDuration : nil, completion: completion)
     }
-    func playSfx(soundEffectUrl:URL,volume:Float, completion: (()->())?) {
+    
+    func playSfx(soundEffectUrl:URL,fadeOutBgmVolume:Float, fadeOutBgmDuration:Double? ,completion: (()->())?) {
         self.completion = completion
-        BackgroundMusicPlayer.setVolume(volume, duration: fade_outBgm)
+        if let fadeOutBgmDuration = fadeOutBgmDuration {
+            fade_outBgm = fadeOutBgmDuration
+        }
+        
+        BackgroundMusicPlayer.setVolume(fadeOutBgmVolume, duration: fade_outBgm)
         Timer.scheduledTimer(withTimeInterval: fade_outBgm, repeats: false) { (_) in
             do {
                 self.soundEffectPlayer = try AVAudioPlayer(contentsOf: soundEffectUrl)
